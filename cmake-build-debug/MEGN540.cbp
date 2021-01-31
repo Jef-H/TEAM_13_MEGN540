@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="MEGN540"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MEGN540">
+				<Option output="/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/MEGN540" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/."/>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/Lab_0"/>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/Lab_1"/>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 MEGN540"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MEGN540/fast">
+				<Option output="/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/MEGN540" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/."/>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/Lab_0"/>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/Lab_1"/>
+					<Add directory="/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 MEGN540/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/Buffalo/CLionProjects/MEGN540/Lab_0/Lab0.c">
+			<Option target="MEGN540"/>
+		</Unit>
+		<Unit filename="/Users/Buffalo/CLionProjects/MEGN540/Lab_1/Lab1.c">
+			<Option target="MEGN540"/>
+		</Unit>
+		<Unit filename="/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/Ring_Buffer.c">
+			<Option target="MEGN540"/>
+		</Unit>
+		<Unit filename="/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/Ring_Buffer.h">
+			<Option target="MEGN540"/>
+		</Unit>
+		<Unit filename="/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/main.c">
+			<Option target="MEGN540"/>
+		</Unit>
+		<Unit filename="/Users/Buffalo/CLionProjects/MEGN540/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,3 @@
+/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Buffalo/CLionProjects/MEGN540/cmake-build-debug/CMakeFiles/MEGN540.dir
