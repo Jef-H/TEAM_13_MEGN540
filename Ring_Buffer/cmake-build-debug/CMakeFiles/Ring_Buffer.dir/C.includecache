@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Buffalo/Desktop/Ring_Buffer_MEGN540/Ring_Buffer.c
+Ring_Buffer.h
+/Users/Buffalo/Desktop/Ring_Buffer_MEGN540/Ring_Buffer.h
+stdio.h
+-
+
+/Users/Buffalo/Desktop/Ring_Buffer_MEGN540/Ring_Buffer.h
+stdint.h
+/Users/Buffalo/Desktop/Ring_Buffer_MEGN540/stdint.h
+
+/Users/Buffalo/Desktop/Ring_Buffer_MEGN540/main.c
+stdio.h
+-
+math.h
+-
+Ring_Buffer.h
+/Users/Buffalo/Desktop/Ring_Buffer_MEGN540/Ring_Buffer.h
+
