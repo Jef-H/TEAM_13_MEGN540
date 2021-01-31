@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Buffalo/CLionProjects/MEGN540/Lab_0/Lab0.c
+avr/io.h
+-
+util/delay.h
+-
+
+/Users/Buffalo/CLionProjects/MEGN540/Lab_1/Lab1.c
+../c_lib/SerialIO.h
+/Users/Buffalo/CLionProjects/MEGN540/c_lib/SerialIO.h
+../c_lib/MEGN540_MessageHandeling.h
+/Users/Buffalo/CLionProjects/MEGN540/c_lib/MEGN540_MessageHandeling.h
+
+/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/Ring_Buffer.c
+Ring_Buffer.h
+/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/Ring_Buffer.h
+stdio.h
+-
+
+/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/Ring_Buffer.h
+stdint.h
+/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/stdint.h
+
+/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/main.c
+stdio.h
+-
+math.h
+-
+Ring_Buffer.h
+/Users/Buffalo/CLionProjects/MEGN540/Ring_Buffer/Ring_Buffer.h
+
