@@ -31,9 +31,33 @@
 #include "../c_lib/SerialIO.h"
 #include "../c_lib/MEGN540_MessageHandeling.h"
 
+void usb_read_next_byte()
+/*Takes the next USB byte and reads it into a ring buffer for latter processing. If there is none waiting,
+ * it returns without blocking.void usb_write_next_byte()Takes the next byte from an output ring buffer and writes it
+ * to the usb port. If there is none waiting, it returns without blocking. */
+
+
+ void usb_send_char(char)//takes a character and appends it to the output ring buffer
+ void usb_send_data(void*, uint8_t) //Takes a pointer to a buffer (everything can be void *) and the length of the
+ // buffer (hint use sizeof to help) and puts into the output ring buffer
+ void usb_send_str(char*) //Puts a null-terminated c-string into the output ring buffer to send.
+ uint8_t usb_msg_length() //Returns the number of bytes in the receive buffer
+ uint8_t usb_msg_get() //Removes and Returns the next byte in the receive buffer
+ uint8_t usb_msg_peek() //Returns the next byte in the receive buffer but does not remove it.
+
+
+
+
+
+
 /** Main program entry point. This routine configures the hardware required by the application, then
  *  enters a loop to run the application tasks in sequence.
  */
+
+
+
+
+
 int main(void)
 {
     USB_SetupHardware();
