@@ -28,29 +28,32 @@
 
 */
 
-#include "../c_lib/SerialIO.h"
-#include "../c_lib/MEGN540_MessageHandeling.h"
-
-/** Main program entry point. This routine configures the hardware required by the application, then
- *  enters a loop to run the application tasks in sequence.
+/**
+ * Battery_Monitor.h/c defines the functions necessary to read the on-board battery voltage for the Pololu Zumo 32U4 car.
+ * For information regarding A/D conversion please consult Section 24 of the atmega32U4 datasheet
+ * https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7766-8-bit-AVR-ATmega16U4-32U4_Datasheet.pdf
+ *
+ * The battery voltage is divided by 2 before being connected to ADC6 (PF6).
+ *
  */
-int main(void)
-{
-    USB_SetupHardware();
-    GlobalInterruptEnable();
-    Message_Handling_Init(); // initialize message handling
+#ifndef _LAB3_BATTERY_MONITOR_H
+#define _LAB3_BATTERY_MONITOR_H
 
-    while( true )
-    {
-        USB_Upkeep_Task();
+#include <avr/io.h>        // For pin input/output access
+#include <ctype.h>         // For int32_t type
 
-        //USB_Echo_Task();// you'll want to remove this once you get your serial sorted
-        Message_Handling_Task();
+/**
+ * Function Battery_Monitor_Init initializes the Battery Monitor to record the current battery voltages.
+ */
+void Battery_Monitor_Init();
 
-        // Below here you'll process state-machine flags.
-        if( MSG_FLAG_Execute( &mf_restart ) )
-        {
-            // re initialzie your stuff...
-        }
-    }
-}
+/**
+ * Function Battery_Voltage initiates the A/D measurement and returns the result for the battery voltage.
+ */
+float Battery_Voltage();
+
+
+
+
+
+#endif

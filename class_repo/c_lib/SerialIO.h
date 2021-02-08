@@ -66,10 +66,6 @@
 
 // *** MEGN540  ***
 // Include your Ring_Buffer homework code.
-
-
-
-
 #include "Ring_Buffer.h"
 
 
@@ -100,6 +96,11 @@ void usb_read_next_byte();
  * (non-blocking) Function usb_write_next_byte takes the next byte from the output
  * ringbuffer and writes it to the USB port (if free).
  */
+// INTIALIZE Serial Communication BAUD RATE:5900, stop character
+// if there is a byte waiting
+// put byte in ring buffer
+
+
 void usb_write_next_byte();
 
 /**
