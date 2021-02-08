@@ -245,6 +245,53 @@ void usb_read_next_byte()
     // will need to adjust to make it non blocking. You'll need to dig into the library to understand
     // how the function above is working then interact at a slightly lower level, but still higher than
     // register level.
+
+    // NAME: usb_read_next_byte()
+    // DESCRIPTION:
+    //
+    /* * Takes the next USB byte and reads it into a ring buffer for latter processing.
+     * If there is none waiting, it returns without blocking.
+     */
+
+
+    // Device must be connected and configured for the task to run
+    // Select the Serial Rx Endpoint
+    /* Check to see if any data has been received
+        /* Create a temp buffer big enough to hold the incoming endpoint packet
+        /* Remember how large the incoming packet is
+        /* Read in the incoming packet into the buffer
+        /* Finalize the stream transfer to send the last packet
+        /* Select the Serial Tx Endpoint
+        /* Write the received data to the endpoint
+        /* Finalize the stream transfer to send the last packet
+
+
+	/* Device must be connected and configured for the task to run */
+    if (USB_DeviceState != DEVICE_STATE_Configured)
+        return;
+
+    /* Select the Serial Rx Endpoint */
+    Endpoint_SelectEndpoint(CDC_RX_EPADDR);
+
+    /* Check to see if any data has been received */
+    if (Endpoint_IsOUTReceived())
+    {
+        /* Create a temp buffer big enough to hold the incoming endpoint packet */
+        uint8_t  Buffer[Endpoint_BytesInEndpoint()];
+
+        /* Remember how large the incoming packet is */
+        uint16_t DataLength = Endpoint_BytesInEndpoint();
+
+        /* Read in the incoming packet into the buffer */
+        Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
+
+        /* Finalize the stream transfer to send the last packet */
+        Endpoint_ClearOUT();
+
+    }
+}
+
+
 }
 
 /**
@@ -258,6 +305,19 @@ void usb_write_next_byte()
     // will need to adjust to make it non blocking. You'll need to dig into the library to understand
     // how the function above is working then interact at a slightly lower level, but still higher than
     // register level.
+    if (USB_DeviceState != DEVICE_STATE_Configured)
+        return;
+
+    /* Select the Serial Tx Endpoint */
+    Endpoint_SelectEndpoint(CDC_TX_EPADDR);
+
+    /* Write the received data to the endpoint */
+    Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
+
+    /* Finalize the stream transfer to send the last packet */
+    Endpoint_ClearIN();
+
+
 }
 
 /**
@@ -323,6 +383,13 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     //      usb_send_byte <-- cmd
     //      usb_send_data <-- p_data
     // FUNCTION END
+    //TODO: what is format_len mentioned above??
+    uint8_t total_msg_length = 1 + data_len;
+    usb_send_byte(total_msg_length);
+    usb_send_str(format);
+    usb_send_byte(cmd);
+    usb_send_data(p_data, total_msg_length);
+
 }
 
 /**
@@ -332,8 +399,10 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
 uint8_t usb_msg_length()
 {
     // *** MEGN540  ***
-    // YOUR CODE HERE
-    return 0;
+    // YOUR CODE HERE'
+    uint8_t length = 0; //TODO
+
+    return length;
 }
 
 /**
