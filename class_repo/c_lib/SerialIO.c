@@ -302,14 +302,41 @@ void usb_write_next_byte()
     // will need to adjust to make it non blocking. You'll need to dig into the library to understand
     // how the function above is working then interact at a slightly lower level, but still higher than
     // register level.
+
+    /* Select the Serial Rx Endpoint */
+    Endpoint_SelectEndpoint(CDC_RX_EPADDR);
+
+    if (Endpoint_IsOUTReceived())
+    {
+
+        /* Remember how large the incoming packet is */
+        uint16_t DataLength = Endpoint_BytesInEndpoint();
+
+        /* Select the Serial Tx Endpoint */
+        Endpoint_SelectEndpoint(CDC_TX_EPADDR);
+
+        /* Write the received data to the endpoint */
+        Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
+
+        /* Finalize the stream transfer to send the last packet */
+        Endpoint_ClearIN();
+
+        /* Send an empty packet to prevent host buffering */
+        Endpoint_ClearIN();
+    }
+}
+
+
+
     if (USB_DeviceState != DEVICE_STATE_Configured)
         return;
 
     /* Select the Serial Tx Endpoint */
     Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
+
     /* Write the received data to the endpoint */
-    //Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
+    Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
 
     /* Finalize the stream transfer to send the last packet */
     Endpoint_ClearIN();
