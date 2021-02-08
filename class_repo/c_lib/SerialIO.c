@@ -383,9 +383,12 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     //      usb_send_byte <-- cmd
     //      usb_send_data <-- p_data
     // FUNCTION END
-
-    //uint_8 total_msg_length = 1 + format_lenght + data_len;
-
+    //TODO: what is format_len mentioned above??
+    uint8_t total_msg_length = 1 + data_len;
+    usb_send_byte(total_msg_length);
+    usb_send_str(format);
+    usb_send_byte(cmd);
+    usb_send_data(p_data, total_msg_length);
 
 }
 
@@ -396,8 +399,10 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
 uint8_t usb_msg_length()
 {
     // *** MEGN540  ***
-    // YOUR CODE HERE
-    return 0;
+    // YOUR CODE HERE'
+    uint8_t length = 0; //TODO
+
+    return length;
 }
 
 /**
