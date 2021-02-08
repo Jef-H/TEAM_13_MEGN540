@@ -324,23 +324,6 @@ void usb_write_next_byte()
         /* Send an empty packet to prevent host buffering */
         Endpoint_ClearIN();
     }
-}
-
-
-
-    if (USB_DeviceState != DEVICE_STATE_Configured)
-        return;
-
-    /* Select the Serial Tx Endpoint */
-    Endpoint_SelectEndpoint(CDC_TX_EPADDR);
-
-
-    /* Write the received data to the endpoint */
-    Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
-
-    /* Finalize the stream transfer to send the last packet */
-    Endpoint_ClearIN();
-
 
 }
 
