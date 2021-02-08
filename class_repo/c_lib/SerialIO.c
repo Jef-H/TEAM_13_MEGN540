@@ -291,9 +291,6 @@ void usb_read_next_byte()
     }
 }
 
-
-}
-
 /**
  * (non-blocking) Function usb_write_next_byte takes the next byte from the output
  * ringbuffer and writes it to the USB port (if free).
@@ -312,7 +309,7 @@ void usb_write_next_byte()
     Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
     /* Write the received data to the endpoint */
-    Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
+    //Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
 
     /* Finalize the stream transfer to send the last packet */
     Endpoint_ClearIN();
