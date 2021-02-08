@@ -265,25 +265,31 @@ void usb_read_next_byte()
         /* Write the received data to the endpoint
         /* Finalize the stream transfer to send the last packet
 
-        //TODO: REMOVE THIS
-        /* Wait until the endpoint is ready for the next packet
 
+	/* Device must be connected and configured for the task to run */
+    if (USB_DeviceState != DEVICE_STATE_Configured)
+        return;
 
-        /* Send an empty packet to prevent host buffering
+    /* Select the Serial Rx Endpoint */
+    Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
-        // if bytes are waiting
-            //read bytes into ring buffer
-        // else
-            // return
+    /* Check to see if any data has been received */
+    if (Endpoint_IsOUTReceived())
+    {
+        /* Create a temp buffer big enough to hold the incoming endpoint packet */
+        uint8_t  Buffer[Endpoint_BytesInEndpoint()];
 
+        /* Remember how large the incoming packet is */
+        uint16_t DataLength = Endpoint_BytesInEndpoint();
 
+        /* Read in the incoming packet into the buffer */
+        Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
+        /* Finalize the stream transfer to send the last packet */
+        Endpoint_ClearOUT();
 
-
-
-
-
-
+    }
+}
 
 
 }
@@ -299,6 +305,19 @@ void usb_write_next_byte()
     // will need to adjust to make it non blocking. You'll need to dig into the library to understand
     // how the function above is working then interact at a slightly lower level, but still higher than
     // register level.
+    if (USB_DeviceState != DEVICE_STATE_Configured)
+        return;
+
+    /* Select the Serial Tx Endpoint */
+    Endpoint_SelectEndpoint(CDC_TX_EPADDR);
+
+    /* Write the received data to the endpoint */
+    Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
+
+    /* Finalize the stream transfer to send the last packet */
+    Endpoint_ClearIN();
+
+
 }
 
 /**
@@ -365,7 +384,7 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     //      usb_send_data <-- p_data
     // FUNCTION END
 
-    uint_8 total_msg_length = 1 + format_lenght + data_len;
+    //uint_8 total_msg_length = 1 + format_lenght + data_len;
 
 
 }
