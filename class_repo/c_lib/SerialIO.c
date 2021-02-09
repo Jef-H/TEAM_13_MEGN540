@@ -275,7 +275,7 @@ void usb_read_next_byte()
         //TODO: see if this is right.
         Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
-        rb_push_back_C(*_usb_receive_buffer, Buffer);
+        rb_push_back_C(RING_BUFFER_C, Buffer);
         // create an input buffer
 
         /* Finalize the stream transfer to send the last packet */
@@ -310,7 +310,7 @@ void usb_write_next_byte()
 
         /* Write the received data to the endpoint */
         //TODO see if this is right..
-        Endpoint_Write_Stream_LE(*_usb_send_buffer, DataLength, NULL);
+        Endpoint_Write_Stream_LE(RING_BUFFER_C._usb_receive_buffer, DataLength, NULL);
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearIN();
@@ -327,7 +327,7 @@ void usb_send_byte(uint8_t byte)
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    rb_push_back_C(*_usb_receive_buffer, byte);
+    rb_push_back_C(RING_BUFFER_C._usb_receive_buffer, byte);
 
 }
 
@@ -355,9 +355,9 @@ void usb_send_str(char* p_str)
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-srtings are null terminated.
 
-    //while (p_str != null){
-   ///     char sending = *p_str;
-   ///     rb_push_back_C(_usb_send_buffer)
+    while (p_str != null){
+        char sending = *p_str;
+        rb_push_back_C(_usb_send_buffer)
    // }
 
 
