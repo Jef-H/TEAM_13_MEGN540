@@ -485,12 +485,13 @@ bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
             // }
             p_obj = &pop_front(_usb_receive_buffer.buffer);
             return true;
+        }
         } else {
             return false;
         }
 
     }
-}
+
 /**
  * (non-blocking) Function usb_flush_input_buffer sets the length of the recieve buffer to zero and disreguards
  * any bytes that remaining.
