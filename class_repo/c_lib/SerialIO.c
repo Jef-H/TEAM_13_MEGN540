@@ -478,18 +478,13 @@ bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
     //YOUR CODE HERE
     uint8_t receive_len = usb_msg_length();
     if (receive_len >= data_len) {
-        // p_obj->v1 = usb_msg_get();
-        // p_obj->v2 = usb_msg_get();
         for (int i = 0; i < data_len; i++) {
-            //    p_obj[i] = usb_msg_get();
-            // }
-            *p_obj = pop_front(_usb_receive_buffer.buffer);
+            p_obj[i] = usb_msg_get();
             return true;
         }
         } else {
             return false;
         }
-
     }
 
 /**
