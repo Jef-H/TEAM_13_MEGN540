@@ -307,13 +307,11 @@ void usb_write_next_byte()
         Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
         /* Write the received data to the endpoint */
-        Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
+        Endpoint_Write_Stream_LE(_usb_send_buffer,1);
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearIN();
 
-        /* Send an empty packet to prevent host buffering */
-        Endpoint_ClearIN();
     }
 
 }
