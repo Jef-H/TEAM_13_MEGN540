@@ -432,6 +432,7 @@ uint8_t usb_msg_peek()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
+    rb_get_C(_usb_receive_buffer.buffer,0);
     return 0;
 }
 
