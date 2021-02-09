@@ -345,7 +345,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // YOUR CODE HERE
     for (int i = 0; i < data_len; i++ ){
         //TODO do i need to cast this?
-        uint8_t data = p_data[i];
+        uint8_t data = p_data;
         rb_push_back_C(_usb_send_buffer.buffer, data);
         // TODO possibly add one to p_data
     }
@@ -479,7 +479,7 @@ bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
     uint8_t receive_len = usb_msg_length();
     if (receive_len >= data_len) {
         for (int i = 0; i < data_len; i++) {
-            p_obj[i] = usb_msg_get();
+            p_obj[i] = &usb_msg_get();
             return true;
         }
         } else {
