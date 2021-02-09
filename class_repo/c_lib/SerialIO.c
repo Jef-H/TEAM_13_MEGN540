@@ -444,7 +444,7 @@ uint8_t usb_msg_get()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    uint8_t byte = rb_pop_front(_usb_receive_buffer.buffer);
+    uint8_t byte = rb_pop_front_C(_usb_receive_buffer.buffer);
     return byte;
 }
 
