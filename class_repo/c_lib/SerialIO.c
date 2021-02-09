@@ -345,8 +345,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // YOUR CODE HERE
     for (int i = 0; i < data_len; i++ ){
         //TODO do i need to cast this?
-        uint8_t data = *p_data[i];
-
+        uint8_t data = *p_data;
         rb_push_back_C(_usb_send_buffer.buffer, data);
         // TODO possibly add one to p_data
     }
@@ -445,7 +444,8 @@ uint8_t usb_msg_get()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    return 0;
+    uint8_t byte = rb_pop_front(_usb_receive_buffer.buffer);
+    return byte;
 }
 
 /**
