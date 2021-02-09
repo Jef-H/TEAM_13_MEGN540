@@ -473,25 +473,24 @@ IF data_len > receiveBuffer.length
  *
  *
  */
-bool usb_msg_read_into(void* p_obj, uint8_t data_len)
-{
+bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
     // *** MEGN540  ***
     //YOUR CODE HERE
-   uint8_t receive_len = usb_msg_length();
-   if ( receive_len >= data_len){
-      // p_obj->v1 = usb_msg_get();
-      // p_obj->v2 = usb_msg_get();
-       for (int i = 0; i < data_len; i++){
-       //    p_obj[i] = usb_msg_get();
-      // }
-      p_obj = &pop_front(_usb_receive_buffer.buffer);
-       return true;
-   } else {
-       return false;
-   }
+    uint8_t receive_len = usb_msg_length();
+    if (receive_len >= data_len) {
+        // p_obj->v1 = usb_msg_get();
+        // p_obj->v2 = usb_msg_get();
+        for (int i = 0; i < data_len; i++) {
+            //    p_obj[i] = usb_msg_get();
+            // }
+            p_obj = &pop_front(_usb_receive_buffer.buffer);
+            return true;
+        } else {
+            return false;
+        }
 
+    }
 }
-
 /**
  * (non-blocking) Function usb_flush_input_buffer sets the length of the recieve buffer to zero and disreguards
  * any bytes that remaining.
