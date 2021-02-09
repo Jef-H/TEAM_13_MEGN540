@@ -1,34 +1,4 @@
-/*
-         MEGN540 Mechatronics Lab
-    Copyright (C) Andrew Petruska, 2021.
-       apetruska [at] mines [dot] edu
-          www.mechanical.mines.edu
-*/
-
-/*
-    Copyright (c) 2021 Andrew Petruska at Colorado School of Mines
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-
-*/
-
-/* Ring_Buffer.h
+/* Ring_Buffer_MEGN540.h
  *
  * This set of functions enables a ringbuffer for both float and char data types.
  * A ring buffer allows constant data addition and removal in a fixed size array.
@@ -44,7 +14,7 @@
  * rb_length_X      <-- Returns the number of active elements in the ringbuffer
  * rb_push_back_X   <-- Appends an element to the end of the buffer
  * rb_push_front_X  <-- Appends an element to the start of the buffer
- * rb_pop_back_X    <-- Removes and returns the last element
+ * rb_pop_back_X    <-- Remojoshves and returns the last element
  * rb_pop_front_X   <-- Removes and returns the first element
  * rb_get_X         <-- Returns an desired element from within the buffer
  * rb_set_X         <-- Sets a desired element within the buffer
@@ -53,6 +23,7 @@
  * Code Details Provided by:  [ YOUR NAME ]
  * Code Last Modified:  1/15/2021
  * */
+
 #ifndef RING_BUFFER_H
 #define RING_BUFFER_H
 

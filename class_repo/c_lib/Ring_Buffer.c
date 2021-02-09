@@ -37,18 +37,36 @@ uint8_t rb_length_C( const struct Ring_Buffer_C* p_buf)
 {
     // your code here!
     // make sure to use the correct mask!
+    uint8_t length = (p_buf->end_index - p_buf->start_index) & RB_MASK_C;
+    return length;
 
-    return 0;
 }
 
 /* Append element to end and lengthen */
 void rb_push_back_F( struct Ring_Buffer_F* p_buf, float value)
 {   
     // Put data at index end
+    p_buf->buffer[rb_length_F(p_buf)] = value;
+
     // Increment the end index and wrap using the mask.
     // If the end equals the start increment the start index
 
     // your code here!
+    p_buf-> end_index = p_buf->end_index & RB_MASK_F;
+
+    // If the end equals the start increment the start index
+    if(p_buf->end_index == p_buf->start_index){
+        p_buf->start_index = p_buf->start_index +1;
+        
+        for (int i =0; i < p_buf->end_index; ) {
+            p_buf->start_index++;
+            if ( i -1 == -1 ){
+                p_buf->buffer[i] = p_buf->buffer[rb_length_F(p_buf)];
+            } else {
+                p_buf->buffer[i] = p_buf->buffer[i - 1];
+            }
+        }
+    }
 
 }
 void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
@@ -58,6 +76,28 @@ void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
     // If the end equals the start increment the start index
 
     // your code here!
+
+
+    // Put data at index end
+    p_buf->buffer[rb_length_C(p_buf)] = value;
+
+    // Increment the end index and wrap using the mask.
+    // If the end equals the start increment the start index
+
+    // your code here!
+    p_buf-> end_index++ & RB_MASK_C;
+
+    // If the end equals the start increment the start index
+    if(p_buf->end_index == p_buf->start_index){
+        for (int i =0; i < p_buf->end_index; ) {
+            p_buf->start_index++;
+            if ( i -1 == -1 ){
+                p_buf->buffer[i] = p_buf->buffer[rb_length_C(p_buf)]& RB_MASK_C ;
+            } else {
+                p_buf->buffer[i] = p_buf->buffer[i - 1]& RB_MASK_C  ;
+            }
+        }
+    }
 }
 
 /* Append element to front and lengthen */
@@ -156,6 +196,7 @@ void  rb_set_F( struct Ring_Buffer_F* p_buf, uint8_t index, float value)
 void  rb_set_C( struct Ring_Buffer_C* p_buf, uint8_t index, char value)
 {
     // set value at start + index wrapped properly
+
     // your code here!
 }
 
