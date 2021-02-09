@@ -185,6 +185,8 @@ void Message_Handling_Task()
                 //then process your reset by setting the mf_restart flag
                 // TODO:
                //  mf_restart =
+               // MSG_FLAG_Init ( &mf_restart );
+               usb_flush_input_buffer();
             }
             break;
         default:
