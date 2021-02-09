@@ -103,6 +103,11 @@ void USB_SetupHardware(void)
 
 	// *** MEGN540  ***
 	// INITIALIZE RING BUFFERS AND OTHER DATA
+
+    // Create the buffer structure and its underlying storage array
+    RingBuffer_t inputBuffer;
+    uint8_t      inputBufferData[9];
+
 }
 
 /** Event handler for the USB_Connect event. This indicates that the device is enumerating via the status LEDs and
@@ -283,7 +288,8 @@ void usb_read_next_byte()
         uint16_t DataLength = Endpoint_BytesInEndpoint();
 
         /* Read in the incoming packet into the buffer */
-        Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
+        Endpoint_Read_Stream_LE(&inputBuffer, DataLength, NULL);
+        // create an input buffer
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearOUT();

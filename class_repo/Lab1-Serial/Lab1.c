@@ -36,6 +36,13 @@
  */
 int main(void)
 {
+
+    // we want our car to do the following..
+    // 1 read input
+    // 2 handle that input and do math
+    // 3 write output.
+
+
     USB_SetupHardware();
     GlobalInterruptEnable();
     Message_Handling_Init(); // initialize message handling
@@ -45,14 +52,30 @@ int main(void)
         USB_Upkeep_Task();
 
         //USB_Echo_Task();// you'll want to remove this once you get your serial sorted
-        //
 
+        //create input buffer
+        RingBuffer_t Buffer;
+        uint8_t BufferData[9];
+
+        // read input in from usb
+        usb_read_next_byte();
+        // write to input buffer.
+        usb_write_next_byte();
+
+        // handle input
         Message_Handling_Task();
+
+        // write output
+        usb_msg_get();
+
 
         // Below here you'll process state-machine flags.
         if( MSG_FLAG_Execute( &mf_restart ) )
         {
             // re initialzie your stuff...
+            USB_SetupHardware();
+            GlobalInterruptEnable();
+            Message_Handling_Init();
         }
     }
 }
