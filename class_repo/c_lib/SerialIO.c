@@ -60,8 +60,8 @@
 
 // *** MEGN540  ***
 // Ring Buffer Objects
-static struct RingBuffer_C _usb_receive_buffer;
-static struct RingBuffer_C _usb_send_buffer;
+static struct RingBuffer_C _usb_receive_buffer[9];
+static struct RingBuffer_C _usb_send_buffer[9];
 
 
 /** Contains the current baud rate and other settings of the first virtual serial port. While this demo does not use
@@ -275,7 +275,7 @@ void usb_read_next_byte()
         //TODO: see if this is right.
         Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
-        rb_push_back_C(_usb_receive_buffer, Buffer)
+        rb_push_back_C(_usb_receive_buffer, &Buffer)
         // create an input buffer
 
         /* Finalize the stream transfer to send the last packet */
