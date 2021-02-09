@@ -479,8 +479,9 @@ bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
     uint8_t receive_len = usb_msg_length();
     if (receive_len >= data_len) {
         for (int i = 0; i < data_len; i++) {
-            p_obj = &usb_msg_get();
-            return true; }
+             rb_push_back_C(p_obj, usb_msg_get());
+        }
+        return true;
         } else {
             return false;
         }
