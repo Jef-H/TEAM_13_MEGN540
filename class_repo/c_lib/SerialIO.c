@@ -60,8 +60,11 @@
 #include "Ring_Buffer.h"
 // *** MEGN540  ***
 // Ring Buffer Objects
-static struct RingBuffer_C _usb_receive_buffer;
-static struct RingBuffer_C _usb_send_buffer;
+//static struct RingBuffer_C _usb_receive_buffer;
+//static struct RingBuffer_C _usb_send_buffer;
+
+static struct Ring_Buffer_C _usb_receive_buffer;
+static struct Ring_Buffer_C _usb_send_buffer;
 
 
 /** Contains the current baud rate and other settings of the first virtual serial port. While this demo does not use
@@ -275,7 +278,7 @@ void usb_read_next_byte()
         //TODO: see if this is right.
         Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
-        rb_push_back_C(_usb_receive_buffer, Buffer);
+        rb_push_back_C(_usb_receive_buffer.buffer, Buffer);
         // create an input buffer
 
         /* Finalize the stream transfer to send the last packet */
@@ -310,7 +313,7 @@ void usb_write_next_byte()
 
         /* Write the received data to the endpoint */
         //TODO see if this is right..
-        Endpoint_Write_Stream_LE(RingBuffer_C._usb_receive_buffer, DataLength, NULL);
+        Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearIN();
@@ -327,7 +330,7 @@ void usb_send_byte(uint8_t byte)
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    rb_push_back_C(RingBuffer_C._usb_receive_buffer, byte);
+    rb_push_back_C(_usb_send_buffer.buffer, byte);
 
 }
 
@@ -342,7 +345,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // YOUR CODE HERE
     for (int i = 0; i < data_len; i++ ){
         //TODO do i need to cast this?
-        rb_push_back_C(RingBuffer_C._usb_send_buffer, p_data);
+        rb_push_back_C(_usb_send_buffer.buffer[i], p_data);
     }
 }
 
@@ -355,9 +358,9 @@ void usb_send_str(char* p_str)
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-srtings are null terminated.
 
-    while (p_str != null){
-        char sending = *p_str;
-        rb_push_back_C(_usb_send_buffer)
+   // while (p_str != null){
+   //     char sending = *p_str;
+   //     rb_push_back_C(_usb_send_buffer)
    // }
 
 
