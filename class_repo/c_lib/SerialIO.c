@@ -479,8 +479,7 @@ bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
     uint8_t receive_len = usb_msg_length();
     if (receive_len >= data_len) {
         for (int i = 0; i < data_len; i++) {
-            data = *p_obj;
-            data[i] = usb_msg_get();
+            *p_obj[i] = usb_msg_get();
             return true; }
         } else {
             return false;
