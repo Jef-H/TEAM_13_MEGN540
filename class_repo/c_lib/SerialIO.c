@@ -457,17 +457,34 @@ uint8_t usb_msg_get()
  * @param data_len
  * @return [bool]  True: sucess, False: not enough bytes available
  */
+
+
+/*
+ *
+ * // if receiveBuffer does not have enough bytes to
+IF data_len > receiveBuffer.length
+	RETURN False;
+	// we have a full message lets process it.
+	ELSE
+	// set object to data in the receive buffer
+	While there’s data in receiveBuffer
+		// remove first element of receiveBuffer
+		P_obj = pop_front(receiveBuffer)
+ *
+ *
+ */
 bool usb_msg_read_into(void* p_obj, uint8_t data_len)
 {
     // *** MEGN540  ***
     //YOUR CODE HERE
    uint8_t receive_len = usb_msg_length();
    if ( receive_len >= data_len){
-       p_obj->v1 = usb_msg_get();
-       p_obj->v2 = usb_msg_get();
-       //for (int i = 0; i < data_len; i++){
+      // p_obj->v1 = usb_msg_get();
+      // p_obj->v2 = usb_msg_get();
+       for (int i = 0; i < data_len; i++){
        //    p_obj[i] = usb_msg_get();
       // }
+      p_obj = &pop_front(_usb_receive_buffer.buffer);
        return true;
    } else {
        return false;
