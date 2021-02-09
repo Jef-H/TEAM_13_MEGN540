@@ -362,7 +362,8 @@ void usb_send_str(char* p_str)
     uint8_t i = 0;
     while (p_str[i] != null){
         char sending = *p_str;
-        rb_push_back_C(_usb_send_buffer.)
+        rb_push_back_C(_usb_send_buffer.buffer, p_str[i]);
+        i++;
     }
 
 
