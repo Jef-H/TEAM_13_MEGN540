@@ -84,6 +84,14 @@ void USB_Upkeep_Task()
 
     // *** MEGN540  ***
     // Get next byte from the USB hardware, send next byte to the USB hardware
+    //TODO: maybe check if device is configured.
+    if (USB_DeviceState != DEVICE_STATE_Configured) {
+        return;
+    } else {
+        usb_read_next_byte()
+        usb_write_next_byte();
+    }
+    return;
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
@@ -251,30 +259,6 @@ void usb_read_next_byte()
     // how the function above is working then interact at a slightly lower level, but still higher than
     // register level.
 
-    // NAME: usb_read_next_byte()
-    // DESCRIPTION:
-    //
-    /* * Takes the next USB byte and reads it into a ring buffer for latter processing.
-     * If there is none waiting, it returns without blocking.
-     */
-
-
-    // Device must be connected and configured for the task to run
-    // Select the Serial Rx Endpoint
-    /* Check to see if any data has been received
-        /* Create a temp buffer big enough to hold the incoming endpoint packet
-        /* Remember how large the incoming packet is
-        /* Read in the incoming packet into the buffer
-        /* Finalize the stream transfer to send the last packet
-        /* Select the Serial Tx Endpoint
-        /* Write the received data to the endpoint
-        /* Finalize the stream transfer to send the last packet
-
-
-	/* Device must be connected and configured for the task to run */
-    if (USB_DeviceState != DEVICE_STATE_Configured)
-        return;
-
     /* Select the Serial Rx Endpoint */
     Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
@@ -288,7 +272,8 @@ void usb_read_next_byte()
         uint16_t DataLength = Endpoint_BytesInEndpoint();
 
         /* Read in the incoming packet into the buffer */
-        Endpoint_Read_Stream_LE(&inputBuffer, DataLength, NULL);
+        Endpoint_Read_Stream_LE(&Buffer, 1);
+        rb_push_back_C(_usb_receive_buffer, Buffer)
         // create an input buffer
 
         /* Finalize the stream transfer to send the last packet */
