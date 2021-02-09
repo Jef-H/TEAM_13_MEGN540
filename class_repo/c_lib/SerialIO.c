@@ -272,7 +272,9 @@ void usb_read_next_byte()
         uint16_t DataLength = Endpoint_BytesInEndpoint();
 
         /* Read in the incoming packet into the buffer */
-        Endpoint_Read_Stream_LE(&Buffer, 1);
+        //TODO: see if this is right. 
+        Endpoint_Read_Stream_LE(&Buffer, 1, NULL);
+
         rb_push_back_C(_usb_receive_buffer, Buffer)
         // create an input buffer
 
@@ -307,7 +309,8 @@ void usb_write_next_byte()
         Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
         /* Write the received data to the endpoint */
-        Endpoint_Write_Stream_LE(_usb_send_buffer,1);
+        //TODO see if this is right..
+        Endpoint_Write_Stream_LE(_usb_send_buffer,1, NULL);
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearIN();
