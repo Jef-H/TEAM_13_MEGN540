@@ -57,7 +57,7 @@
  */
 
 #include "SerialIO.h"
-
+#include "Ring_Buffer.h"
 // *** MEGN540  ***
 // Ring Buffer Objects
 static struct RingBuffer_C _usb_receive_buffer;
@@ -342,7 +342,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // YOUR CODE HERE
     for (int i = 0; i < data_len; i++ ){
         //TODO do i need to cast this?
-        rb_push_back_C(*_usb_send_buffer, p_data);
+        rb_push_back_C(RingBuffer_C._usb_send_buffer, p_data);
     }
 }
 
