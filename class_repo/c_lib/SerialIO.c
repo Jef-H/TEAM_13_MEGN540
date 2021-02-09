@@ -272,8 +272,8 @@ void usb_read_next_byte()
         uint16_t DataLength = Endpoint_BytesInEndpoint();
 
         /* Read in the incoming packet into the buffer */
-        //TODO: see if this is right. 
-        Endpoint_Read_Stream_LE(&Buffer, 1, NULL);
+        //TODO: see if this is right.
+        Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
         rb_push_back_C(_usb_receive_buffer, Buffer)
         // create an input buffer
@@ -310,7 +310,7 @@ void usb_write_next_byte()
 
         /* Write the received data to the endpoint */
         //TODO see if this is right..
-        Endpoint_Write_Stream_LE(_usb_send_buffer,1, NULL);
+        Endpoint_Write_Stream_LE(_usb_send_buffer, DataLength, NULL);
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearIN();
