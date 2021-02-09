@@ -345,8 +345,9 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // YOUR CODE HERE
     for (int i = 0; i < data_len; i++ ){
         //TODO do i need to cast this?
-        //uint8_t data = *p_data;
-        rb_push_back_C(_usb_send_buffer.buffer, p_data[i]);
+        uint8_t data = *p_data[i];
+
+        rb_push_back_C(_usb_send_buffer.buffer, data);
         // TODO possibly add one to p_data
     }
 }
@@ -360,7 +361,7 @@ void usb_send_str(char* p_str)
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-srtings are null terminated.
     uint8_t i = 0;
-    while (p_str[i] != null){
+    while (p_str[i] != NULL){
         char sending = *p_str;
         rb_push_back_C(_usb_send_buffer.buffer, p_str[i]);
         i++;
@@ -407,7 +408,7 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     usb_send_byte(msg_length);
     usb_send_str(format);
     usb_send_byte(cmd);
-    usb_send_data(p_data, total_msg_length);
+    usb_send_data(p_data, msg_length);
     return;
 
 }
