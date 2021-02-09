@@ -420,8 +420,7 @@ uint8_t usb_msg_length()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE'
-    uint8_t length = 0; //TODO
-
+    uint8_t length = rb_length_C(_usb_receive_buffer.buffer);
     return length;
 }
 
