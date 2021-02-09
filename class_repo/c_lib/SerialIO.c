@@ -60,8 +60,8 @@
 
 // *** MEGN540  ***
 // Ring Buffer Objects
-static struct RingBuffer_C _usb_receive_buffer[9];
-static struct RingBuffer_C _usb_send_buffer[9];
+static struct RingBuffer_C _usb_receive_buffer;
+static struct RingBuffer_C _usb_send_buffer;
 
 
 /** Contains the current baud rate and other settings of the first virtual serial port. While this demo does not use
@@ -88,7 +88,7 @@ void USB_Upkeep_Task()
     if (USB_DeviceState != DEVICE_STATE_Configured) {
         return;
     } else {
-        usb_read_next_byte()
+        usb_read_next_byte();
         usb_write_next_byte();
     }
     return;
@@ -113,8 +113,8 @@ void USB_SetupHardware(void)
 	// INITIALIZE RING BUFFERS AND OTHER DATA
 
     // Create the buffer structure and its underlying storage array
-    RingBuffer_t inputBuffer;
-    uint8_t      inputBufferData[9];
+    //RingBuffer_t inputBuffer;
+    //uint8_t      inputBufferData[9];
 
 }
 
