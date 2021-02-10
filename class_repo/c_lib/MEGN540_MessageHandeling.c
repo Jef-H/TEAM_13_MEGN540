@@ -142,9 +142,6 @@ void Message_Handling_Task()
                 //then process your times...
 
                 pin_low();
-                _delay_ms(1000);
-                pin_high();
-                _delay_ms(1000);
 
                 // remove the command from the usb recieved buffer using the usb_msg_get() function
                 usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
