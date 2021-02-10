@@ -277,7 +277,7 @@ void usb_read_next_byte()
         /* Read in the incoming packet into the buffer */
         //TODO: see if this is right.
         Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
-
+        //Endpoint_ClearOUT();
         rb_push_back_C(_usb_receive_buffer.buffer, Buffer);
         // create an input buffer
 
@@ -315,7 +315,6 @@ void usb_write_next_byte()
         //TODO see if this is right..
         Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
 
-        /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearIN();
 
     }
