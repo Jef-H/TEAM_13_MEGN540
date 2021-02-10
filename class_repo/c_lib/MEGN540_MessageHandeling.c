@@ -155,6 +155,12 @@ void Message_Handling_Task()
             if( usb_msg_length() >= MEGN540_Message_Len('*') )
             {
                 //then process your times...
+                pin_init_yellow();
+                pin_init_red();
+                pin_light_red();
+                pin_dark_yellow();
+                pin_dark_red();
+                pin_light_yellow();
 
                 // remove the command from the usb recieved buffer using the usb_msg_get() function
                 usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
