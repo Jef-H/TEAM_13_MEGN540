@@ -31,6 +31,10 @@
 #include "../c_lib/SerialIO.h"
 #include "../c_lib/MEGN540_MessageHandeling.h"
 
+
+
+
+
 /** Main program entry point. This routine configures the hardware required by the application, then
  *  enters a loop to run the application tasks in sequence.
  */
@@ -46,6 +50,8 @@ int main(void)
     USB_SetupHardware();
     GlobalInterruptEnable();
     Message_Handling_Init(); // initialize message handling
+
+
 
     while( true )
     {
