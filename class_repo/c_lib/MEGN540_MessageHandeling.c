@@ -148,6 +148,10 @@ void Message_Handling_Task()
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
 
+    pin_init_red();
+    pin_dark_red();
+    pin_light_red();
+
     // process command
     switch( command )
     {
