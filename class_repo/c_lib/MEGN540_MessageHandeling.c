@@ -31,6 +31,38 @@
 #include "MEGN540_MessageHandeling.h"
 
 
+#define F_CPU 16000000L //Clock speed of Arduino 16 MHz
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+
+// Define function prototypes
+void pin_init(void);
+void pin_high(void);
+void pin_low(void);
+
+// Write functions
+void pin_init(void){
+    // Specify the pin5 on portB (1<<DDB5) to out
+    DDRB = (1<<DDB5);
+    // Set this pin as LOW
+    PORTB = (0<<PORTB5);
+}
+
+void pin_high(void){
+    // Set pin5 on portB as HIGH
+    PORTB = (1<<PORTB5);
+}
+
+void pin_low(void){
+    // Set pin5 on portB as LOW
+    PORTB = (0<<PORTB5);
+}
+
+
+
+
 static inline void MSG_FLAG_Init(MSG_FLAG_t* p_flag)
 {
     p_flag->active = false;
@@ -66,9 +98,9 @@ void Message_Handling_Init()
     // state machine flags to control your main-loop state machine
 
     MSG_FLAG_Init( &mf_restart ); // needs to be initialized to the default values.
-    MSG_FLAG_Init( &mf_loop_timer);
-    MSG_FLAG_Init( &mf_time_float_send);
-    MSG_FLAG_Init( &mf_send_time );
+   // MSG_FLAG_Init( &mf_loop_timer);
+   // MSG_FLAG_Init( &mf_time_float_send);
+   // MSG_FLAG_Init( &mf_send_time );
     return;
 }
 
@@ -99,6 +131,11 @@ void Message_Handling_Task()
             if( usb_msg_length() >= MEGN540_Message_Len('*') )
             {
                 //then process your times...
+
+                pin_low();
+                _delay_ms(1000);
+                pin_high();
+                _delay_ms(1000);
 
                 // remove the command from the usb recieved buffer using the usb_msg_get() function
                 usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
