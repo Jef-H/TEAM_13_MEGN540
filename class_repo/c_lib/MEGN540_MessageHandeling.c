@@ -42,9 +42,9 @@ void pin_init_red(void);
 void pin_dark_red(void);
 void pin_light_red(void);
 
-void pin_init_green(void);
-void pin_dark_green(void);
-void pin_light_green(void);
+void pin_init_yellow(void);
+void pin_dark_yellow(void);
+void pin_light_yellow(void);
 
 // Write functions
 void pin_init_red(void){
@@ -66,21 +66,21 @@ void pin_light_red(void){
 
 
 // Write functions
-void pin_init_green(void){
+void pin_init_yellow(void){
     // Specify the pin5 on portB (1<<DDB5) to out
-    DDRB = (1<<DDB5);
+    DDRB = (1<<DDC7);
     // Set this pin as LOW
-    PORTB = (0<<PORTB5);
+    PORTC = (0<<PORTC7);
 }
 
-void pin_dark_green(void){
+void pin_light_yellow(void){
     // Set pin5 on portB as HIGH
-    PORTB = (1<<PORTB5);
+    PORTC = (1<<PORTC7);
 }
 
-void pin_light_green(void){
+void pin_dark_yellow(void){
     // Set pin5 on portB as LOW
-    PORTB = (0<<PORTB5);
+    PORTC = (0<<PORTC7);
 }
 
 
@@ -141,6 +141,7 @@ void Message_Handling_Task()
     // If it just is a USB thing, do it here, if it requires other hardware, do it in the main and
     // set a flag to have it done here.
     pin_init_red();
+    pin_init_yellow();
     pin_dark_red();
     _delay_ms(1000);
     pin_light_red();
@@ -152,6 +153,7 @@ void Message_Handling_Task()
     // Check to see if their is data in waiting
     if( !usb_msg_length() )
         return; // nothing to process...
+    pin_light_yellow();
 
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
