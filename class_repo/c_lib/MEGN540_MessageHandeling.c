@@ -147,17 +147,6 @@ void Message_Handling_Task()
 
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
-    pin_init_yellow();
-    _delay_ms(1000);
-    pin_init_red();
-    _delay_ms(1000);
-    pin_light_red();
-    pin_dark_yellow();
-    _delay_ms(1000);
-    pin_dark_red();
-    _delay_ms(1000);
-    pin_light_yellow();
-
 
     // process command
     switch( command )
@@ -165,6 +154,9 @@ void Message_Handling_Task()
         case '*':
             if( usb_msg_length() >= MEGN540_Message_Len('*') )
             {
+                pin_init_red();
+                pin_dark_red();
+                pin_light_red();
                 //then process your times...
                 // remove the command from the usb recieved buffer using the usb_msg_get() function
                 usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
