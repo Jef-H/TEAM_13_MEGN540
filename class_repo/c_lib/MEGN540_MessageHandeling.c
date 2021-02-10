@@ -140,31 +140,21 @@ void Message_Handling_Task()
     // Either do the simple stuff strait up, set flags to have it done later.
     // If it just is a USB thing, do it here, if it requires other hardware, do it in the main and
     // set a flag to have it done here.
-    pin_init_red();
-    pin_init_yellow();
-    pin_dark_red();
-    _delay_ms(1000);
-    pin_light_red();
-    _delay_ms(1000);
-    pin_dark_red();
-
-
 
     // Check to see if their is data in waiting
     if( !usb_msg_length() )
         return; // nothing to process...
-    pin_light_yellow();
-    _delay_ms(1000);
-    pin_dark_yellow();
-    _delay_ms(1000);
-    pin_light_yellow();
-
-    pin_dark_yellow();
-    pin_light_red();
-
 
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
+
+    pin_init_yellow();
+    pin_init_red();
+    pin_light_yellow();
+    _delay_ms(1000);
+    pin_dark_yellow();
+    _delay_ms(1000);
+    pin_light_yellow();
 
     // process command
     switch( command )
