@@ -401,7 +401,7 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     // FUNCTION END
     //TODO: what is format_len mentioned above??
     // TODO fix hardcoded number
-    uint8_t msg_length = 1 + data_len + 9;
+    uint8_t msg_length = 1 + data_len + 8;
     usb_send_byte(msg_length);
     usb_send_str(format);
     usb_send_byte(cmd);

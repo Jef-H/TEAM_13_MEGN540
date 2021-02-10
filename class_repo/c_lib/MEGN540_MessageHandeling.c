@@ -126,7 +126,8 @@ void Message_Handling_Task()
     _delay_ms(1000);
     pin_high();
     _delay_ms(1000);
-
+    pin_low();
+    
     // Check to see if their is data in waiting
     if( !usb_msg_length() )
         return; // nothing to process...
