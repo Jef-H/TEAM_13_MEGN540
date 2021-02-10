@@ -69,6 +69,7 @@ static inline void MSG_FLAG_Init(MSG_FLAG_t* p_flag)
     p_flag->duration = -1;
     p_flag->last_trigger_time.millisec=0;
     p_flag->last_trigger_time.microsec=0;
+
 }
 
 
@@ -101,6 +102,14 @@ void Message_Handling_Init()
    // MSG_FLAG_Init( &mf_loop_timer);
    // MSG_FLAG_Init( &mf_time_float_send);
    // MSG_FLAG_Init( &mf_send_time );
+    pin_high();
+    _delay_ms(1000);
+    pin_low();
+    _delay_ms(1000);
+    pin_high();
+    _delay_ms(1000);
+
+
     return;
 }
 
