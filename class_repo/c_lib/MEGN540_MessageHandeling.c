@@ -67,7 +67,7 @@ void pin_light_red(void){
 
 // Write functions
 void pin_init_yellow(void){
-    // Specify the pin5 on portB (1<<DDB5) to out
+    // Specify the pin5 on portC (1<<DDB5) to out
     DDRB = (1<<DDC7);
     // Set this pin as LOW
     PORTC = (0<<PORTC7);
@@ -148,9 +148,14 @@ void Message_Handling_Task()
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
 
-    pin_init_red();
-    pin_dark_red();
-    pin_light_red();
+    pin_init_yellow();
+    _delay_ms(1000);
+    pin_dark_yellow();
+    _delay_ms(1000);
+    pin_light_yellow();
+    _delay_ms(1000);
+
+
 
     // process command
     switch( command )
@@ -159,8 +164,12 @@ void Message_Handling_Task()
             if( usb_msg_length() >= MEGN540_Message_Len('*') )
             {
                 pin_init_red();
+                _delay_ms(1000);
                 pin_dark_red();
+                _delay_ms(1000);
                 pin_light_red();
+                _delay_ms(1000);
+
                 //then process your times...
                 // remove the command from the usb recieved buffer using the usb_msg_get() function
                 usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
