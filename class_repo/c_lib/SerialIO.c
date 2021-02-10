@@ -430,6 +430,7 @@ uint8_t usb_msg_peek()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
+    // use 0 because index 0 should giev us what's at the beginning of the buffer.
     rb_get_C(_usb_receive_buffer.buffer,0);
     return 0;
 }

@@ -102,12 +102,6 @@ void Message_Handling_Init()
    // MSG_FLAG_Init( &mf_loop_timer);
    // MSG_FLAG_Init( &mf_time_float_send);
    // MSG_FLAG_Init( &mf_send_time );
-    pin_high();
-    _delay_ms(1000);
-    pin_low();
-    _delay_ms(1000);
-    pin_high();
-    _delay_ms(1000);
 
 
     return;
@@ -126,9 +120,20 @@ void Message_Handling_Task()
     // If it just is a USB thing, do it here, if it requires other hardware, do it in the main and
     // set a flag to have it done here.
 
+    pin_high();
+    _delay_ms(1000);
+    pin_low();
+    _delay_ms(1000);
+    pin_high();
+    _delay_ms(1000);
+
     // Check to see if their is data in waiting
     if( !usb_msg_length() )
         return; // nothing to process...
+    pin_high();
+    _delay_ms(1000);
+    pin_low();
+    _delay_ms(1000);
 
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
@@ -140,8 +145,13 @@ void Message_Handling_Task()
             if( usb_msg_length() >= MEGN540_Message_Len('*') )
             {
                 //then process your times...
-
                 pin_low();
+                _delay_ms(1000);
+                pin_high();
+                _delay_ms(1000);
+                pin_low();
+                _delay_ms(1000);
+                pin_high();
 
                 // remove the command from the usb recieved buffer using the usb_msg_get() function
                 usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
