@@ -159,11 +159,12 @@ void Message_Handling_Task()
     _delay_ms(1000);
     pin_light_yellow();
 
+    pin_dark_yellow();
+    pin_light_red();
+
 
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
-    pin_dark_yellow();
-    pin_light_red();
 
     // process command
     switch( command )
