@@ -38,29 +38,50 @@
 
 
 // Define function prototypes
-void pin_init(void);
-void pin_high(void);
-void pin_low(void);
+void pin_init_red(void);
+void pin_dark_red(void);
+void pin_light_red(void);
+
+void pin_init_green(void);
+void pin_dark_green(void);
+void pin_light_green(void);
 
 // Write functions
-void pin_init(void){
+void pin_init_red(void){
     // Specify the pin5 on portB (1<<DDB5) to out
     DDRB = (1<<DDB5);
     // Set this pin as LOW
     PORTB = (0<<PORTB5);
 }
 
-void pin_high(void){
+void pin_dark_red(void){
     // Set pin5 on portB as HIGH
     PORTB = (1<<PORTB5);
 }
 
-void pin_low(void){
+void pin_light_red(void){
     // Set pin5 on portB as LOW
     PORTB = (0<<PORTB5);
 }
 
 
+// Write functions
+void pin_init_green(void){
+    // Specify the pin5 on portB (1<<DDB5) to out
+    DDRB = (1<<DDB5);
+    // Set this pin as LOW
+    PORTB = (0<<PORTB5);
+}
+
+void pin_dark_green(void){
+    // Set pin5 on portB as HIGH
+    PORTB = (1<<PORTB5);
+}
+
+void pin_light_green(void){
+    // Set pin5 on portB as LOW
+    PORTB = (0<<PORTB5);
+}
 
 
 static inline void MSG_FLAG_Init(MSG_FLAG_t* p_flag)
@@ -119,22 +140,18 @@ void Message_Handling_Task()
     // Either do the simple stuff strait up, set flags to have it done later.
     // If it just is a USB thing, do it here, if it requires other hardware, do it in the main and
     // set a flag to have it done here.
+    pin_init_red();
+    pin_dark_red();
+    _delay_ms(1000);
+    pin_light_red();
+    _delay_ms(1000);
+    pin_dark_red();
 
-    pin_high();
-    pin_low();
-    pin_high();
-    pin_low();
-    pin_high();
-    pin_low();
 
 
     // Check to see if their is data in waiting
     if( !usb_msg_length() )
         return; // nothing to process...
-    pin_high();
-    _delay_ms(1000);
-    pin_low();
-    _delay_ms(1000);
 
     // Get Your command designator without removal so if their are not enough bytes yet, the command persists
     char command = usb_msg_peek();
