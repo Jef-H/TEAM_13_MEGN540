@@ -219,7 +219,7 @@ void USB_Echo_Task(void)
 	Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
 	/* Check to see if any data has been received */
-	if (Endpoint_IsOUTReceived())
+	while (Endpoint_IsOUTReceived())
 	{
 		/* Create a temp buffer big enough to hold the incoming endpoint packet */
 		uint8_t  Buffer[Endpoint_BytesInEndpoint()];
@@ -230,14 +230,17 @@ void USB_Echo_Task(void)
 		/* Read in the incoming packet into the buffer */
 		//Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
-		//Buffer[0] = Endpoint_Read_8();
+		Buffer[0] = Endpoint_Read_8();
+        rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
+        Endpoint_ClearOUT();
+        Endpoint_WaitUntilReady();
 
-		for ( int i = 0; i < DataLength; i++){
+		/*for ( int i = 0; i < DataLength; i++){
 		    Buffer[i] = Endpoint_Read_8();
             rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
             Endpoint_ClearOUT();
             Endpoint_WaitUntilReady();
-		}
+		}*/
 
 		// add to buffer.
         //rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
