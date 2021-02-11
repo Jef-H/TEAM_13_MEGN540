@@ -261,11 +261,11 @@ void USB_Echo_Task(void) {
         uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
         uint8_t length = rb_length_C(&_usb_receive_buffer);
 
-        for (int i = 0; i < length; i++) {
+        for (int i = length; i > 0; i--) {
             Endpoint_Write_8(rb_pop_front_C((&_usb_receive_buffer)));
             Endpoint_ClearIN();
             Endpoint_WaitUntilReady();
-            length = rb_length_C(&_usb_receive_buffer);
+            //length = rb_length_C(&_usb_receive_buffer);
         }
 
         /* Finalize the stream transfer to send the last packet */
