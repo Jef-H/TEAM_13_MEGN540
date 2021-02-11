@@ -239,7 +239,7 @@ void USB_Echo_Task(void)
 
 		_usb_receive_buffer.buffer[Endpoint_BytesInEndpoint()];
 		/* Write the received data to the endpoint */
-		Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
+		Endpoint_Write_Stream_LE(&_usb_receive_buffer.buffer, DataLength, NULL);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
