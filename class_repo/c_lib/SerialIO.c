@@ -510,16 +510,16 @@ bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
     //YOUR CODE HERE
     uint8_t receive_len = usb_msg_length();
     //TODO: revisit this if statement
-    uint8_t* p_obj_char = p_obj;
-    if (receive_len >= data_len) {
+    uint8_t *p_obj_char = p_obj;
+    if (receive_len < data_len) {
+        return false;
+    } else {
         for (int i = 0; i < data_len; i++) {
-            p_obj_char[i] = usb_msg_get();
+            p_obj_char[i] = 'a';
         }
         return true;
-        } else {
-            return false;
-        }
-   }
+    }
+}
 
 /**
  * (non-blocking) Function usb_flush_input_buffer sets the length of the recieve buffer to zero and disreguards
