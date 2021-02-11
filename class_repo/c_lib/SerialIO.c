@@ -332,7 +332,7 @@ void usb_write_next_byte()
     uint16_t DataLength = Endpoint_BytesInEndpoint();
     uint8_t i = 0;
 
-    if (Endpoint_IsINReady())
+    if (rb_length_C(&_usb_send_buffer)!=0  && Endpoint_isINReady() )
     {
 
         /* Remember how large the incoming packet is */
