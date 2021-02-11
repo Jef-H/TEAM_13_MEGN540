@@ -65,8 +65,6 @@
 
 static struct Ring_Buffer_C _usb_receive_buffer;
 static struct Ring_Buffer_C _usb_send_buffer;
-rb_initialize_C(&_usb_receive_buffer);
-rb_initialize_C(&_usb_send_buffer);
 
 
 /** Contains the current baud rate and other settings of the first virtual serial port. While this demo does not use
@@ -230,10 +228,10 @@ void USB_Echo_Task(void)
 		uint16_t DataLength = Endpoint_BytesInEndpoint();
 
 		/* Read in the incoming packet into the buffer */
-		Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
+		Endpoint_Read_Stream_LE(&_usb_receive_buffer, DataLength, NULL);
 
 		// add to buffer.
-        rb_push_back_C(&_usb_receive_buffer, Buffer);
+        //rb_push_back_C(&_usb_receive_buffer, Buffer);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearOUT();
