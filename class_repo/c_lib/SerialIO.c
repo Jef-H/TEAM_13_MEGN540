@@ -283,7 +283,7 @@ void usb_read_next_byte()
         /* Read in the incoming packet into the buffer */
         //TODO: see if this is right.
         //Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
-        Endpoint_Read_8(&Buffer);
+        Endpoint_Read_8();
         //Endpoint_ClearOUT();
         rb_push_back_C(&_usb_receive_buffer, Buffer);
         // create an input buffer
