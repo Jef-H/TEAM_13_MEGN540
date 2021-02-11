@@ -231,7 +231,7 @@ void USB_Echo_Task(void)
 		//Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
 		Buffer[0] = Endpoint_Read_8();
-        rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
+        rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
         Endpoint_ClearOUT();
         Endpoint_WaitUntilReady();
 
