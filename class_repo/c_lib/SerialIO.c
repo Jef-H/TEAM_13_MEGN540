@@ -232,7 +232,7 @@ void USB_Echo_Task(void)
 
 		//Buffer[0] = Endpoint_Read_8();
 
-		for ( int i = 0; i < 3; i++){
+		for ( int i = 0; i < DataLength; i++){
 		    Buffer[i] = Endpoint_Read_8();
             rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
             Endpoint_ClearOUT();
