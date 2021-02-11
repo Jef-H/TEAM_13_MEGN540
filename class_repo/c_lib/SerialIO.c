@@ -320,9 +320,7 @@ void usb_write_next_byte()
         /* Write the received data to the endpoint */
         //TODO see if this is right..
        // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
-        uint8_t val = rb_get_C(&_usb_receive_buffer,0);
-
-        Endpoint_Write_8(val);
+        Endpoint_Write_8(&_usb_send_buffer[_usb_send_buffer.start_index]);
 
         Endpoint_ClearIN();
         Endpoint_ClearIN();
@@ -442,7 +440,7 @@ uint8_t usb_msg_peek()
     // *** MEGN540  ***
     // YOUR CODE HERE
     // use 0 because index 0 should giev us what's at the beginning of the buffer.
-    rb_get_C(&_usb_receive_buffer,0);
+    rb_get_C(&_usb_receive_buffer,_usb_receive_buffer.start_index);
     return 0;
 }
 

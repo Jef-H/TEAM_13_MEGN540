@@ -57,24 +57,17 @@ int main(void) {
     while (true) {
 
         USB_Upkeep_Task();
-        USB_Echo_Task();
-       // usb_read_next_byte();
-       // Message_Handling_Task();
-        //usb_write_next_byte();
 
-        // handle input
-        // Message_Handling_Task();
-        //usb_write_next_byte();
-
+        Message_Handling_Task();
 
         // Below here you'll process state-machine flags.
-        //   if( MSG_FLAG_Execute( &mf_restart ) )
-        //   {
-        // re initialzie your stuff...
-        //        USB_SetupHardware();
-        //       GlobalInterruptEnable();
-        //       Message_Handling_Init();
-        //    }
-        // }
+           if( MSG_FLAG_Execute( &mf_restart ) )
+           {
+         re initialzie your stuff...
+                USB_SetupHardware();
+               GlobalInterruptEnable();
+               Message_Handling_Init();
+            }
+         }
     }
 }
