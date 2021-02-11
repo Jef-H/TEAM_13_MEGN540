@@ -64,10 +64,9 @@ int main(void) {
            if( MSG_FLAG_Execute( &mf_restart ) )
            {
          //re initialzie your stuff...
-                USB_SetupHardware();
+                SB_SetupHardware();
                GlobalInterruptEnable();
                Message_Handling_Init();
             }
          }
     }
-}
