@@ -252,7 +252,7 @@ void USB_Echo_Task(void)
 		/* Write the received data to the endpoint */
 		//Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
 
-		uint8_t  RB_MASK = DataLength -1;
+		uint8_t  RB_MASK = rb_length_C(&_usb_receive_buffer) -1;
 
         for ( int i = 0; i < rb_length_C(&_usb_receive_buffer); i++){
             Endpoint_Write_8(_usb_receive_buffer.buffer[_usb_receive_buffer.start_index + i &RB_MASK]);
