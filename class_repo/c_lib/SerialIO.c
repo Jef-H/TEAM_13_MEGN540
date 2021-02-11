@@ -225,7 +225,7 @@ void USB_Echo_Task(void)
         uint8_t Buffer[Endpoint_BytesInEndpoint()];
 
         /* Remember how large the incoming packet is */
-        uint16_t DataLength = 3;
+        uint16_t DataLength = Endpoint_BytesInEndpoint();
 
         /* Read in the incoming packet into the buffer */
         //Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
