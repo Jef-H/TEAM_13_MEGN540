@@ -178,7 +178,7 @@ void Message_Handling_Task()
                 float ret_val = data.v1 * data.v2;
 
                 // send response right here if appropriate.
-                usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
+                usb_send_msg('f', command, &ret_val, sizeof(ret_val));
             }
             break;
         case '/':

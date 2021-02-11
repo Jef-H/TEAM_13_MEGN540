@@ -378,9 +378,10 @@ void usb_send_data(void* p_data, uint8_t data_len)
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    char* p_data_char = p_data;
+    // Changed to float because the data is float after we process it.
+    float* p_data_char = p_data;
     for (int i = 0; i < data_len; i++ ){
-        rb_push_back_C(&_usb_send_buffer, p_data_char[i]);
+        rb_push_back_F(&_usb_send_buffer, p_data_char[i]);
     }
 }
 
@@ -437,12 +438,27 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     // FUNCTION END
     //TODO: what is format_len mentioned above??
     // TODO fix hardcoded number
+
+    if (format = 'f'){
+        uint8_t format_length = 9;
+        uint8_t msg_length = format_length + 1 + data_len;
+        //usb_send_byte(format_lenght);
+       // usb_send_str(format);
+      //  usb_send_byte(cmd);
+        usb_send_data(p_data, format_length);
+
+    }
+
+
     uint8_t format_length = sizeof(format);
     uint8_t msg_length = format_length + 1 + data_len;
     usb_send_byte(msg_length);
     usb_send_str(format);
     usb_send_byte(cmd);
     usb_send_data(p_data, msg_length);
+
+
+
     return;
 
 }
