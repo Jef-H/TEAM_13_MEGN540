@@ -209,18 +209,17 @@ void EVENT_USB_Device_ControlRequest(void)
 /** Function to manage CDC data transmission and reception to and from the host for the second CDC interface, which echoes back
  *  all data sent to it from the host.
  */
-void USB_Echo_Task(void)
-{
-	/* Device must be connected and configured for the task to run */
-	if (USB_DeviceState != DEVICE_STATE_Configured) {
+void USB_Echo_Task(void) {
+    /* Device must be connected and configured for the task to run */
+    if (USB_DeviceState != DEVICE_STATE_Configured) {
         return;
     }
 
-	/* Select the Serial Rx Endpoint */
-	Endpoint_SelectEndpoint(CDC_RX_EPADDR);
+    /* Select the Serial Rx Endpoint */
+    Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
-	/* Check to see if any data has been received */
-	if (Endpoint_IsOUTReceived()) {
+    /* Check to see if any data has been received */
+    if (Endpoint_IsOUTReceived()) {
         /* Create a temp buffer big enough to hold the incoming endpoint packet */
         uint8_t Buffer[Endpoint_BytesInEndpoint()];
 
@@ -250,33 +249,33 @@ void USB_Echo_Task(void)
 
         /* Select the Serial Tx Endpoint */
 
-    }
 
-	Endpoint_SelectEndpoint(CDC_TX_EPADDR);
+
+        Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
         usb_msg_read_into(&_usb_send_buffer, rb_length_C(&_usb_send_buffer));
 
-		/* Write the received data to the endpoint */
-		//Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
+        /* Write the received data to the endpoint */
+        //Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
 
-		uint8_t  RB_MASK = rb_length_C(&_usb_receive_buffer) -1;
+        uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
 
-        for ( int i = 0; i < rb_length_C(&_usb_receive_buffer); i++){
+        for (int i = 0; i < rb_length_C(&_usb_receive_buffer); i++) {
             Endpoint_Write_8(_usb_receive_buffer.buffer[i]);
             Endpoint_ClearIN();
             Endpoint_WaitUntilReady();
         }
 
-		/* Finalize the stream transfer to send the last packet */
-		//Endpoint_ClearIN();
+        /* Finalize the stream transfer to send the last packet */
+        //Endpoint_ClearIN();
 
-		/* Wait until the endpoint is ready for the next packet */
-		//Endpoint_WaitUntilReady();
+        /* Wait until the endpoint is ready for the next packet */
+        //Endpoint_WaitUntilReady();
 
-		/* Send an empty packet to prevent host buffering */
-		//Endpoint_ClearIN();
-	}
-
+        /* Send an empty packet to prevent host buffering */
+        //Endpoint_ClearIN();
+    }
+}
 
 /**
  * (non-blocking) Function usb_read_next_byte takes the next USB byte and reads it
