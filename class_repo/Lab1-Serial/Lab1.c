@@ -64,7 +64,7 @@ int main(void) {
            if( MSG_FLAG_Execute( &mf_restart ) )
            {
          //re initialzie your stuff...
-                SB_SetupHardware();
+               USB_SetupHardware();
                GlobalInterruptEnable();
                Message_Handling_Init();
             }
