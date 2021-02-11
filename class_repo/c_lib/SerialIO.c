@@ -237,17 +237,18 @@ void USB_Echo_Task(void)
 		/* Select the Serial Tx Endpoint */
 		Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
+		_usb_receive_buffer.buffer = Buffer;
 		/* Write the received data to the endpoint */
-		Endpoint_Write_Stream_LE(&Buffer, DataLength, NULL);
+		Endpoint_Write_Stream_LE(&_usb_receive_buffer.buffer, DataLength, NULL);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
 
 		/* Wait until the endpoint is ready for the next packet */
-		Endpoint_WaitUntilReady();
+		//Endpoint_WaitUntilReady();
 
 		/* Send an empty packet to prevent host buffering */
-		Endpoint_ClearIN();
+		//Endpoint_ClearIN();
 	}
 }
 
