@@ -243,7 +243,7 @@ void USB_Echo_Task(void)
 
 
 		/* Write the received data to the endpoint */
-		Endpoint_Write_8(rb_get_C(&_usb_receive_buffer,0));
+		Endpoint_Write_8(_usb_receive_buffer.buffer[0]);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
@@ -285,9 +285,9 @@ void usb_read_next_byte()
         /* Read in the incoming packet into the buffer */
         //TODO: see if this is right.
         //Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
-        Endpoint_Read_8();
+        Buffer[0] = Endpoint_Read_8();
         //Endpoint_ClearOUT();
-        rb_push_back_C(&_usb_receive_buffer, Buffer);
+        rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
         // create an input buffer
 
         /* Finalize the stream transfer to send the last packet */
@@ -320,8 +320,9 @@ void usb_write_next_byte()
         /* Write the received data to the endpoint */
         //TODO see if this is right..
        // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
+        uint8_t val = rb_get_C(&_usb_receive_buffer,0);
 
-        Endpoint_Write_8(&_usb_receive_buffer);
+        Endpoint_Write_8(val);
 
         Endpoint_ClearIN();
         Endpoint_ClearIN();
