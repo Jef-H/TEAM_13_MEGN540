@@ -51,9 +51,6 @@ int main(void) {
     Message_Handling_Init(); // initialize message handling
 
 
-
-
-
     while (true) {
 
         //USB_Echo_Task();

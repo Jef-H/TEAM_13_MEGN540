@@ -249,9 +249,26 @@ void Message_Handling_Task()
             {
                 //then process your reset by setting the mf_restart flag
                 // TODO:
-               //  mf_restart =
-               MSG_FLAG_Init ( &mf_restart );
-               usb_flush_input_buffer();
+
+                //then process your minus...
+                // remove the command from the usb recieved buffer using the usb_msg_get() function
+                usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
+
+                // Build a meaningful structure to put your data in. Here we want two floats.
+                struct __attribute__((__packed__)) { float v1; float v2; } data;
+
+                // Copy the bytes from the usb receive buffer into our structure so we can use the information
+                usb_msg_read_into( &data, sizeof(data) );
+
+                // Do the thing you need to do. Here we want to multiply
+                float ret_val = data.v1 - data.v2;
+
+
+                usb_send_msg("cc", command, &ret_val, sizeof(ret_val));
+
+
+                MSG_FLAG_Init ( &mf_restart );
+                usb_flush_input_buffer();
             }
             break;
         default:

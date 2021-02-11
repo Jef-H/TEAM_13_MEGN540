@@ -88,9 +88,9 @@ void USB_Upkeep_Task()
     // *** MEGN540  ***
     // Get next byte from the USB hardware, send next byte to the USB hardware
     //TODO: maybe check if device is configured.
-    if (USB_DeviceState != DEVICE_STATE_Configured) {
-        return;
-    } else{
+   // if (USB_DeviceState != DEVICE_STATE_Configured) {
+  //      return;
+  //  } else{
         usb_read_next_byte();
         usb_write_next_byte();
         return;
@@ -310,6 +310,7 @@ void usb_read_next_byte()
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearOUT();
+        Endpoint_WaitUntilReady();
         i++;
 
     }
@@ -345,6 +346,7 @@ void usb_write_next_byte()
         Endpoint_Write_8(_usb_send_buffer.buffer[index]);
 
         Endpoint_ClearIN();
+        Endpoint_WaitUntilReady();
         //Endpoint_ClearIN();
         i++;
     }
