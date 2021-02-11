@@ -256,7 +256,7 @@ void USB_Echo_Task(void)
 		uint8_t  RB_MASK = rb_length_C(&_usb_receive_buffer) -1;
 
         for ( int i = 0; i < rb_length_C(&_usb_receive_buffer); i++){
-            Endpoint_Write_8(rb_pop_front_C(&_usb_receive_buffer)]);
+            Endpoint_Write_8(rb_pop_front_C(&_usb_receive_buffer));
             Endpoint_ClearIN();
             Endpoint_WaitUntilReady();
         }
