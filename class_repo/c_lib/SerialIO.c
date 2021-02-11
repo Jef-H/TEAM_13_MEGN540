@@ -265,7 +265,7 @@ void USB_Echo_Task(void) {
             Endpoint_Write_8(rb_pop_front_C((&_usb_receive_buffer)));
             Endpoint_ClearIN();
             Endpoint_WaitUntilReady();
-            lenght = rb_length_C(&_usb_receive_buffer);
+            length = rb_length_C(&_usb_receive_buffer);
         }
 
         /* Finalize the stream transfer to send the last packet */
