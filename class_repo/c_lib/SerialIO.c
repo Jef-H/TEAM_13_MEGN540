@@ -94,7 +94,7 @@ void USB_Upkeep_Task()
         usb_read_next_byte();
         usb_write_next_byte();
         return;
-    }
+   // }
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
