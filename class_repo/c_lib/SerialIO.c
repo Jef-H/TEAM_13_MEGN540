@@ -292,7 +292,7 @@ void usb_read_next_byte()
     uint16_t DataLength = Endpoint_BytesInEndpoint();
     uint16_t i = 0;
     /* Check to see if any data has been received */
-    if (Endpoint_IsOUTReceived()&&)
+    if (Endpoint_IsOUTReceived())
     {
         /* Create a temp buffer big enough to hold the incoming endpoint packet */
         uint8_t  Buffer[Endpoint_BytesInEndpoint()];
