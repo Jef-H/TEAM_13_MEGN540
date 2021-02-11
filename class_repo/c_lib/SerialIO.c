@@ -242,7 +242,7 @@ void USB_Echo_Task(void)
 		Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
 		/* Write the received data to the endpoint */
-		Endpoint_Write_8(Buffer[0]);
+		Endpoint_Write_8(&_usb_receive_buffer);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
