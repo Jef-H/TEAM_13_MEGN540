@@ -92,7 +92,7 @@ void USB_Upkeep_Task()
         return;
     } else {
         usb_read_next_byte();
-        usb_write_next_byte();
+        //usb_write_next_byte();
     }
     return;
 }
