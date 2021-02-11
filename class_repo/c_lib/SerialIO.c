@@ -230,10 +230,10 @@ void USB_Echo_Task(void)
 		/* Read in the incoming packet into the buffer */
 		//Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
-		Buffer[0]= Endpoint_Read_8();
+		Buffer = Endpoint_Read_8();
 
 		// add to buffer.
-        rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
+        rb_push_back_C(&_usb_receive_buffer, &Buffer);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearOUT();
@@ -242,7 +242,7 @@ void USB_Echo_Task(void)
 		Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
 		/* Write the received data to the endpoint */
-		Endpoint_Write_8(&_usb_receive_buffer);
+		Endpoint_Write_8(&Buffer);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
