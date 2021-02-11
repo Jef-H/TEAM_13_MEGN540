@@ -253,7 +253,7 @@ void USB_Echo_Task(void)
 
 	Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
-	if(Endpoint_IsINREADY()){
+	if(Endpoint_IsINReady()){
 
         usb_msg_read_into(&_usb_send_buffer, rb_length_C(&_usb_send_buffer));
 
