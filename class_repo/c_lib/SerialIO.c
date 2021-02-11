@@ -219,7 +219,7 @@ void USB_Echo_Task(void) {
     Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
     /* Check to see if any data has been received */
-    if (Endpoint_IsOUTReceived() && Endpoint_BytesInEndpoint() >0) {
+    if (Endpoint_IsOUTReceived() && Endpoint_BytesInEndpoint() >=0) {
         /* Create a temp buffer big enough to hold the incoming endpoint packet */
         uint8_t Buffer[Endpoint_BytesInEndpoint()];
 
@@ -259,11 +259,13 @@ void USB_Echo_Task(void) {
         //Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
 
         uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
+        uint8_t length = rb_length_C(&_usb_receive_buffer);
 
-        for (int i = 0; i < rb_length_C(&_usb_receive_buffer); i++) {
+        for (int i = 0; i < length; i++) {
             Endpoint_Write_8(rb_pop_front_C((&_usb_receive_buffer)));
             Endpoint_ClearIN();
             Endpoint_WaitUntilReady();
+            lenght = rb_length_C(&_usb_receive_buffer);
         }
 
         /* Finalize the stream transfer to send the last packet */
