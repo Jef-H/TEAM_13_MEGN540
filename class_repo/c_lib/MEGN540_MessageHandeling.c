@@ -263,6 +263,8 @@ void Message_Handling_Task()
             _delay_ms(1000);
             pin_light_red();
             _delay_ms(1000);
+            pin_dark_red();
+            _delay_ms(1000);
 
 
             break;
