@@ -439,7 +439,7 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     //TODO: what is format_len mentioned above??
     // TODO fix hardcoded number
 
-    if (format = 'f'){
+    if (format == 'f'){
         uint8_t format_length = 9;
         uint8_t msg_length = format_length + 1 + data_len;
         //usb_send_byte(format_lenght);
