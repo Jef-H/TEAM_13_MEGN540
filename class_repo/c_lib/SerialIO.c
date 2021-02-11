@@ -445,7 +445,7 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
         //usb_send_byte(format_lenght);
        // usb_send_str(format);
       //  usb_send_byte(cmd);
-        usb_send_data(p_data, format_length);
+      //  usb_send_data(p_data, format_length);
 
     }
 
