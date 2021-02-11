@@ -259,13 +259,11 @@ void USB_Echo_Task(void) {
         //Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
 
         uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
-        uint8_t length = rb_length_C(&_usb_receive_buffer);
 
-        for (int i = length; i > 0; i--) {
+        for (int i = 0; i < rb_length_C(&_usb_receive_buffer); i++) {
             Endpoint_Write_8(rb_pop_front_C((&_usb_receive_buffer)));
             Endpoint_ClearIN();
             Endpoint_WaitUntilReady();
-            //length = rb_length_C(&_usb_receive_buffer);
         }
 
         /* Finalize the stream transfer to send the last packet */
