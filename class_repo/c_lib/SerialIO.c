@@ -119,6 +119,10 @@ void USB_SetupHardware(void)
 
     //_usb_receive_buffer =
 
+    rb_initialize_C(&_usb_receive_buffer);
+    rb_initialize_C(&_usb_send_buffer);
+
+
 }
 
 /** Event handler for the USB_Connect event. This indicates that the device is enumerating via the status LEDs and
@@ -229,7 +233,7 @@ void USB_Echo_Task(void)
 		Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
 		// add to buffer.
-        rb_push_back_C(_usb_receive_buffer->buffer, Buffer);
+        rb_push_back_C(&_usb_receive_buffer, Buffer);&
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearOUT();
@@ -237,9 +241,8 @@ void USB_Echo_Task(void)
 		/* Select the Serial Tx Endpoint */
 		Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
-
 		/* Write the received data to the endpoint */
-		Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
+		Endpoint_Write_Stream_LE(&_usb_receive_buffer, DataLength, NULL);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
@@ -283,7 +286,7 @@ void usb_read_next_byte()
         //Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
         Endpoint_Read_8();
         //Endpoint_ClearOUT();
-        rb_push_back_C(_usb_receive_buffer.buffer, Buffer);
+        rb_push_back_C(&_usb_receive_buffer, Buffer);
         // create an input buffer
 
         /* Finalize the stream transfer to send the last packet */
@@ -317,7 +320,7 @@ void usb_write_next_byte()
         //TODO see if this is right..
        // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
 
-        Endpoint_Write_8(_usb_receive_buffer.buffer);
+        Endpoint_Write_8(&_usb_receive_buffer);
 
         Endpoint_ClearIN();
         Endpoint_ClearIN();
@@ -334,7 +337,7 @@ void usb_send_byte(uint8_t byte)
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    rb_push_back_C(_usb_send_buffer.buffer, byte);
+    rb_push_back_C(&_usb_send_buffer, byte);
 
 }
 
@@ -349,7 +352,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // YOUR CODE HERE
     char* p_data_char = p_data;
     for (int i = 0; i < data_len; i++ ){
-        rb_push_back_C(_usb_send_buffer.buffer, p_data_char[i]);
+        rb_push_back_C(&_usb_send_buffer, p_data_char[i]);
     }
 }
 
@@ -365,7 +368,7 @@ void usb_send_str(char* p_str)
     // TODO. check this.
     char* sending = p_str;
     while (sending[i] != NULL){
-        rb_push_back_C(_usb_send_buffer.buffer, sending[i]);
+        rb_push_back_C(&_usb_send_buffer, sending[i]);
         i++;
     }
 
@@ -424,7 +427,7 @@ uint8_t usb_msg_length()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE'
-    uint8_t length = rb_length_C(_usb_receive_buffer.buffer);
+    uint8_t length = rb_length_C(&_usb_receive_buffer);
     return length;
 }
 
@@ -437,7 +440,7 @@ uint8_t usb_msg_peek()
     // *** MEGN540  ***
     // YOUR CODE HERE
     // use 0 because index 0 should giev us what's at the beginning of the buffer.
-    rb_get_C(_usb_receive_buffer.buffer,0);
+    rb_get_C(&_usb_receive_buffer,0);
     return 0;
 }
 
@@ -449,7 +452,7 @@ uint8_t usb_msg_get()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    uint8_t byte = rb_pop_front_C(_usb_receive_buffer.buffer);
+    uint8_t byte = rb_pop_front_C(&_usb_receive_buffer);
     return byte;
 }
 
