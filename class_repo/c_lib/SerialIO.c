@@ -230,7 +230,7 @@ void USB_Echo_Task(void)
 		/* Read in the incoming packet into the buffer */
 		//Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
-		Buffer = Endpoint_Read_8();
+		Buffer[0] = Endpoint_Read_8();
 
 		// add to buffer.
         rb_push_back_C(&_usb_receive_buffer, &Buffer);
