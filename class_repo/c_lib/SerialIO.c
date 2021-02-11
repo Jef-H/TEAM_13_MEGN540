@@ -236,6 +236,7 @@ void USB_Echo_Task(void)
 		    Buffer[i] = Endpoint_Read_8();
             rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
             Endpoint_ClearOUT();
+            Endpoint_WaitUntilReady();
 		}
 
 		// add to buffer.
@@ -257,6 +258,7 @@ void USB_Echo_Task(void)
         for ( int i = 0; i < 3; i++){
             Endpoint_Write_8(_usb_receive_buffer.buffer[i]);
             Endpoint_ClearIN();
+            Endpoint_WaitUntilReady();
         }
 
 		/* Finalize the stream transfer to send the last packet */
