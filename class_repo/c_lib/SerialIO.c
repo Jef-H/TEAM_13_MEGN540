@@ -276,7 +276,6 @@ void USB_Echo_Task(void)
 		/* Send an empty packet to prevent host buffering */
 		//Endpoint_ClearIN();
 	}
-}
 
 
 /**
