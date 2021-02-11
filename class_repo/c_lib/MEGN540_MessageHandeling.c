@@ -163,12 +163,6 @@ void Message_Handling_Task()
         case '*':
             if( usb_msg_length() >= MEGN540_Message_Len('*') )
             {
-                pin_init_red();
-                _delay_ms(1000);
-                pin_dark_red();
-                _delay_ms(1000);
-                pin_light_red();
-                _delay_ms(1000);
 
                 //then process your times...
                 // remove the command from the usb recieved buffer using the usb_msg_get() function
@@ -256,12 +250,21 @@ void Message_Handling_Task()
                 //then process your reset by setting the mf_restart flag
                 // TODO:
                //  mf_restart =
-               // MSG_FLAG_Init ( &mf_restart );
+               MSG_FLAG_Init ( &mf_restart );
                usb_flush_input_buffer();
             }
             break;
         default:
             // What to do if you dont recognize the command character
+
+            pin_init_red();
+            _delay_ms(1000);
+            pin_dark_red();
+            _delay_ms(1000);
+            pin_light_red();
+            _delay_ms(1000);
+
+
             break;
     }
 }
