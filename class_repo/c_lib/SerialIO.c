@@ -255,7 +255,7 @@ void USB_Echo_Task(void)
 
 	if(Endpoint_IsOUTReceived()){
 
-        usb_msg_read_into(&_usb_send_buffer, DataLength);
+        usb_msg_read_into(&_usb_send_buffer, rb_length_C(&_usb_send_buffer));
 
 		/* Write the received data to the endpoint */
 		//Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
