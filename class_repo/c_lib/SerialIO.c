@@ -233,7 +233,7 @@ void USB_Echo_Task(void)
 		Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
 		// add to buffer.
-        rb_push_back_C(&_usb_receive_buffer, Buffer);&
+        rb_push_back_C(&_usb_receive_buffer, Buffer);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearOUT();
