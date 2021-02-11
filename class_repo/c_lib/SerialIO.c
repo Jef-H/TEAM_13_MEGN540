@@ -243,7 +243,7 @@ void USB_Echo_Task(void)
 
 
 		/* Write the received data to the endpoint */
-		Endpoint_Write_8(_usb_receive_buffer.buffer);
+		Endpoint_Write_8(rb_get_C(_usb_receive_buffer,0));
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
