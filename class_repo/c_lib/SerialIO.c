@@ -232,7 +232,7 @@ void USB_Echo_Task(void)
 
 		//Buffer[0] = Endpoint_Read_8();
 
-		for ( int i = 0; i < DataLength; i++){
+		for ( int i = 0; i < 3; i++){
 		    Buffer[i] = Endpoint_Read_8();
             rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
             Endpoint_ClearOUT();
@@ -254,8 +254,8 @@ void USB_Echo_Task(void)
 
 		uint8_t  RB_MASK = rb_length_C(&_usb_receive_buffer) -1;
 
-        for ( int i = 0; i < rb_length_C(&_usb_receive_buffer); i++){
-            Endpoint_Write_8(_usb_receive_buffer.buffer[_usb_receive_buffer.start_index]);
+        for ( int i = 0; i < 3; i++){
+            Endpoint_Write_8(_usb_receive_buffer.buffer[i]);
             Endpoint_ClearIN();
         }
 
