@@ -65,6 +65,8 @@
 
 static struct Ring_Buffer_C _usb_receive_buffer;
 static struct Ring_Buffer_C _usb_send_buffer;
+rb_initialize_C(&_usb_receive_buffer);
+rb_initialize_C(&_usb_send_buffer);
 
 
 /** Contains the current baud rate and other settings of the first virtual serial port. While this demo does not use
@@ -91,8 +93,8 @@ void USB_Upkeep_Task()
     if (USB_DeviceState != DEVICE_STATE_Configured) {
         return;
     } else {
-      //  usb_read_next_byte();
-       // usb_write_next_byte();
+        usb_read_next_byte();
+        usb_write_next_byte();
         return;
     }
 }
@@ -117,10 +119,8 @@ void USB_SetupHardware(void)
 
     // Create the buffer structure and its underlying storage array
 
-    //_usb_receive_buffer =
-
-    rb_initialize_F(&_usb_receive_buffer);
-    rb_initialize_F(&_usb_send_buffer);
+    rb_initialize_C(&_usb_receive_buffer);
+    rb_initialize_C(&_usb_send_buffer);
 
 
 }
@@ -242,7 +242,7 @@ void USB_Echo_Task(void)
 		Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
 		/* Write the received data to the endpoint */
-		Endpoint_Write_Stream_LE(&_usb_receive_buffer, DataLength, NULL);
+		Endpoint_Write_8(&_usb_receive_buffer, DataLength, NULL);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
