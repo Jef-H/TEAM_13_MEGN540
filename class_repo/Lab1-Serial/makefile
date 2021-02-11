@@ -24,6 +24,7 @@ SRC = $(TARGET).c       \
 	$(MEGN_C_LIB_PATH)/Ring_Buffer.c		\
 	$(MEGN_C_LIB_PATH)/MEGN540_MessageHandeling.c\
 	$(MEGN_C_LIB_PATH)/USB_Config/Descriptors.c       \
+	$(MEGN_C_LIB_PATH)/USB_Config/Descriptors.c       \
 	$(LUFA_SRC_USB)
 
 # List C++ source files here. (C dependencies are automatically generated.)

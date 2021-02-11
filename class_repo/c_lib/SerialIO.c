@@ -276,7 +276,8 @@ void usb_read_next_byte()
 
         /* Read in the incoming packet into the buffer */
         //TODO: see if this is right.
-        Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
+        //Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
+        Endpoint_Read_8();
         //Endpoint_ClearOUT();
         rb_push_back_C(_usb_receive_buffer.buffer, Buffer);
         // create an input buffer
@@ -302,7 +303,7 @@ void usb_write_next_byte()
     /* Select the Serial Rx Endpoint */
     Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
-    if (Endpoint_IsOUTReceived())
+    if (Endpoint_IsOUTReceived()&& Endpoint_)
     {
 
         /* Remember how large the incoming packet is */
@@ -313,8 +314,10 @@ void usb_write_next_byte()
 
         /* Write the received data to the endpoint */
         //TODO see if this is right..
-        Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
+       // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, 0);
+        Endpoint_Write_8(_usb_receive_buffer.buffer);
 
+        Endpoint_ClearIN();
         Endpoint_ClearIN();
 
     }
