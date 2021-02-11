@@ -119,8 +119,8 @@ void USB_SetupHardware(void)
 
     //_usb_receive_buffer =
 
-    rb_initialize_C(&_usb_receive_buffer);
-    rb_initialize_C(&_usb_send_buffer);
+    rb_initialize_F(&_usb_receive_buffer);
+    rb_initialize_F(&_usb_send_buffer);
 
 
 }
