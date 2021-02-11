@@ -60,7 +60,7 @@ int main(void)
 
         USB_Upkeep_Task();
         // handle input
-        //Message_Handling_Task();
+        Message_Handling_Task();
 
 
         // Below here you'll process state-machine flags.
