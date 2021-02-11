@@ -212,8 +212,9 @@ void EVENT_USB_Device_ControlRequest(void)
 void USB_Echo_Task(void)
 {
 	/* Device must be connected and configured for the task to run */
-	if (USB_DeviceState != DEVICE_STATE_Configured)
-	  return;
+	if (USB_DeviceState != DEVICE_STATE_Configured) {
+        return;
+    }
 
 	/* Select the Serial Rx Endpoint */
 	Endpoint_SelectEndpoint(CDC_RX_EPADDR);
@@ -252,8 +253,6 @@ void USB_Echo_Task(void)
     }
 
 	Endpoint_SelectEndpoint(CDC_TX_EPADDR);
-
-	if(Endpoint_IsINReady()){
 
         usb_msg_read_into(&_usb_send_buffer, rb_length_C(&_usb_send_buffer));
 
