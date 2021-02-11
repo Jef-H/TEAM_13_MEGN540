@@ -241,8 +241,9 @@ void USB_Echo_Task(void)
 		/* Select the Serial Tx Endpoint */
 		Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
+
 		/* Write the received data to the endpoint */
-		Endpoint_Write_8(*_usb_receive_buffer);
+		Endpoint_Write_8(_usb_receive_buffer.start_index);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearIN();
@@ -505,7 +506,7 @@ void usb_flush_input_buffer()
 {
     // *** MEGN540  ***
     // YOUR CODE HERE
-    rb_initialize_C(_usb_receive_buffer.buffer);
+    rb_initialize_C(&_usb_receive_buffer);
     return;
 }
 
