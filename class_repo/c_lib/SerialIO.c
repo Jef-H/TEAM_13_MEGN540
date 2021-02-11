@@ -91,10 +91,10 @@ void USB_Upkeep_Task()
     if (USB_DeviceState != DEVICE_STATE_Configured) {
         return;
     } else {
-        usb_read_next_byte();
-        //usb_write_next_byte();
+      //  usb_read_next_byte();
+       // usb_write_next_byte();
+        return;
     }
-    return;
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
@@ -227,6 +227,9 @@ void USB_Echo_Task(void)
 
 		/* Read in the incoming packet into the buffer */
 		Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
+
+		// add to buffer.
+        rb_push_back_C(_usb_receive_buffer.buffer, Buffer);
 
 		/* Finalize the stream transfer to send the last packet */
 		Endpoint_ClearOUT();

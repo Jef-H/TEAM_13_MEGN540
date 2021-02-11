@@ -56,11 +56,11 @@ int main(void) {
 
     while (true) {
 
-        //USB_Upkeep_Task();
-       // USB_Echo_Task();
-        usb_read_next_byte();
+        USB_Upkeep_Task();
+        USB_Echo_Task();
+       // usb_read_next_byte();
        // Message_Handling_Task();
-        usb_write_next_byte();
+        //usb_write_next_byte();
 
         // handle input
         // Message_Handling_Task();
