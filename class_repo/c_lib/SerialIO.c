@@ -320,7 +320,8 @@ void usb_write_next_byte()
         /* Write the received data to the endpoint */
         //TODO see if this is right..
        // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
-        Endpoint_Write_8(&_usb_send_buffer[_usb_send_buffer.start_index]);
+        uint8_t index = _usb_send_buffer.start_index;
+        Endpoint_Write_8(_usb_send_buffer.buffer[index]);
 
         Endpoint_ClearIN();
         Endpoint_ClearIN();
