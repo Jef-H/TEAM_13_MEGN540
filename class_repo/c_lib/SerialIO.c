@@ -301,7 +301,7 @@ void usb_write_next_byte()
     // register level.
 
     /* Select the Serial Rx Endpoint */
-    Endpoint_SelectEndpoint(CDC_RX_EPADDR);
+    Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
     if (Endpoint_IsOUTReceived())
     {
@@ -309,12 +309,10 @@ void usb_write_next_byte()
         /* Remember how large the incoming packet is */
         uint16_t DataLength = Endpoint_BytesInEndpoint();
 
-        /* Select the Serial Tx Endpoint */
-        Endpoint_SelectEndpoint(CDC_TX_EPADDR);
-
         /* Write the received data to the endpoint */
         //TODO see if this is right..
-       // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, 0);
+       // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
+
         Endpoint_Write_8(_usb_receive_buffer.buffer);
 
         Endpoint_ClearIN();
