@@ -303,7 +303,7 @@ void usb_write_next_byte()
     /* Select the Serial Rx Endpoint */
     Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
-    if (Endpoint_IsOUTReceived()&& Endpoint_)
+    if (Endpoint_IsOUTReceived())
     {
 
         /* Remember how large the incoming packet is */
