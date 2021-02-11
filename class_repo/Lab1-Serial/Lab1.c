@@ -38,8 +38,7 @@
 /** Main program entry point. This routine configures the hardware required by the application, then
  *  enters a loop to run the application tasks in sequence.
  */
-int main(void)
-{
+int main(void) {
 
     // we want our car to do the following..
     // 1 read input
@@ -55,24 +54,24 @@ int main(void)
 
 
 
-    while( true )
-    {
+    while (true) {
 
         USB_Upkeep_Task();
         USB_Echo_Task();
 
         // handle input
-       // Message_Handling_Task();
+        // Message_Handling_Task();
         //usb_write_next_byte();
 
 
         // Below here you'll process state-machine flags.
-     //   if( MSG_FLAG_Execute( &mf_restart ) )
-     //   {
-            // re initialzie your stuff...
-    //        USB_SetupHardware();
-     //       GlobalInterruptEnable();
-     //       Message_Handling_Init();
-    //    }
-   // }
+        //   if( MSG_FLAG_Execute( &mf_restart ) )
+        //   {
+        // re initialzie your stuff...
+        //        USB_SetupHardware();
+        //       GlobalInterruptEnable();
+        //       Message_Handling_Init();
+        //    }
+        // }
+    }
 }
