@@ -90,7 +90,7 @@ void USB_Upkeep_Task()
     //TODO: maybe check if device is configured.
     if (USB_DeviceState != DEVICE_STATE_Configured) {
         return;
-    } else {
+    } else{
         usb_read_next_byte();
         usb_write_next_byte();
         return;
@@ -232,7 +232,7 @@ void USB_Echo_Task(void)
 
 		//Buffer[0] = Endpoint_Read_8();
 
-		for ( int i = 0; i < 9; i++){
+		for ( int i = 0; i < 3; i++){
 		    Buffer[i] = Endpoint_Read_8();
             rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
             Endpoint_ClearOUT();
@@ -289,14 +289,16 @@ void usb_read_next_byte()
     /* Select the Serial Rx Endpoint */
     Endpoint_SelectEndpoint(CDC_RX_EPADDR);
 
+    uint16_t DataLength = Endpoint_BytesInEndpoint();
+    uint16_t i = 0;
     /* Check to see if any data has been received */
-    if (Endpoint_IsOUTReceived())
+    if (Endpoint_IsOUTReceived()&&)
     {
         /* Create a temp buffer big enough to hold the incoming endpoint packet */
         uint8_t  Buffer[Endpoint_BytesInEndpoint()];
 
         /* Remember how large the incoming packet is */
-        uint16_t DataLength = Endpoint_BytesInEndpoint();
+        //uint16_t DataLength = Endpoint_BytesInEndpoint();
 
         /* Read in the incoming packet into the buffer */
         //TODO: see if this is right.
@@ -308,6 +310,7 @@ void usb_read_next_byte()
 
         /* Finalize the stream transfer to send the last packet */
         Endpoint_ClearOUT();
+        i++;
 
     }
 }
@@ -326,8 +329,10 @@ void usb_write_next_byte()
 
     /* Select the Serial Rx Endpoint */
     Endpoint_SelectEndpoint(CDC_TX_EPADDR);
+    uint16_t DataLength = Endpoint_BytesInEndpoint();
+    uint8_t i = 0;
 
-    if (Endpoint_IsOUTReceived())
+    if (Endpoint_IsINReady())
     {
 
         /* Remember how large the incoming packet is */
@@ -340,8 +345,8 @@ void usb_write_next_byte()
         Endpoint_Write_8(_usb_send_buffer.buffer[index]);
 
         Endpoint_ClearIN();
-        Endpoint_ClearIN();
-
+        //Endpoint_ClearIN();
+        i++;
     }
 
 }

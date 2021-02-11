@@ -56,9 +56,9 @@ int main(void) {
 
     while (true) {
 
-        USB_Echo_Task();
-        //USB_Upkeep_Task();
-        //Message_Handling_Task();
+        //USB_Echo_Task();
+        USB_Upkeep_Task();
+        Message_Handling_Task();
 
         // Below here you'll process state-machine flags.
            if( MSG_FLAG_Execute( &mf_restart ) )
