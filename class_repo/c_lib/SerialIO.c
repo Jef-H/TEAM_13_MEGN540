@@ -230,23 +230,37 @@ void USB_Echo_Task(void)
 		/* Read in the incoming packet into the buffer */
 		//Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
 
-		Buffer[0] = Endpoint_Read_8();
+		//Buffer[0] = Endpoint_Read_8();
+
+		for ( int i = 0; i < DataLength; i++){
+		    Buffer[i] = Endpoint_Read_8();
+            rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
+            Endpoint_ClearOUT();
+		}
 
 		// add to buffer.
-        rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
+        //rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
 
 		/* Finalize the stream transfer to send the last packet */
-		Endpoint_ClearOUT();
+		//Endpoint_ClearOUT();
 
 		/* Select the Serial Tx Endpoint */
 		Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
+        usb_msg_read_into(&_usb_send_buffer, DataLength);
 
 		/* Write the received data to the endpoint */
-		Endpoint_Write_8(_usb_receive_buffer.buffer[0]);
+		Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
+
+		uint8_t  RB_MASK = DataLength -1;
+
+        for ( int i = 0; i < DataLength; i++){
+            Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index + i &RB_MASK]);
+            Endpoint_ClearIN();
+        }
 
 		/* Finalize the stream transfer to send the last packet */
-		Endpoint_ClearIN();
+		//Endpoint_ClearIN();
 
 		/* Wait until the endpoint is ready for the next packet */
 		//Endpoint_WaitUntilReady();
