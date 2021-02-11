@@ -250,12 +250,12 @@ void USB_Echo_Task(void)
         usb_msg_read_into(&_usb_send_buffer, DataLength);
 
 		/* Write the received data to the endpoint */
-		Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
+		//Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
 
 		uint8_t  RB_MASK = DataLength -1;
 
         for ( int i = 0; i < DataLength; i++){
-            Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index + i &RB_MASK]);
+            Endpoint_Write_8(_usb_receive_buffer.buffer[i]);
             Endpoint_ClearIN();
         }
 
