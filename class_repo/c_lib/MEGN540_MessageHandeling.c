@@ -30,9 +30,6 @@
 
 #include "MEGN540_MessageHandeling.h"
 
-
-#define F_CPU 16000000L //Clock speed of Arduino 16 MHz
-
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -177,7 +174,7 @@ void Message_Handling_Task()
                 float ret_val = data.v1 * data.v2;
 
                 // send response right here if appropriate.
-                usb_send_msg('cf', command, &ret_val, sizeof(ret_val));
+                usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
             }
             break;
         case '/':
