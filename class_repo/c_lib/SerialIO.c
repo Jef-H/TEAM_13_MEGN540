@@ -88,7 +88,7 @@ void USB_Upkeep_Task()
     // *** MEGN540  ***
     // Get next byte from the USB hardware, send next byte to the USB hardware
     //TODO: maybe check if device is configured.
-   // if (USB_DeviceState != DEVICE_STATE_Configured) {
+  // if (USB_DeviceState != DEVICE_STATE_Configured) {
   //      return;
   //  } else{
         usb_read_next_byte();
@@ -445,7 +445,10 @@ void usb_send_str(char* p_str)
     while (sending[i] != NULL){
         rb_push_back_C(&_usb_send_buffer, sending[i]);
         i++;
+
     }
+    // add 0
+    rb_push_back_C(&_usb_send_buffer, 0);
 
 
 }
@@ -488,9 +491,9 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     // TODO: implement for loop to go through format string and add up appropriate values.
     // TODO: char* makes me think i'm only going to get one value. how do i iterate
 
-    // for each char in the format
-
-    for (char c = format; c; c=++format){
+    // for each char in the forma
+    //TODO: just count characters in format.
+  /*  for (char* c = format; c; c++){
         if (c == 'c'){
             format_length = format_length + 2;
         } else if ( c == 'f'){
@@ -498,9 +501,13 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
         } else {
             // we don't recognize that format.
         }
-    }
+    }*/
+    // TODO:
+        strlen(format); // number of charccters.
         // ????? is msg lenght right..?
         uint8_t msg_length = format_length + 1 + data_len;
+    
+
         usb_send_byte(msg_length);
         usb_send_str(format);
         usb_send_byte(cmd);
