@@ -373,7 +373,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // TODO is this right>?
     float* p_data_char = p_data;
     for (int i = 0; i < data_len; i++ ){
-        rb_push_back_F(&_usb_send_buffer, p_data_char[i]);
+        rb_push_back_C(&_usb_send_buffer, p_data_char[i]);
     }
 }
 
