@@ -62,7 +62,7 @@ int main(void) {
         }*/
         //usb_send_byte('c');
         //USB_Echo_Task();
-       /Message_Handling_Task();
+       Message_Handling_Task();
 
         // Below here you'll process state-machine flags.
            if( MSG_FLAG_Execute( &mf_restart ) )
