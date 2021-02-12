@@ -96,7 +96,7 @@ void rb_push_front_C( struct Ring_Buffer_C* p_buf, char value)
     // If the end equals the start decrement the end index
 
     //if (p_buf->end_index == p_buf->start_index) {
-    p_buf-> end_index = p_buf->end_index -1  & RB_MASK_C;
+    p_buf-> end_index = (p_buf->end_index -1)  & RB_MASK_C;
     // }
 
     // Set the value at the start index as desired.
@@ -112,7 +112,7 @@ float rb_pop_back_F( struct Ring_Buffer_F* p_buf)
     // if end does not equal start (length zero),
     if (p_buf->end_index != p_buf->start_index && rb_length_F!= 0){
         //    reduce end index by 1 and mask
-        p_buf-> end_index = p_buf->end_index -1  & RB_MASK_F;
+        p_buf-> end_index = (p_buf->end_index -1 ) & RB_MASK_F;
         // 	  return value at at end
         return p_buf->buffer[p_buf-> end_index];
     }  else {
@@ -125,7 +125,7 @@ char  rb_pop_back_C( struct Ring_Buffer_C* p_buf)
     // if end does not equal start (length zero),
     if (p_buf->end_index != p_buf->start_index && rb_length_C!= 0){
         //    reduce end index by 1 and mask
-        p_buf-> end_index = p_buf->end_index -1  & RB_MASK_C;
+        p_buf-> end_index = (p_buf->end_index -1)  & RB_MASK_C;
         // 	  return value at at end
         return p_buf->buffer[p_buf-> end_index];
     }  else {
@@ -142,7 +142,7 @@ float rb_pop_front_F( struct Ring_Buffer_F* p_buf)
         //    get value to return at front
         float value = p_buf->buffer[p_buf-> start_index];
         //    increase start index by 1 and mask
-        p_buf->start_index = p_buf->start_index +1  & RB_MASK_F;
+        p_buf->start_index = (p_buf->start_index +1)  & RB_MASK_F;
         //    return value
         return value;
     }
@@ -165,7 +165,7 @@ char  rb_pop_front_C( struct Ring_Buffer_C* p_buf)
         //    get value to return at front
         char value = p_buf->buffer[p_buf-> start_index];
         //    increase start index by 1 and mask
-        p_buf->start_index = p_buf->start_index +1  & RB_MASK_C;
+        p_buf->start_index = (p_buf->start_index +1)  & RB_MASK_C;
         return value;
     }
 

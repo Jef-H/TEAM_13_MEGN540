@@ -248,9 +248,6 @@ void USB_Echo_Task(void) {
         //Endpoint_ClearOUT();
 
         /* Select the Serial Tx Endpoint */
-
-
-
         Endpoint_SelectEndpoint(CDC_TX_EPADDR);
 
         usb_msg_read_into(&_usb_send_buffer, rb_length_C(&_usb_send_buffer));
@@ -371,7 +368,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // YOUR CODE HERE
     // Changed to float because the data is float after we process it.
     // TODO is this right>?
-    float* p_data_char = p_data;
+    char* p_data_char = p_data;
     for (int i = 0; i < data_len; i++ ){
         rb_push_back_C(&_usb_send_buffer, p_data_char[i]);
     }
