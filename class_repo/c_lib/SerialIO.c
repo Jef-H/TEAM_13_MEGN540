@@ -259,7 +259,7 @@ void USB_Echo_Task(void) {
         //Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
 
         uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
-
+        // TODO: do we need to mask? 
         for (int i = 0; i < rb_length_C(&_usb_receive_buffer); i++) {
             Endpoint_Write_8(rb_pop_front_C((&_usb_receive_buffer)));
             Endpoint_ClearIN();
@@ -439,8 +439,8 @@ void usb_send_str(char* p_str)
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-srtings are null terminated.
     uint8_t i = 0;
-    // TODO. check this.
     char* sending = p_str;
+    // TODO: should this be \0 or does null send the \0?
     while (sending[i] != NULL){
         rb_push_back_C(&_usb_send_buffer, sending[i]);
         i++;
@@ -472,6 +472,8 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-strings are null terminated. Use the above functions to help!
 
+    uint8_t format_length = 0;
+
     // FUNCTION BEGIN
     //  Calculate the length of the format string taking advantage of the null-termination (+1 for null termination)
     //  Calculate the total message length:  1 + format_length + data_len
@@ -481,26 +483,51 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     //      usb_send_byte <-- cmd
     //      usb_send_data <-- p_data
     // FUNCTION END
-    //TODO: what is format_len mentioned above??
-    // TODO fix hardcoded number
+
+    // TODO: implement for loop to go through format string and add up appropriate values.
+    // TODO: char* makes me think i'm only going to get one value. how do i iterate
+
+    // for each char in the format
+    /*
+    for (char c = format; c; c=++format){
+        if (c == 'c'){
+            format_length = format_lenght + 2;
+        } else if ( c == 'f'){
+            format_length = format_lenght + 4;
+        } else {
+            // we don't recognize that format.
+        }
+    }
+     */
+
+        // add that char's length to the total lenght
+        // f = 4
+        // c = 1
+
 
     if (format == 'f'){
-        uint8_t format_length = 9;
+        //TODO fix hardcoded. lenght
+        format_length = 9;
         uint8_t msg_length = format_length + 1 + data_len;
         //usb_send_byte(format_lenght);
        // usb_send_str(format);
       //  usb_send_byte(cmd);
-      //  usb_send_data(p_data, format_length);
+      // send all the data
+        usb_send_data(p_data, format_length);
+        return;
+
+    } else {
+
+
+        uint8_t format_length = sizeof(format);
+        uint8_t msg_length = format_length + 1 + data_len;
+        usb_send_byte(msg_length);
+        usb_send_str(format);
+        usb_send_byte(cmd);
+        usb_send_data(p_data, msg_length);
+        return;
 
     }
-
-
-    uint8_t format_length = sizeof(format);
-    uint8_t msg_length = format_length + 1 + data_len;
-    usb_send_byte(msg_length);
-    usb_send_str(format);
-    usb_send_byte(cmd);
-    usb_send_data(p_data, msg_length);
 
 
 
