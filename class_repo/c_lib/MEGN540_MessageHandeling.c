@@ -64,7 +64,6 @@ void pin_light_red(void){
     PORTB = (0<<PORTB5);
 }
 
-
 // Write functions
 void pin_init_yellow(void){
     // Specify the pin5 on portC (1<<DDB5) to out
@@ -120,9 +119,9 @@ void Message_Handling_Init()
     // state machine flags to control your main-loop state machine
 
     MSG_FLAG_Init( &mf_restart ); // needs to be initialized to the default values.
-   // MSG_FLAG_Init( &mf_loop_timer);
-   // MSG_FLAG_Init( &mf_time_float_send);
-   // MSG_FLAG_Init( &mf_send_time );
+    MSG_FLAG_Init( &mf_loop_timer);
+    MSG_FLAG_Init( &mf_time_float_send);
+    MSG_FLAG_Init( &mf_send_time );
 
 
     return;
@@ -266,10 +265,9 @@ void Message_Handling_Task()
 
 
                 usb_send_msg("cc", command, &ret_val, sizeof(ret_val));
-
-
-                MSG_FLAG_Init ( &mf_restart );
-                usb_flush_input_buffer();
+                mf_restart.active =true;
+                //MSG_FLAG_Init ( &mf_restart );
+                //usb_flush_input_buffer();
             }
             break;
         default:
@@ -283,7 +281,6 @@ void Message_Handling_Task()
             _delay_ms(1000);
             pin_dark_red();
             _delay_ms(1000);
-
 
             break;
     }
