@@ -180,7 +180,7 @@ void Message_Handling_Task()
                 // TODO: should this be null terminated?
                 //usb_send_msg('cf/0', command, &ret_val, sizeof(ret_val));
                 // send response right here if appropriate.
-                usb_send_msg('f', command, &ret_val, sizeof(ret_val));
+                usb_send_msg('cf', command, &ret_val, sizeof(ret_val));
             }
             break;
         case '/':
