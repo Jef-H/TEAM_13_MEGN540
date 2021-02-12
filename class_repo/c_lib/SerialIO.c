@@ -445,7 +445,6 @@ void usb_send_str(char* p_str)
     while (sending[i] != NULL){
         rb_push_back_C(&_usb_send_buffer, sending[i]);
         i++;
-
     }
     // add 0
     rb_push_back_C(&_usb_send_buffer, 0);
@@ -476,7 +475,7 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-strings are null terminated. Use the above functions to help!
 
-    uint8_t format_length = strlen(format) + 1; // 1 for null character
+        uint8_t format_length = strlen(format) + 1; // 1 for null character
 
     // FUNCTION BEGIN
     //  Calculate the length of the format string taking advantage of the null-termination (+1 for null termination)
@@ -487,23 +486,6 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     //      usb_send_byte <-- cmd
     //      usb_send_data <-- p_data
     // FUNCTION END
-
-    // TODO: implement for loop to go through format string and add up appropriate values.
-    // TODO: char* makes me think i'm only going to get one value. how do i iterate
-
-    // for each char in the forma
-    //TODO: just count characters in format.
-  /*  for (char* c = format; c; c++){
-        if (c == 'c'){
-            format_length = format_length + 2;
-        } else if ( c == 'f'){
-            format_length = format_length + 4;
-        } else {
-            // we don't recognize that format.
-        }
-    }*/
-    // TODO:
-        // ????? is msg lenght right..?
         uint8_t msg_length = format_length  + data_len + 1; //
 
         usb_send_byte(msg_length);
