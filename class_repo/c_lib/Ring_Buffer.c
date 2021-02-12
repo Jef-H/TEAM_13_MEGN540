@@ -49,12 +49,12 @@ void rb_push_back_F( struct Ring_Buffer_F* p_buf, float value) {
     p_buf->buffer[rb_length_F(p_buf)] = value;
 
     // Increment the end index and wrap using the mask.
-    p_buf->end_index = p_buf->end_index +1 & RB_MASK_F;
+    p_buf->end_index = (p_buf->end_index +1) & RB_MASK_F;
 
 
     // If the end equals the start increment the start index
     if (p_buf->end_index == p_buf->start_index) {
-        p_buf->start_index = p_buf->start_index + 1 & RB_MASK_F;
+        p_buf->start_index = (p_buf->start_index + 1) & RB_MASK_F;
     }
 }
 void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
@@ -66,7 +66,7 @@ void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
 
     // If the end equals the start increment the start index
     if (p_buf->end_index == p_buf->start_index) {
-         p_buf-> start_index = p_buf->start_index +1  & RB_MASK_C;
+         p_buf-> start_index = (p_buf->start_index +1)  & RB_MASK_C;
     }
 
 
@@ -76,11 +76,11 @@ void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
 void rb_push_front_F( struct Ring_Buffer_F* p_buf, float value)
 {
     // Decrement the start index and wrap using the mask.
-    p_buf-> start_index = p_buf->start_index -1  & RB_MASK_F;
+    p_buf-> start_index = (p_buf->start_index -1)  & RB_MASK_F;
     // If the end equals the start decrement the end index
 
     //if (p_buf->end_index == p_buf->start_index) {
-    p_buf-> end_index = p_buf->end_index -1  & RB_MASK_F;
+    p_buf-> end_index = (p_buf->end_index -1 ) & RB_MASK_F;
    // }
 
     // Set the value at the start index as desired.
@@ -92,7 +92,7 @@ void rb_push_front_F( struct Ring_Buffer_F* p_buf, float value)
 void rb_push_front_C( struct Ring_Buffer_C* p_buf, char value)
 {
     // Decrement the start index and wrap using the mask.
-    p_buf-> start_index = p_buf->start_index -1  & RB_MASK_C;
+    p_buf-> start_index = (p_buf->start_index -1)  & RB_MASK_C;
     // If the end equals the start decrement the end index
 
     //if (p_buf->end_index == p_buf->start_index) {
