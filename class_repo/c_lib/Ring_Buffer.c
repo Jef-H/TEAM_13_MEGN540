@@ -110,7 +110,7 @@ void rb_push_front_C( struct Ring_Buffer_C* p_buf, char value)
 float rb_pop_back_F( struct Ring_Buffer_F* p_buf)
 {
     // if end does not equal start (length zero),
-    if (p_buf->end_index != p_buf->start_index && rb_length_F!= 0){
+    if (p_buf->end_index != p_buf->start_index){
         //    reduce end index by 1 and mask
         p_buf-> end_index = (p_buf->end_index -1 ) & RB_MASK_F;
         // 	  return value at at end
@@ -123,7 +123,7 @@ float rb_pop_back_F( struct Ring_Buffer_F* p_buf)
 char  rb_pop_back_C( struct Ring_Buffer_C* p_buf)
 {
     // if end does not equal start (length zero),
-    if (p_buf->end_index != p_buf->start_index && rb_length_C!= 0){
+    if (p_buf->end_index != p_buf->start_index){
         //    reduce end index by 1 and mask
         p_buf-> end_index = (p_buf->end_index -1)  & RB_MASK_C;
         // 	  return value at at end
@@ -138,7 +138,7 @@ char  rb_pop_back_C( struct Ring_Buffer_C* p_buf)
 float rb_pop_front_F( struct Ring_Buffer_F* p_buf)
 {
     // if end does not equal start (length zero),
-    if (p_buf->end_index != p_buf->start_index && rb_length_F!= 0 ) {
+    if (p_buf->end_index != p_buf->start_index) {
         //    get value to return at front
         float value = p_buf->buffer[p_buf-> start_index];
         //    increase start index by 1 and mask
@@ -161,7 +161,7 @@ char  rb_pop_front_C( struct Ring_Buffer_C* p_buf)
     // else return zero if length of list is zero
 
     // if end does not equal start (length zero),
-    if (p_buf->end_index != p_buf->start_index && rb_length_C!= 0) {
+    if (p_buf->end_index != p_buf->start_index) {
         //    get value to return at front
         char value = p_buf->buffer[p_buf-> start_index];
         //    increase start index by 1 and mask
