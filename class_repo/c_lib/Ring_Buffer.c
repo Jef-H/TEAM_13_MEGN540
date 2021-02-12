@@ -60,7 +60,7 @@ void rb_push_back_F( struct Ring_Buffer_F* p_buf, float value) {
 void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
 {
     // Put data at index end
-    p_buf->buffer[rb_length_C(p_buf)]= value;
+    p_buf->buffer[p_buf->end_index]= value;
     // Increment the end index and wrap using the mask.
     p_buf-> end_index = (p_buf->end_index +1)  & RB_MASK_C;
 
