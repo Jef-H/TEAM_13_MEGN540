@@ -55,7 +55,12 @@ int main(void) {
 
         //USB_Echo_Task();
         USB_Upkeep_Task();
-        usb_send_byte('c');
+
+        //EHCHOOOO
+        if( usb_msg_length()){
+            usb_send_byte(usb_msg_get());
+        }
+        //usb_send_byte('c');
         //USB_Echo_Task();
       /*  Message_Handling_Task();
 
