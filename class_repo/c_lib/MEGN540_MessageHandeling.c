@@ -176,7 +176,6 @@ void Message_Handling_Task()
                 // Do the thing you need to do. Here we want to multiply
                 float ret_val = data.v1 * data.v2;
 
-
                 // send response right here if appropriate.
                 usb_send_msg('cf', command, &ret_val, sizeof(ret_val));
             }

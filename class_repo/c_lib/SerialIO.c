@@ -290,35 +290,6 @@ void usb_read_next_byte()
     // how the function above is working then interact at a slightly lower level, but still higher than
     // register level.
 
-//      OUR CODE BELOW
-//    /* Select the Serial Rx Endpoint */
-//    Endpoint_SelectEndpoint(CDC_RX_EPADDR);
-//
-//    uint16_t DataLength = Endpoint_BytesInEndpoint();
-//    uint16_t i = 0;
-//    /* Check to see if any data has been received */
-//    if (Endpoint_IsOUTReceived())
-//    {
-//        /* Create a temp buffer big enough to hold the incoming endpoint packet */
-//        uint8_t  Buffer[Endpoint_BytesInEndpoint()];
-//
-//        /* Remember how large the incoming packet is */
-//        //uint16_t DataLength = Endpoint_BytesInEndpoint();
-//
-//        /* Read in the incoming packet into the buffer */
-//        //TODO: see if this is right.
-//        //Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
-//        Buffer[0] = Endpoint_Read_8();
-//        //Endpoint_ClearOUT();
-//        rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
-//        // create an input buffer
-//
-//        /* Finalize the stream transfer to send the last packet */
-//        Endpoint_ClearOUT();
-//        Endpoint_WaitUntilReady();
-//        i++;
-//
-//    }
 
 // PROVIDED CODE
 
@@ -349,31 +320,6 @@ void usb_write_next_byte()
     // will need to adjust to make it non blocking. You'll need to dig into the library to understand
     // how the function above is working then interact at a slightly lower level, but still higher than
     // register level.
-
-// OUR CODE BELOW
-//    /* Select the Serial Rx Endpoint */
-//    Endpoint_SelectEndpoint(CDC_TX_EPADDR);
-//    uint16_t DataLength = Endpoint_BytesInEndpoint();
-//    uint8_t i = 0;
-//
-//    if (Endpoint_IsOUTReceived())
-//    {
-//
-//        /* Remember how large the incoming packet is */
-//        uint16_t DataLength = Endpoint_BytesInEndpoint();
-//
-//        /* Write the received data to the endpoint */
-//        //TODO see if this is right..
-//       // Endpoint_Write_Stream_LE(_usb_receive_buffer.buffer, DataLength, NULL);
-//        uint8_t index = _usb_send_buffer.start_index;
-//        Endpoint_Write_8(_usb_send_buffer.buffer[index]);
-//
-//        Endpoint_ClearIN();
-//        Endpoint_WaitUntilReady();
-//        //Endpoint_ClearIN();
-//        i++;
-//    }
-
 // PROVIDED CODE
 /* Device must be connected and configured for the task to run */
     if (USB_DeviceState != DEVICE_STATE_Configured)
@@ -516,8 +462,7 @@ uint8_t usb_msg_peek()
     // *** MEGN540  ***
     // YOUR CODE HERE
     // use 0 because index 0 should giev us what's at the beginning of the buffer.
-    rb_get_C(&_usb_receive_buffer,_usb_receive_buffer.start_index);
-    return 0;
+    return rb_get_C(&_usb_receive_buffer,0);
 }
 
 /**
