@@ -1,1 +1,1 @@
-CMakeLists.txt not found in /Users/jacobgolson/CLionProjects/TEAM_13_MEGN540 Select CMakeLists.txt
+CMakeLists.txt not found in /Users/Buffalo/CLionProjects/MEGN540 Select CMakeLists.txt
