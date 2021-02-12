@@ -255,7 +255,7 @@ void USB_Echo_Task(void) {
         /* Write the received data to the endpoint */
         //Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
 
-        uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
+        // uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
         // TODO: do we need to mask?
         for (int i = 0; i < rb_length_C(&_usb_receive_buffer); i++) {
             Endpoint_Write_8(rb_pop_front_C((&_usb_receive_buffer)));
@@ -383,10 +383,10 @@ void usb_send_str(char* p_str)
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-srtings are null terminated.
     uint8_t i = 0;
-    char* sending = p_str;
+   // char* sending = p_str;
     // TODO: should this be \0 or does null send the \0?
-    while (sending[i] != NULL){
-        rb_push_back_C(&_usb_send_buffer, sending[i]);
+    while (p_str[i] != 0){
+        rb_push_back_C(&_usb_send_buffer, p_str[i]);
         i++;
     }
     // add 0
