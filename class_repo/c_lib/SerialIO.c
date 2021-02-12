@@ -476,7 +476,7 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-strings are null terminated. Use the above functions to help!
 
-    uint8_t format_length = 0;
+    uint8_t format_length = strlen(format) + 1; // 1 for null character
 
     // FUNCTION BEGIN
     //  Calculate the length of the format string taking advantage of the null-termination (+1 for null termination)
@@ -503,15 +503,13 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
         }
     }*/
     // TODO:
-        strlen(format); // number of charccters.
         // ????? is msg lenght right..?
-        uint8_t msg_length = format_length + 1 + data_len;
-    
+        uint8_t msg_length = format_length  + data_len + 1; //
 
         usb_send_byte(msg_length);
-        usb_send_str(format);
-        usb_send_byte(cmd);
-        usb_send_data(p_data, msg_length);
+        usb_send_str(format); // needs 0
+        usb_send_byte(cmd); // this is where the plus 1 is coming from..
+        usb_send_data(p_data, data_len);
         return;
 
     }
@@ -587,7 +585,7 @@ bool usb_msg_read_into(void* p_obj, uint8_t data_len) {
         return false;
     } else {
         for (int i = 0; i < data_len; i++) {
-            p_obj_char[i] = 'a';
+            p_obj_char[i] = rb_pop_front_C(&_usb_receive_buffer);
         }
         return true;
     }
