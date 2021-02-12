@@ -62,7 +62,7 @@ void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
     // Put data at index end
     p_buf->buffer[rb_length_C(p_buf)]= value;
     // Increment the end index and wrap using the mask.
-    p_buf-> end_index = p_buf->end_index +1  & RB_MASK_C;
+    p_buf-> end_index = (p_buf->end_index +1)  & RB_MASK_C;
 
     // If the end equals the start increment the start index
     if (p_buf->end_index == p_buf->start_index) {
