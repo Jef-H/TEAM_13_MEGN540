@@ -424,6 +424,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // *** MEGN540  ***
     // YOUR CODE HERE
     // Changed to float because the data is float after we process it.
+    // TODO is this right>?
     float* p_data_char = p_data;
     for (int i = 0; i < data_len; i++ ){
         rb_push_back_F(&_usb_send_buffer, p_data_char[i]);
@@ -488,38 +489,17 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     // TODO: char* makes me think i'm only going to get one value. how do i iterate
 
     // for each char in the format
-    /*
+
     for (char c = format; c; c=++format){
         if (c == 'c'){
-            format_length = format_lenght + 2;
+            format_length = format_length + 2;
         } else if ( c == 'f'){
-            format_length = format_lenght + 4;
+            format_length = format_length + 4;
         } else {
             // we don't recognize that format.
         }
     }
-     */
-
-        // add that char's length to the total lenght
-        // f = 4
-        // c = 1
-
-
-    if (format == 'f'){
-        //TODO fix hardcoded. lenght
-        format_length = 9;
-        uint8_t msg_length = format_length + 1 + data_len;
-        //usb_send_byte(format_lenght);
-       // usb_send_str(format);
-      //  usb_send_byte(cmd);
-      // send all the data
-        usb_send_data(p_data, format_length);
-        return;
-
-    } else {
-
-
-        uint8_t format_length = sizeof(format);
+        // ????? is msg lenght right..?
         uint8_t msg_length = format_length + 1 + data_len;
         usb_send_byte(msg_length);
         usb_send_str(format);
