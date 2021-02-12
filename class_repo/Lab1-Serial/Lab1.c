@@ -66,6 +66,6 @@ int main(void) {
                USB_SetupHardware();
                GlobalInterruptEnable();
                Message_Handling_Init();
-            }
-         }*/
+            }*/
+         }
     }
