@@ -508,13 +508,6 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
         return;
 
     }
-
-
-
-    return;
-
-}
-
 /**
  * (non-blocking) Funtion usb_msg_length returns the number of bytes in the receive buffer awaiting processing.
  * @return [uint8_t] Number of bytes ready for processing.
