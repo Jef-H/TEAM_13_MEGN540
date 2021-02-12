@@ -57,12 +57,12 @@ int main(void) {
         USB_Upkeep_Task();
 
         //EHCHOOOO
-        if( usb_msg_length()){
+       /* if( usb_msg_length()){
             usb_send_byte(usb_msg_get());
-        }
+        }*/
         //usb_send_byte('c');
         //USB_Echo_Task();
-       /* Message_Handling_Task();
+       /Message_Handling_Task();
 
         // Below here you'll process state-machine flags.
            if( MSG_FLAG_Execute( &mf_restart ) )
@@ -71,6 +71,6 @@ int main(void) {
                USB_SetupHardware();
                GlobalInterruptEnable();
                Message_Handling_Init();
-            }*/
+            }
          }
     }
