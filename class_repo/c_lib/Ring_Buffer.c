@@ -4,7 +4,7 @@
 // define constant masks for use later based on length chosen
 // these are global scope only to this c file
 const uint8_t RB_MASK_F = RB_LENGTH_F-1;
-const uint8_t RB_MASK_C = RB_LENGTH_C-1; 
+const uint8_t RB_MASK_C = RB_LENGTH_C-1;
 
 
 /* Initialization */
@@ -46,7 +46,7 @@ uint8_t rb_length_C( const struct Ring_Buffer_C* p_buf)
 void rb_push_back_F( struct Ring_Buffer_F* p_buf, float value) {
 
     // Put data at index end
-    p_buf->buffer[rb_length_F(p_buf)] = value;
+    p_buf->buffer[p_buf->end_index] = value;
 
     // Increment the end index and wrap using the mask.
     p_buf->end_index = (p_buf->end_index +1) & RB_MASK_F;
@@ -66,7 +66,7 @@ void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
 
     // If the end equals the start increment the start index
     if (p_buf->end_index == p_buf->start_index) {
-         p_buf-> start_index = (p_buf->start_index +1)  & RB_MASK_C;
+        p_buf-> start_index = (p_buf->start_index +1)  & RB_MASK_C;
     }
 
 
@@ -81,7 +81,7 @@ void rb_push_front_F( struct Ring_Buffer_F* p_buf, float value)
 
     //if (p_buf->end_index == p_buf->start_index) {
     p_buf-> end_index = (p_buf->end_index -1 ) & RB_MASK_F;
-   // }
+    // }
 
     // Set the value at the start index as desired.
     p_buf->buffer[p_buf-> start_index] = value;
@@ -189,7 +189,7 @@ char  rb_get_C( const struct Ring_Buffer_C* p_buf, uint8_t index)
     return value;
 }
 
-/* set element - This behavior is 
+/* set element - This behavior is
    poorly defined if inedex is outside of active length.
    Use of the push_back or push_front methods are prefered.
 */
