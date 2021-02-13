@@ -82,14 +82,10 @@ void pin_dark_yellow(void){
 
 static inline void MSG_FLAG_Init(MSG_FLAG_t* p_flag)
 {
-    if ( p_flag->active == false){
-        p_flag->duration = -1;
-        p_flag->last_trigger_time.millisec=0;
-        p_flag->last_trigger_time.microsec=0;
-        return true;
-    } else {
-        return false;
-    }
+    p_flag->active = false;
+    p_flag->duration = -1;
+    p_flag->last_trigger_time.millisec=0;
+    p_flag->last_trigger_time.microsec=0;
 
 }
 
@@ -265,6 +261,7 @@ void Message_Handling_Task() {
                     char *error_char = "~";
                     usb_send_msg("c", command, error_char, 1);
                     mf_restart.active = true;
+
                 }
                 break;
             default:
