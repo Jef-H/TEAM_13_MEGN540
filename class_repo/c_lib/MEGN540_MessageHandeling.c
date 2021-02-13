@@ -259,7 +259,7 @@ void Message_Handling_Task() {
                     //MSG_FLAG_Init ( &mf_restart );
                     //usb_flush_input_buffer();]
                     char *error_char = '~';
-                    usb_send_msg("c", command, error_char, sizeof(error_char)
+                    usb_send_msg("c", command, error_char, sizeof(error_char);
                 }
                 break;
             default:
