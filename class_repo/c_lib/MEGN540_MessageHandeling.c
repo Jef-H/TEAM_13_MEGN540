@@ -82,10 +82,14 @@ void pin_dark_yellow(void){
 
 static inline void MSG_FLAG_Init(MSG_FLAG_t* p_flag)
 {
-    p_flag->active = false;
-    p_flag->duration = -1;
-    p_flag->last_trigger_time.millisec=0;
-    p_flag->last_trigger_time.microsec=0;
+    if ( p_flag->active == false){
+        p_flag->duration = -1;
+        p_flag->last_trigger_time.millisec=0;
+        p_flag->last_trigger_time.microsec=0;
+        return true;
+    } else {
+        return false;
+    }
 
 }
 
@@ -259,18 +263,18 @@ void Message_Handling_Task() {
                     //MSG_FLAG_Init ( &mf_restart );
                     //usb_flush_input_buffer();]
                     char *error_char = "~";
-                    usb_send_msg("c", command, error_char, sizeof(error_char));
+                    usb_send_msg("c", command, error_char, 1);
+                    mf_restart.active = true;
                 }
                 break;
             default:
                 // What to do if you dont recognize the command character
-                // cry myself to sleep.
-                pin_init_red();
-                pin_dark_red();
+                // light show!
+                pin_init_yellow();
                 _delay_ms(1000);
-                pin_light_red();
+                pin_dark_yellow();
                 _delay_ms(1000);
-                pin_dark_red();
+                pin_light_yellow();
                 _delay_ms(1000);
 
                 break;
