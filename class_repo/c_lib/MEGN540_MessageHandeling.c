@@ -120,7 +120,6 @@ void Message_Handling_Init()
     MSG_FLAG_Init( &mf_time_float_send);
     MSG_FLAG_Init( &mf_send_time );
 
-
     return;
 }
 

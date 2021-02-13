@@ -29,25 +29,26 @@
     SOFTWARE.
 
 '''
+# GUI IMPORTS
 import tkinter
 from tkinter import filedialog
 from tkinter import *
 
-import queue
+# FOR THREADING AND MUTEX PROTECTION (used in serial interface primarily) 
 from threading import Thread, Lock
-import serial
-import time
-import collections
-import matplotlib.pyplot as plt
+import collections  # FOR DEQUEUE USED IN DATA STORAGE AND CALLBACK QUEUES
+
+# FOR SERIAL COMMUNICATIONS
+import serial # FOR SERIAL INTERFACE
+import struct # FOR BINARY DATA INTERFACING
+import time   # FOR TIME STAMPING DATA
+
+
+
+# FOR REALTIME PLOT
+import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
-
-import struct
-import csv
-import pandas as pd
-from array import *
-
 from matplotlib.backends.backend_tkagg import(FigureCanvasTkAgg,NavigationToolbar2Tk)
-from matplotlib.figure import Figure
 
 
 class SerialData:
@@ -58,6 +59,7 @@ class SerialData:
         self.thread = None
         self.callbackfunction = collections.deque()
         self.callback_list_mutex = Lock()
+        self.serial_read_write_mutex = Lock()
         self.port = None
         self.baud = None
         self.serialConnection = None
@@ -178,14 +180,23 @@ class SerialData:
             try:
                 if self.defined_data_mode and self.serialConnection.in_waiting >= self.dataNumBytes and self.dataNumBytes > 0:
                     self.rawData = bytearray(self.dataNumBytes)
-                    self.serialConnection.readinto(self.rawData)
+                    self.serial_read_write_mutex.acquire()
+                    try:
+                        self.serialConnection.readinto(self.rawData)
+                    finally:
+                        self.serial_read_write_mutex.release()
                     self.parseData()
                 
                 elif (not self.defined_data_mode) and self.serialConnection.in_waiting and  self.dataNumBytes == -1:
                     self.dataNumBytes = struct.unpack('b',self.serialConnection.read(1))[0]
                 
                 elif (not self.defined_data_mode) and self.serialConnection.in_waiting >= self.dataNumBytes and self.dataNumBytes > 0 :
-                    tmp = self.serialConnection.read(1)
+                    self.serial_read_write_mutex.acquire()
+                    try:
+                        tmp = self.serialConnection.read(1)
+                    finally:
+                        self.serial_read_write_mutex.release()
+                    
                     self.dataNumBytes -= 1
                     tmp_uchar = struct.unpack('b',tmp)[0]
                     
@@ -207,7 +218,11 @@ class SerialData:
                         if struct.calcsize(self.dataFormat) == self.dataNumBytes:
                             # all is as expected
                             self.rawData = bytearray(self.dataNumBytes)
-                            self.serialConnection.readinto(self.rawData)
+                            self.serial_read_write_mutex.acquire()
+                            try:
+                                self.serialConnection.readinto(self.rawData)
+                            finally:
+                                self.serial_read_write_mutex.release()
                             self.parseData()
                         self.dataNumBytes = -1
                         self.dataFormat = "<"
@@ -216,7 +231,7 @@ class SerialData:
                     self.dataNumBytes = -1
                 
                 else:
-                    time.sleep(0.005) # recheck serial every 5ms
+                    time.sleep(0.001) # recheck serial every 5ms
                     
                         
             
@@ -262,7 +277,11 @@ class SerialData:
             
         if self.isConnected():    
             if self.serialConnection:
-                self.serialConnection.write(msg)
+                self.serial_read_write_mutex.acquire()
+                try:
+                    self.serialConnection.write(msg)
+                finally:
+                    self.serial_read_write_mutex.release()
                 return True, None
             else:
                 return (False, 'Port Not Writeable')
@@ -297,8 +316,8 @@ class SerialData:
 
 class RecordData:
     def __init__(self):
-        self.csvData = []
-        self.csvTime = []
+        self.csvData = collections.deque(maxlen=100000)
+        self.csvTime = collections.deque(maxlen=100000)
         self.is_recording = False
 
     def startRecording(self):
@@ -337,7 +356,7 @@ class RecordData:
 
 
 class RealTimePlot():
-    def __init__(self, plotLength=500, refreshTime=30):
+    def __init__(self, plotLength=500, refreshTime=10):
                
         self.gui_main = None       
         self.window = None
@@ -374,6 +393,8 @@ class RealTimePlot():
             if self.plotTimer > 1:
                 self.previousTimer = currentTimer
                 self.timeText.set_text('Plot Interval = ' + str(self.plotTimer) + 'ms')
+        else:
+            return
        
         valueLast = []
 
@@ -381,12 +402,16 @@ class RealTimePlot():
 
         while len(self.times_queue):
             try:
-                valueLast = self.values_queue.popleft()[self.input_index]
+                valueLast = self.values_queue[-1][self.input_index]
+                time_val = self.times_queue[-1]
                 valueLast = float(valueLast) # make sure its a number
                 self.data.append(valueLast)  # latest data point and append it to array
-                self.times.append(self.times_queue.popleft())                          
+                self.times.append(time_val)
+                self.values_queue.clear()
+                self.times_queue.clear()
             except:
                 break
+        
 
         self.data_mutex.release()
         
@@ -446,16 +471,10 @@ class RealTimePlot():
         self.timeText = self.ax.text(0.50, 0.95, '', transform=self.ax.transAxes)
         self.lines = self.ax.plot([], [], label=self.lineLabel)[0]
         self.lineValueText = self.ax.text(0.50, 0.90, '', transform=self.ax.transAxes)
-         
-
-        
+  
+        # START THE PLOT ANIMATION
         self.anim = animation.FuncAnimation(self.fig, self.updatePlotData, interval=self.pltInterval)
-        #self.lineLabel = 'Sensor Value'
-        #self.timeText = self.ax.text(0.50, 0.95, '', transform=self.ax.transAxes)
-        #self.lines = self.ax.plot([], [], label=self.lineLabel)[0]
-        #self.lineValueText = self.ax.text(0.50, 0.90, '', transform=self.ax.transAxes)
         
-        self.updatePlotData()
     
     def isOk(self):
         return self.anim is not None
@@ -480,46 +499,4 @@ class RealTimePlot():
             self.window.protocol("WM_DELETE_WINDOW", self.close)
             self.gui_main = main
         self.setupPlot()
-#            self.isRunning = True
-#            self.thread = Thread(target=self.updatePlotData)
-#            self.thread.start()
-            #self.p = multiprocessing.Process(target=self.setupPlot)
-            #self.p.start()
-            
-        #self.q = multiprocessing.Queue(maxsize=2)
-        #self.p = multiprocessing.Process(target=self.backgroundThread)
-        #self.p.start()
 
-
-#def printMe(value):
-#    print("value is: " + str(value))
-#
-#
-#def main():
-#    portName = 'COM5'
-#    baudRate = 9600
-#
-#    # 4 bytes in 1 data point
-#    s = SerialData()
-#    s.openPort(portName, baudRate)
-#    # s.registerCallback(printMe)
-#
-#    p = RealTimePlot()
-#    s.registerCallback(p.addValue)
-#    p.Start()
-#
-#    r = RecordData()
-#    s.registerCallback(r.addData)
-#    r.startRecording()
-#    time.sleep(10)
-#    r.stopRecording()
-#
-#    s.close()
-#
-#    r.saveData()
-#
-#    p.close()
-#
-#
-#if __name__ == '__main__':
-#    main()
