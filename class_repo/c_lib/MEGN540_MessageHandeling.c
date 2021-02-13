@@ -129,8 +129,7 @@ void Message_Handling_Init()
  * It returns true unless the program receives a reset message.
  * @return
  */
-void Message_Handling_Task()
-{
+void Message_Handling_Task() {
     // *** MEGN540  ***
     // YOUR CODE HERE. I suggest you use your peak function and a switch interface
     // Either do the simple stuff strait up, set flags to have it done later.
@@ -138,147 +137,143 @@ void Message_Handling_Task()
     // set a flag to have it done here.
 
     // Check to see if their is data in waiting
-    if( !usb_msg_length() )
+    if (usb_msg_length() == 0) {
         return; // nothing to process...
+    } else {
 
-    // Get Your command designator without removal so if their are not enough bytes yet, the command persists
-    char command = usb_msg_peek();
+        // Get Your command designator without removal so if their are not enough bytes yet, the command persists
+        char command = usb_msg_peek();
 
-    pin_init_yellow();
-    _delay_ms(1000);
-    pin_dark_yellow();
-    _delay_ms(1000);
-    pin_light_yellow();
-    _delay_ms(1000);
- 
-
-
-    // process command
-    switch( command )
-    {
-        case '*':
-            if( usb_msg_length() >= MEGN540_Message_Len('*') )
-            {
-
-                //then process your times...
-                // remove the command from the usb recieved buffer using the usb_msg_get() function
-                usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
-
-                // Build a meaningful structure to put your data in. Here we want two floats.
-                struct __attribute__((__packed__)) { float v1; float v2; } data;
-
-                // Copy the bytes from the usb receive buffer into our structure so we can use the information
-                usb_msg_read_into( &data, sizeof(data) );
-
-                // Do the thing you need to do. Here we want to multiply
-                float ret_val = data.v1 * data.v2;
-
-                // send response right here if appropriate.
-                usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
-            }
-            break;
-        case '/':
-            if( usb_msg_length() >= MEGN540_Message_Len('/') )
-            {
-                //then process your divide...
-
-                // remove the command from the usb recieved buffer using the usb_msg_get() function
-                usb_msg_get(); // removes the first character from the received buffer, we already know it was a /
-
-                // Build a meaningful structure to put your data in. Here we want two floats.
-                struct __attribute__((__packed__)) { float v1; float v2; } data;
-
-                // Copy the bytes from the usb receive buffer into our structure so we can use the information
-                usb_msg_read_into( &data, sizeof(data) );
-
-                // Do the thing you need to do. Here we want to multiply
-                float ret_val = data.v1 / data.v2;
-
-                // send response right here if appropriate.
-                usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
+        pin_init_yellow();
+        _delay_ms(1000);
+        pin_dark_yellow();
+        _delay_ms(1000);
+        pin_light_yellow();
+        _delay_ms(1000);
 
 
-            }
-            break;
-        case '+':
-            if( usb_msg_length() >= MEGN540_Message_Len('+') )
-            {
-                //then process your plus...
-                // remove the command from the usb recieved buffer using the usb_msg_get() function
-                usb_msg_get(); // removes the first character from the received buffer, we already know it was a +
 
-                // Build a meaningful structure to put your data in. Here we want two floats.
-                struct __attribute__((__packed__)) { float v1; float v2; } data;
+        // process command
+        switch (command) {
+            case '*':
+                if (usb_msg_length() >= MEGN540_Message_Len('*')) {
 
-                // Copy the bytes from the usb receive buffer into our structure so we can use the information
-                usb_msg_read_into( &data, sizeof(data) );
+                    //then process your times...
+                    // remove the command from the usb recieved buffer using the usb_msg_get() function
+                    usb_msg_get(); // removes the first character from the received buffer, we already know it was a * so no need to save it as a variable
 
-                // Do the thing you need to do. Here we want to multiply
-                float ret_val = data.v1 + data.v2;
+                    // Build a meaningful structure to put your data in. Here we want two floats.
+                    struct __attribute__((__packed__)) {
+                        float v1;
+                        float v2;
+                    } data;
 
-                // send response right here if appropriate.
-                usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
-            }
-            break;
-        case '-':
-            if( usb_msg_length() >= MEGN540_Message_Len('-') )
-            {
-                //then process your minus...
-                // remove the command from the usb recieved buffer using the usb_msg_get() function
-                usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
+                    // Copy the bytes from the usb receive buffer into our structure so we can use the information
+                    usb_msg_read_into(&data, sizeof(data));
 
-                // Build a meaningful structure to put your data in. Here we want two floats.
-                struct __attribute__((__packed__)) { float v1; float v2; } data;
+                    // Do the thing you need to do. Here we want to multiply
+                    float ret_val = data.v1 * data.v2;
 
-                // Copy the bytes from the usb receive buffer into our structure so we can use the information
-                usb_msg_read_into( &data, sizeof(data) );
+                    // send response right here if appropriate.
+                    usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
+                }
+                break;
+            case '/':
+                if (usb_msg_length() >= MEGN540_Message_Len('/')) {
+                    //then process your divide...
 
-                // Do the thing you need to do. Here we want to multiply
-                float ret_val = data.v1 - data.v2;
+                    // remove the command from the usb recieved buffer using the usb_msg_get() function
+                    usb_msg_get(); // removes the first character from the received buffer, we already know it was a /
 
-                // send response right here if appropriate.
-                usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
-            }
-            break;
-        case '~':
-            if( usb_msg_length() >= MEGN540_Message_Len('~') )
-            {
-                //then process your reset by setting the mf_restart flag
-                // TODO:
+                    // Build a meaningful structure to put your data in. Here we want two floats.
+                    struct __attribute__((__packed__)) {
+                        float v1;
+                        float v2;
+                    } data;
 
-                //then process your minus...
-                // remove the command from the usb recieved buffer using the usb_msg_get() function
-                usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
+                    // Copy the bytes from the usb receive buffer into our structure so we can use the information
+                    usb_msg_read_into(&data, sizeof(data));
 
-                // Build a meaningful structure to put your data in. Here we want two floats.
-                struct __attribute__((__packed__)) { float v1; float v2; } data;
+                    // Do the thing you need to do. Here we want to multiply
+                    float ret_val = data.v1 / data.v2;
 
-                // Copy the bytes from the usb receive buffer into our structure so we can use the information
-                usb_msg_read_into( &data, sizeof(data) );
-
-                // Do the thing you need to do. Here we want to multiply
-                float ret_val = data.v1 - data.v2;
+                    // send response right here if appropriate.
+                    usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
 
 
-                usb_send_msg("cc", command, &ret_val, sizeof(ret_val));
-                mf_restart.active =true;
-                //MSG_FLAG_Init ( &mf_restart );
-                //usb_flush_input_buffer();
-            }
-            break;
-        default:
-            // What to do if you dont recognize the command character
+                }
+                break;
+            case '+':
+                if (usb_msg_length() >= MEGN540_Message_Len('+')) {
+                    //then process your plus...
+                    // remove the command from the usb recieved buffer using the usb_msg_get() function
+                    usb_msg_get(); // removes the first character from the received buffer, we already know it was a +
 
-            pin_init_red();
-            _delay_ms(1000);
-            pin_dark_red();
-            _delay_ms(1000);
-            pin_light_red();
-            _delay_ms(1000);
-            pin_dark_red();
-            _delay_ms(1000);
+                    // Build a meaningful structure to put your data in. Here we want two floats.
+                    struct __attribute__((__packed__)) {
+                        float v1;
+                        float v2;
+                    } data;
 
-            break;
+                    // Copy the bytes from the usb receive buffer into our structure so we can use the information
+                    usb_msg_read_into(&data, sizeof(data));
+
+                    // Do the thing you need to do. Here we want to multiply
+                    float ret_val = data.v1 + data.v2;
+
+                    // send response right here if appropriate.
+                    usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
+                }
+                break;
+            case '-':
+                if (usb_msg_length() >= MEGN540_Message_Len('-')) {
+                    //then process your minus...
+                    // remove the command from the usb recieved buffer using the usb_msg_get() function
+                    usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
+
+                    // Build a meaningful structure to put your data in. Here we want two floats.
+                    struct __attribute__((__packed__)) {
+                        float v1;
+                        float v2;
+                    } data;
+
+                    // Copy the bytes from the usb receive buffer into our structure so we can use the information
+                    usb_msg_read_into(&data, sizeof(data));
+
+                    // Do the thing you need to do. Here we want to multiply
+                    float ret_val = data.v1 - data.v2;
+
+                    // send response right here if appropriate.
+                    usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
+                }
+                break;
+            case '~':
+                if (usb_msg_length() >= MEGN540_Message_Len('~')) {
+                    //then process your reset by setting the mf_restart flag
+                    // TODO:
+
+                    //then process your minus...
+                    // remove the command from the usb recieved buffer using the usb_msg_get() function
+                    usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
+                    mf_restart.active = true;
+                    //MSG_FLAG_Init ( &mf_restart );
+                    //usb_flush_input_buffer();
+                }
+                break;
+            default:
+                // What to do if you dont recognize the command character
+                // cry myself to sleep.
+                pin_init_red();
+                _delay_ms(1000);
+                pin_dark_red();
+                _delay_ms(1000);
+                pin_light_red();
+                _delay_ms(1000);
+                pin_dark_red();
+                _delay_ms(1000);
+
+                break;
+        }
     }
 }
 

@@ -205,75 +205,6 @@ void EVENT_USB_Device_ControlRequest(void)
 	}
 }
 
-
-/** Function to manage CDC data transmission and reception to and from the host for the second CDC interface, which echoes back
- *  all data sent to it from the host.
- */
-void USB_Echo_Task(void) {
-    /* Device must be connected and configured for the task to run */
-    if (USB_DeviceState != DEVICE_STATE_Configured) {
-        return;
-    }
-
-    /* Select the Serial Rx Endpoint */
-    Endpoint_SelectEndpoint(CDC_RX_EPADDR);
-
-    /* Check to see if any data has been received */
-    while (Endpoint_IsOUTReceived()) {
-        /* Create a temp buffer big enough to hold the incoming endpoint packet */
-        uint8_t Buffer[Endpoint_BytesInEndpoint()];
-
-        /* Remember how large the incoming packet is */
-        uint8_t DataLength = Endpoint_BytesInEndpoint();
-
-        /* Read in the incoming packet into the buffer */
-        //Endpoint_Read_Stream_LE(&Buffer, DataLength, NULL);
-
-        //Buffer[0] = Endpoint_Read_8();
-        //rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
-        // Endpoint_ClearOUT();
-        //Endpoint_WaitUntilReady();
-
-        for (int i = 0; i < DataLength; i++) {
-            Buffer[i] = Endpoint_Read_8();
-            rb_push_back_C(&_usb_receive_buffer, Buffer[i]);
-            Endpoint_ClearOUT();
-            Endpoint_WaitUntilReady();
-        }
-
-        // add to buffer.
-        //rb_push_back_C(&_usb_receive_buffer, Buffer[0]);
-
-        /* Finalize the stream transfer to send the last packet */
-        //Endpoint_ClearOUT();
-
-        /* Select the Serial Tx Endpoint */
-        Endpoint_SelectEndpoint(CDC_TX_EPADDR);
-
-        usb_msg_read_into(&_usb_send_buffer, rb_length_C(&_usb_send_buffer));
-
-        /* Write the received data to the endpoint */
-        //Endpoint_Write_8(_usb_send_buffer.buffer[_usb_send_buffer.start_index]);
-
-        // uint8_t RB_MASK = rb_length_C(&_usb_receive_buffer) - 1;
-        // TODO: do we need to mask?
-        for (int i = 0; i < rb_length_C(&_usb_receive_buffer); i++) {
-            Endpoint_Write_8(rb_pop_front_C((&_usb_receive_buffer)));
-            Endpoint_ClearIN();
-            Endpoint_WaitUntilReady();
-        }
-
-        /* Finalize the stream transfer to send the last packet */
-        //Endpoint_ClearIN();
-
-        /* Wait until the endpoint is ready for the next packet */
-        //Endpoint_WaitUntilReady();
-
-        /* Send an empty packet to prevent host buffering */
-        //Endpoint_ClearIN();
-    }
-}
-
 /**
  * (non-blocking) Function usb_read_next_byte takes the next USB byte and reads it
  * into a ring buffer for latter processing.
@@ -369,7 +300,7 @@ void usb_send_data(void* p_data, uint8_t data_len)
     // Changed to float because the data is float after we process it.
     // TODO is this right>?
     char* p_data_char = p_data;
-    for (int i = 0; i < data_len; i++ ){
+    for (uint8_t i = 0; i < data_len; i++ ){
         rb_push_back_C(&_usb_send_buffer, p_data_char[i]);
     }
 }
@@ -383,13 +314,11 @@ void usb_send_str(char* p_str)
     // *** MEGN540  ***
     // YOUR CODE HERE. Remember c-srtings are null terminated.
     uint8_t i = 0;
-   // char* sending = p_str;
-    // TODO: should this be \0 or does null send the \0?
     while (p_str[i] != 0){
         rb_push_back_C(&_usb_send_buffer, p_str[i]);
         i++;
     }
-    // add 0
+    // add 0 to keep null terminated.
     rb_push_back_C(&_usb_send_buffer, 0);
 
 
@@ -429,8 +358,8 @@ void usb_send_msg(char* format, char cmd, void* p_data, uint8_t data_len )
     //      usb_send_byte <-- cmd
     //      usb_send_data <-- p_data
     // FUNCTION END
-        uint8_t msg_length = format_length  + data_len + 1; //
 
+        uint8_t msg_length = format_length  + data_len + 1; //
         usb_send_byte(msg_length);
         usb_send_str(format); // needs 0
         usb_send_byte(cmd); // this is where the plus 1 is coming from..
