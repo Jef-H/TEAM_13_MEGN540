@@ -250,7 +250,7 @@ void Message_Handling_Task() {
             case '~':
                 if (usb_msg_length() >= MEGN540_Message_Len('~')) {
                     //then process your reset by setting the mf_restart flag
-                    // TODO:
+                    // TODO: finish this and then it's minimum viable product. 
 
                     //then process your minus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
