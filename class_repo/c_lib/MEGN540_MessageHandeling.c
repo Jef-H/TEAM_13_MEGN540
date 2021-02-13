@@ -255,7 +255,7 @@ void Message_Handling_Task() {
                     //then process your minus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
                     usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
-                    mf_restart.active = true;
+                    //mf_restart.active = true;
                     //MSG_FLAG_Init ( &mf_restart );
                     //usb_flush_input_buffer();]
                     char *error_char = "~";
