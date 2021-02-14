@@ -144,11 +144,9 @@ void Message_Handling_Task() {
         char command = usb_msg_peek();
 
         pin_init_yellow();
-        _delay_ms(1000);
         pin_dark_yellow();
-        _delay_ms(1000);
         pin_light_yellow();
-        _delay_ms(1000);
+
 
 
 
@@ -267,11 +265,8 @@ void Message_Handling_Task() {
                 // What to do if you dont recognize the command character
                 // light show!
                 pin_init_yellow();
-                _delay_ms(1000);
                 pin_dark_yellow();
-                _delay_ms(1000);
                 pin_light_yellow();
-                _delay_ms(1000);
 
                 break;
         }
