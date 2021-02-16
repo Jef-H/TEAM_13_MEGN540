@@ -153,7 +153,7 @@ void Message_Handling_Task() {
         // process command
         switch (command) {
             case '*':
-                if (usb_msg_length() >= MEGN540_Message_Len('*')) {
+                if (usb_msg_length() == MEGN540_Message_Len('*')) {
 
                     //then process your times...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
@@ -176,7 +176,7 @@ void Message_Handling_Task() {
                 }
                 break;
             case '/':
-                if (usb_msg_length() >= MEGN540_Message_Len('/')) {
+                if (usb_msg_length() == MEGN540_Message_Len('/')) {
                     //then process your divide...
 
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
@@ -201,7 +201,7 @@ void Message_Handling_Task() {
                 }
                 break;
             case '+':
-                if (usb_msg_length() >= MEGN540_Message_Len('+')) {
+                if (usb_msg_length() == MEGN540_Message_Len('+')) {
                     //then process your plus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
                     usb_msg_get(); // removes the first character from the received buffer, we already know it was a +
@@ -223,7 +223,7 @@ void Message_Handling_Task() {
                 }
                 break;
             case '-':
-                if (usb_msg_length() >= MEGN540_Message_Len('-')) {
+                if (usb_msg_length() == MEGN540_Message_Len('-')) {
                     //then process your minus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
                     usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
@@ -245,7 +245,7 @@ void Message_Handling_Task() {
                 }
                 break;
             case '~':
-                if (usb_msg_length() >= MEGN540_Message_Len('~')) {
+                if (usb_msg_length() == MEGN540_Message_Len('~')) {
                     //then process your reset by setting the mf_restart flag
 
                     //then process your minus...
