@@ -60,6 +60,7 @@ void SetupTimer0()
     ms_counter_2 = 0;
     ms_counter_3 = 0;
     ms_counter_4 = 0;
+
 }
 
 /**
@@ -70,8 +71,11 @@ float  GetTimeSec()
 {
     // *** MEGN540 Lab 2 ***
     // YOUR CODE HERE
-    return 0;
+    Time_t time = 0;
+
+    return time;
 }
+
 Time_t GetTime()
 {
     // *** MEGN540 Lab 2 ***

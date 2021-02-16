@@ -247,18 +247,12 @@ void Message_Handling_Task() {
             case '~':
                 if (usb_msg_length() >= MEGN540_Message_Len('~')) {
                     //then process your reset by setting the mf_restart flag
-                    // TODO: finish this and then it's minimum viable product.
 
                     //then process your minus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
                     usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
-                    //mf_restart.active = true;
-                    //MSG_FLAG_Init ( &mf_restart );
-                    //usb_flush_input_buffer();]
-                    char *error_char = "~";
+                    char *error_char = "0";
                     usb_send_msg("c", command, error_char, 1);
-                    mf_restart.active = true;
-
                 }
                 break;
             default:
@@ -268,6 +262,9 @@ void Message_Handling_Task() {
                 pin_dark_yellow();
                 pin_light_yellow();
 
+                char *unknown_char = "?";
+                usb_flush_input_buffer();
+                usb_send_msg("c", command, unknown_char, 1);
                 break;
         }
     }
