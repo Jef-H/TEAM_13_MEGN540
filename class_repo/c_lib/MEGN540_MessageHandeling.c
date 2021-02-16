@@ -261,8 +261,7 @@ void Message_Handling_Task() {
                 //pin_init_yellow();
               //  pin_dark_yellow();
               //  pin_light_yellow();
-
-                char *unknown_char = "?";
+                char *unknown_char = '?';
                 usb_flush_input_buffer();
                 usb_send_msg("cc", command, unknown_char, 1);
                 break;
