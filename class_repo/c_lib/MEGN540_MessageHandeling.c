@@ -251,8 +251,8 @@ void Message_Handling_Task() {
                     //then process your minus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
                     usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
-                    char *error_char = 0;
-                    usb_send_msg("cc", command, error_char, 1);
+
+                    usb_send_msg("cf", command, 0, 1);
                 }
                 break;
             default:
@@ -264,7 +264,7 @@ void Message_Handling_Task() {
                 usb_flush_input_buffer();
                 char *unknown_char = "?";
                 //usb_flush_input_buffer();
-                usb_send_msg("cc", command, unknown_char, 1);
+                usb_send_msg("c", command, unknown_char, 1);
                 break;
         }
     }
