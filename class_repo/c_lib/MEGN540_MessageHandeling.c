@@ -258,9 +258,9 @@ void Message_Handling_Task() {
             default:
                 // What to do if you dont recognize the command character
                 // light show!
-                pin_init_yellow();
-                pin_dark_yellow();
-                pin_light_yellow();
+                //pin_init_yellow();
+              //  pin_dark_yellow();
+              //  pin_light_yellow();
 
                 char *unknown_char = "?";
                 usb_flush_input_buffer();
