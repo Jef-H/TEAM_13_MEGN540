@@ -66,7 +66,7 @@ void SetupTimer0()
     //1kHz interrupt is desired
     //Enable external 16MHz crystal clock
     //(CLKSEL0; EXTE bit 2); set bit to 1
-    CLKSEL0 |= (1<<EXTE)
+    CLKSEL0 |= (1<<EXTE);
     //Select clock source to external 16MHz crystal
     //(CLKSEL0; CLKS bit 0); set bit to 1
     //Reset prescaler
@@ -75,13 +75,13 @@ void SetupTimer0()
     //(CLKPR); Write all bits to 0
     CLKPR = 0;
     //(CLKPR; CLKPCE bit 7); set bit to 1
-    CLKPR |= (1 << CLKPCE7);
+    CLKPR  |= (1 << CLKPCE7);
     //Set prescaler division factor
     // going to use 64
     //(TCCR0B; CS01 bit 1); set bit to 1
-    TCCR0B | = (1<<CS01);
+    TCCR0B |= (1<<CS01);
     //(TCCR0B; CS02 bit 0); set bit to 1
-    TCCR0B | = (1<<CS02);
+    TCCR0B |= (1<<CS02);
     //Set output compare register ‘A’
     // takes an 8-bit value
     //set OCR0A to 249 (for 1kHz interrupt)
