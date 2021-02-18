@@ -30,12 +30,12 @@
 
 #include "../c_lib/SerialIO.h"
 #include "../c_lib/Timing.h"
+#include "../c_lib/MEGN540_MessageHandeling.h"
 
 /** Main program entry point. This routine configures the hardware required by the application, then
  *  enters a loop to run the application tasks in sequence.
  */
-int main(void)
-{
+int main(void) {
     SetupTimer0();         // initialize timer zero functionality
     USB_SetupHardware();   // initialize USB
     GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
@@ -45,13 +45,14 @@ int main(void)
         GetTime();
         USB_Echo_Task();
         USB_USBTask();
-        if( MSG_FLAG_Execute( &mf_restart ) )// TODO add desired timer
+        if (MSG_FLAG_Execute(&mf_restart))// TODO add desired timer
         {
             //re initialzie your stuff...
             SetupTimer0();
             USB_SetupHardware();
             GlobalInterruptEnable();
             Message_Handling_Init();
-    }
+        }
         return 0;
+    }
 }
