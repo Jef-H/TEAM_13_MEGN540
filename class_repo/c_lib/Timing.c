@@ -61,6 +61,39 @@ void SetupTimer0()
     ms_counter_3 = 0;
     ms_counter_4 = 0;
 
+    _disable_interrupt();
+    _watchdog_reset();
+    //1kHz interrupt is desired
+    //Enable external 16MHz crystal clock
+    //(CLKSEL0; EXTE bit 2); set bit to 1
+    CLKSEL0 |= (1<<EXTE)
+    //Select clock source to external 16MHz crystal
+    //(CLKSEL0; CLKS bit 0); set bit to 1
+    //Reset prescaler
+    //(PSRSYNC; GTCCR bit 0); set bit to 1
+    //Enable prescaler change
+    //(CLKPR); Write all bits to 0
+    CLKPR = 0;
+    //(CLKPR; CLKPCE bit 7); set bit to 1
+    CLKPR |= (1 << CLKPCE7);
+    //Set prescaler division factor
+    // going to use 64
+    //(TCCR0B; CS01 bit 1); set bit to 1
+    TCCR0B | = (1<<CS01);
+    //(TCCR0B; CS02 bit 0); set bit to 1
+    TCCR0B | = (1<<CS02);
+    //Set output compare register ‘A’
+    // takes an 8-bit value
+    //set OCR0A to 249 (for 1kHz interrupt)
+    OCR0A = 249;
+    //Enable Compare Match A interrupt
+    //(TIMSK0; OCIE0A bit 1); set bit to 1
+    TIMSK0 |= (1 << OCIE0A);
+    //Set comparing feature to CTC mode
+    //(TCCR0A; WGM01 bit 1); set bit to 1
+    TCCR0A |= (1 << WGM01);
+    _enable_interupt();
+
 }
 
 /**
