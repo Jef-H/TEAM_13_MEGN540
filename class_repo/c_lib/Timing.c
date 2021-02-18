@@ -147,7 +147,7 @@ float  SecondsSince(const Time_t* time_start_p )
 {
     // *** MEGN540 Lab 2 ***
     // YOUR CODE HERE
-    float myMillisec =
+    //float myMillisec =
             //TODO:  could i use getmili here?
     float delta_time = ((Time_t.millisec *  1000) - time_start_p);
     return delta_time;
