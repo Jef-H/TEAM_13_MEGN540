@@ -38,12 +38,20 @@ int main(void)
 {
     SetupTimer0();         // initialize timer zero functionality
     USB_SetupHardware();   // initialize USB
-
     GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
 
-    for (;;)
+    while (true);
     {
+        GetTime();
         USB_Echo_Task();
         USB_USBTask();
+        if( MSG_FLAG_Execute( &mf_restart ) )// TODO add desired timer
+        {
+            //re initialzie your stuff...
+            SetupTimer0();
+            USB_SetupHardware();
+            GlobalInterruptEnable();
+            Message_Handling_Init();
     }
+        return 0;
 }
