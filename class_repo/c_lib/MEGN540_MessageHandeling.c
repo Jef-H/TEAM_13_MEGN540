@@ -119,7 +119,6 @@ void Message_Handling_Init()
     // *** MEGN540  ***
     // YOUR CODE HERE. This is where you'd initialize any
     // state machine flags to control your main-loop state machine
-
     MSG_FLAG_Init( &mf_restart ); // needs to be initialized to the default values.
     MSG_FLAG_Init( &mf_loop_timer);
     MSG_FLAG_Init( &mf_time_float_send);
@@ -140,7 +139,7 @@ void Message_Handling_Task() {
 
     // Check to see if their is data in waiting
     if (usb_msg_length() == 0) {
-        return; // nothing to process...
+        // nothing to process...
     } else {
 
         // Get Your command designator without removal so if their are not enough bytes yet, the command persists

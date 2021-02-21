@@ -141,7 +141,7 @@ Time_t GetTime()
     // YOUR CODE HERE
     Time_t time ={
                     .millisec = _count_ms,
-                    .microsec = getMicro() // YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
+                    .microsec = GetMicro() // YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
                  };
 
     return time;
