@@ -84,17 +84,11 @@ static CDC_LineEncoding_t LineEncoding1 = { .BaudRateBPS = 0,
 void USB_Upkeep_Task()
 {
     USB_USBTask();
-
     // *** MEGN540  ***
     // Get next byte from the USB hardware, send next byte to the USB hardware
-    //TODO: maybe check if device is configured.
-  // if (USB_DeviceState != DEVICE_STATE_Configured) {
-  //      return;
-  //  } else{
         usb_read_next_byte();
         usb_write_next_byte();
         return;
-   // }
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
