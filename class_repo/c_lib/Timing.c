@@ -69,43 +69,60 @@ void SetupTimer0()
     //1kHz interrupt is desired
     //Enable external 16MHz crystal clock
     //(CLKSEL0; EXTE bit 2); set bit to 1
-    CLKSEL0 |= (1<<EXTE);
+    *CLKSEL0 |= (1<<EXTE);
     //Select clock source to external 16MHz crystal
     //(CLKSEL0; CLKS bit 0); set bit to 1
+     CLKSEL0 = (1<<CLKS);
     //Reset prescaler
     //(PSRSYNC; GTCCR bit 0); set bit to 1
+      PRSYNC = (1 << GTTCR);
     //Enable prescaler change
     //(CLKPR); Write all bits to 0
-    CLKPR = 0;
+    *CLKPR = 0;
     //(CLKPR; CLKPCE bit 7); set bit to 1
-    CLKPR  |= (1 << CLKPCE7);
+    *CLKPR  |= (1 << CLKPCE7);
     //Set prescaler division factor
     // going to use 64
     //(TCCR0B; CS01 bit 1); set bit to 1
-    TCCR0B |= (1<<CS01);
+   *TCCR0B |= (1<<CS01);
     //(TCCR0B; CS02 bit 0); set bit to 1
-    TCCR0B |= (1<<CS02);
+    *TCCR0B |= (1<<CS02);
     //Set output compare register ‘A’
     // takes an 8-bit value
     //set OCR0A to 249 (for 1kHz interrupt)
-    OCR0A = 249;
+    *OCR0A = 249;
     //Enable Compare Match A interrupt
     //(TIMSK0; OCIE0A bit 1); set bit to 1
-    TIMSK0 |= (1 << OCIE0A);
+    *TIMSK0 |= (1 << OCIE0A);
     //Set comparing feature to CTC mode
     //(TCCR0A; WGM01 bit 1); set bit to 1
     TCCR0A |= (1 << WGM01);
      */
    //TODO  GlobalInterruptDisable();
-    // code from pseudo code.
+
+    //(CLKSEL0; EXTE bit 2); set bit to 1
+    CLKSEL0 |= (1<<EXTE);
+    //(CLKSEL0; CLKS bit 0); set bit to 1
+    CLKSEL0 = (1<<CLKS);
+    //(PSRSYNC; GTCCR bit 0); set bit to 1
+    PRSYNC = (1 << GTTCR);
+    //(CLKPR); Write all bits to 0
+    CLKPR = 0;
+    //(CLKPR; CLKPCE bit 7); set bit to 1
+    CLKPR  |= (1 << CLKPCE7);
+
+    // code from pseudo code. // petruska said these 4 lines look fine.
     TCCR0B = (1<< CS00)|(1<<CS01);
     TCNT0 = 0;
-    TIMSK0 |=(1<<OCIE0A);
     OCR0A = 249;
+    TIMSK0 |=(1<<OCIE0A);
+    // one of our calls
+    TCCR0A |= (1 << WGM01);
+
     // what is SEI??
    // sei();
     // SEI replacement.
-    //SREG |=(1<<I); // Global Interrupt Enable
+    SREG |=(1<<I); // Global Interrupt Enable
    //TODO  GlobalInterruptEnable();
 }
 
