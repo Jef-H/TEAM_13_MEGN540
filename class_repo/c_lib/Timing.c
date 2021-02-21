@@ -104,16 +104,9 @@ void SetupTimer0()
     OCR0A = 249;
     // what is SEI??
     sei();
-    // TODO: write interupt enable function.
-    //_enable_interupt();
-
+    // SEI replacement.
+    //SREG |=(1<<I); // Global Interrupt Enable
 }
-// interrupt service routine
-// ISR function
-// TCNT0 = 0;
-// increment both internal and external millisec counters.
-
-
 
 
 /**
