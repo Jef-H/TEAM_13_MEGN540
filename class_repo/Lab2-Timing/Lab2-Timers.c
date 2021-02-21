@@ -48,7 +48,7 @@ int main(void) {
         // 2. toggle ledevery few ms with the interrupt ( might show as dim)
         // 3. time how long a loop takes.
 
-        Time_t loop_start = GetTime();
+        GetTime();
         USB_USBTask();
         if (MSG_FLAG_Execute(&mf_restart))// TODO add desired timer
         {

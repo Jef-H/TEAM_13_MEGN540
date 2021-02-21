@@ -126,6 +126,14 @@ float  GetTimeSec()
     float seconds = time.millisec / 1000;
     return seconds;
 }
+uint16_t GetMicro()
+{
+    // *** MEGN540 Lab 2 ***
+    // YOUR CODE HERE
+    // pseudo cocde says * 4us
+    // TODO: double check
+    return TCNT0 * 1000 ;// YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
+}
 
 Time_t GetTime()
 {
@@ -147,13 +155,6 @@ Time_t GetTime()
 uint32_t GetMilli()
 {
     return _count_ms;
-}
-uint16_t GetMicro()
-{
-    // *** MEGN540 Lab 2 ***
-    // YOUR CODE HERE
-    // pseudo cocde says * 4us
-    return TCNT0 * 1000 ;// YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
 }
 
 
