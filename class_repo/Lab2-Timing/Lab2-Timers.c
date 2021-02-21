@@ -60,5 +60,5 @@ int main(void) {
             Message_Handling_Init();
         }*/
         return 0;
-    }
+    //}
 }
