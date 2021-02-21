@@ -32,13 +32,14 @@
 #include "../c_lib/Timing.h"
 #include "../c_lib/MEGN540_MessageHandeling.h"
 
+
 /** Main program entry point. This routine configures the hardware required by the application, then
  *  enters a loop to run the application tasks in sequence.
  */
 int main(void) {
+    SetupTimer0();
     USB_SetupHardware();
     GlobalInterruptEnable();
-    Message_Handling_Init();
 
    // SetupTimer0();         // initialize timer zero functionality
     //GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
@@ -46,16 +47,31 @@ int main(void) {
 
     while (true);
     {
+        //USB_Echo_Task();
         USB_Upkeep_Task();
         Message_Handling_Task();
+
+        if( MSG_FLAG_Execute( &mf_restart ) )
+        {
+            //re initialzie your stuff...
+            USB_SetupHardware();
+            GlobalInterruptEnable();
+            Message_Handling_Init();
+        }
+    }
+
+
+        //USB_Upkeep_Task();
+        //Message_Handling_Task();
         // baby steps of main.
+        // have the robot send the time once.
         // 1. have the robot send the time each second.
         // 2. toggle ledevery few ms with the interrupt ( might show as dim)
         // 3. time how long a loop takes.
         //Time_t test = GetTime();
 
         //usb_send_data(&test,48);
-
+/*
         if (MSG_FLAG_Execute(&mf_restart))// TODO add desired timer
         {
             //re initialzie your stuff...
@@ -63,7 +79,8 @@ int main(void) {
             USB_SetupHardware();
             GlobalInterruptEnable();
             Message_Handling_Init();
-        }
+        }*/
+
+
         return 0;
     }
-}
