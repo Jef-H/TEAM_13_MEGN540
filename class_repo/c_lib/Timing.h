@@ -46,6 +46,15 @@
 #include <avr/interrupt.h>  // for interrupt service routine use
 
 #include <ctype.h>
+#include <avr/wdt.h>
+#include <avr/power.h>
+#include <string.h>
+
+#include "USB_Config/Descriptors.h"
+#include <LUFA/Drivers/USB/USB.h>
+#include <LUFA/Platform/Platform.h>
+
+
 
 
 /**
