@@ -62,8 +62,8 @@ void SetupTimer0()
     ms_counter_4 = 0;
 
 
-    _disable_interrupt();
-    _watchdog_reset();
+    //_disable_interrupt();
+    //_watchdog_reset();
 
     /*
     //1kHz interrupt is desired
@@ -103,8 +103,9 @@ void SetupTimer0()
     TIMSK0 |=(1<<OCIE0A);
     OCR0A = 249;
     // what is SEI??
-    //sei();
-    _enable_interupt();
+    //sei()
+    // TODO: write interupt enable function.
+    //_enable_interupt();
 
 }
 // interrupt service routine
