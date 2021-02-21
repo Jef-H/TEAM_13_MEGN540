@@ -37,9 +37,11 @@
  *  enters a loop to run the application tasks in sequence.
  */
 int main(void) {
-    SetupTimer0();
+    
     USB_SetupHardware();
     GlobalInterruptEnable();
+    Message_Handling_Init();
+    SetupTimer0();
 
    // SetupTimer0();         // initialize timer zero functionality
     //GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
@@ -47,7 +49,7 @@ int main(void) {
 
     while (true);
     {
-        //USB_Echo_Task();
+        USB_Echo_Task();
         USB_Upkeep_Task();
         Message_Handling_Task();
 
