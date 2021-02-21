@@ -102,10 +102,17 @@ void SetupTimer0()
     TIMSK0 |=(1<<OCIE0A);
     OCR0A = 249;
     // what is SEI??
-    sei();
+    //sei();
     _enable_interupt();
 
 }
+// interrupt service routine
+// ISR function
+// TCNT0 = 0;
+// increment both internal and external millisec counters.
+
+
+
 
 /**
  * This function gets the current time and returns it in a Time_t structure.
@@ -145,6 +152,7 @@ uint16_t GetMicro()
 {
     // *** MEGN540 Lab 2 ***
     // YOUR CODE HERE
+    // pseudo cocde says * 4us
     return TCNT0 * 1000 ;// YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
 }
 
@@ -157,10 +165,9 @@ uint16_t GetMicro()
 float  SecondsSince(const Time_t* time_start_p )
 {
     // *** MEGN540 Lab 2 ***
-    // YOUR CODE HERE
-    //float myMillisec =
-            //TODO:  could i use getmili here?
-    float delta_time = ((Time_t.millisec *  1000) - time_start_p);
+    Time_t current_time = GetTime();
+    float delta_time =((current_time.millisec - time_start_p.millisec) * 0.001) +
+    ((current_time.microsec - time_start_p.microsec) * 0.000001);
     return delta_time;
 }
 

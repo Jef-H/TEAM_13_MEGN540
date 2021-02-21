@@ -260,6 +260,28 @@ void Message_Handling_Task() {
                     usb_send_msg("cf", command, 0, 1);
                 }
                 break;
+          /* case 't':
+                if (usb_msg_length() == MEGN540_Message_Len('t')) {
+                    //then process your minus...
+                    // remove the command from the usb recieved buffer using the usb_msg_get() function
+                    usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
+
+                    // Build a meaningful structure to put your data in. Here we want two floats.
+                    struct __attribute__((__packed__)) {
+                        float v1;
+                        float v2;
+                    } data;
+
+                    // Copy the bytes from the usb receive buffer into our structure so we can use the information
+                    usb_msg_read_into(&data, sizeof(data));
+
+                    // Do the thing you need to do. Here we want to multiply
+                    float ret_val = data.v1 - data.v2;
+
+                    // send response right here if appropriate.
+                    usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
+                }
+                break;*/
             default:
                 // What to do if you dont recognize the command character
                 // light show!
