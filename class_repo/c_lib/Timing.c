@@ -105,7 +105,7 @@ void SetupTimer0()
     //(CLKSEL0; CLKS bit 0); set bit to 1
     CLKSEL0 = (1<<CLKS);
     //(PSRSYNC; GTCCR bit 0); set bit to 1
-    PSRSYNC = (1 << GTCCR);
+    PSRSYNC |= (1 << GTCCR);
     //(CLKPR); Write all bits to 0
     CLKPR = 0;
     //(CLKPR; CLKPCE bit 7); set bit to 1
