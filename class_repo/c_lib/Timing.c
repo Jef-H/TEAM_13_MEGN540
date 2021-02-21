@@ -122,7 +122,8 @@ void SetupTimer0()
     // what is SEI??
    // sei();
     // SEI replacement.
-    SREG |=(1<<I); // Global Interrupt Enable
+    //SREG |=(1<<I); // Global Interrupt Enable
+    SREG |=(1<<1);
    //TODO  GlobalInterruptEnable();
 }
 
