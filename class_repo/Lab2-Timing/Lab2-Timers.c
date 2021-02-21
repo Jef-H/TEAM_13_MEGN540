@@ -47,8 +47,7 @@ int main(void) {
     //GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
 
 
-    while (true);
-    {
+    while (true){
         //USB_Echo_Task();
         USB_Upkeep_Task();
         Message_Handling_Task();
