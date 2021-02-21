@@ -105,11 +105,11 @@ void SetupTimer0()
     //(CLKSEL0; CLKS bit 0); set bit to 1
     CLKSEL0 = (1<<CLKS);
     //(PSRSYNC; GTCCR bit 0); set bit to 1
-    PRSYNC = (1 << GTTCR);
+    PSRSYNC = (1 << GTCCR);
     //(CLKPR); Write all bits to 0
     CLKPR = 0;
     //(CLKPR; CLKPCE bit 7); set bit to 1
-    CLKPR  |= (1 << CLKPCE7);
+    CLKPR  |= (1 << CLKPCE);
 
     // code from pseudo code. // petruska said these 4 lines look fine.
     TCCR0B = (1<< CS00)|(1<<CS01);
