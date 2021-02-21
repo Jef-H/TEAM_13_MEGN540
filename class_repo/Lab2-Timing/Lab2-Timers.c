@@ -40,7 +40,7 @@ int main(void) {
 
     USB_SetupHardware();   // initialize USB
 
-    GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
+    //GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
 
     while (true);
     {
