@@ -97,7 +97,7 @@ void SetupTimer0()
      */
 
     // code from pseudo code.
-    TCCR0 = (1<< CS00)|(1<<CS01);
+    TCCR0B = (1<< CS00)|(1<<CS01);
     TCNT0 = 0;
     TIMSK0 |=(1<<OCIE0A);
     OCR0A = 249;
