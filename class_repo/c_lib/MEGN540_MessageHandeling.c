@@ -259,7 +259,7 @@ void Message_Handling_Task() {
                     usb_send_msg("cf", command, 0, 1);
                 }
                 break;
-            case 't':
+            /* case 't':
                 if (usb_msg_length() == MEGN540_Message_Len('t')) {
                     //then process your minus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
@@ -283,7 +283,7 @@ void Message_Handling_Task() {
                     // send response right here if appropriate.
                     usb_send_msg("cff", command, &ret_val, sizeof(ret_val));
                 }
-                break;
+                break;*/
             default:
                 // What to do if you dont recognize the command character
                 // light show!
