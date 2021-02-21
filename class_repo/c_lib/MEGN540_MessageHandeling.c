@@ -103,12 +103,8 @@ bool MSG_FLAG_Execute( MSG_FLAG_t* p_flag)
     // For Lab 1, ignore the timing part.
 
     // HE TALKED ABOUT THIS IN CLASS FEB 18th first 10 minutes // TODO fix this.
-    uint16_t targetFrequency  =1;
-    if (GetMilli() >= targetFrequency) {
-        return p_flag->active;
-    }
 
-    return false;
+        return p_flag->active;
 }
 
 
