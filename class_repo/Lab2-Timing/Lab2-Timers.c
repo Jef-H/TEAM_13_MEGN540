@@ -55,10 +55,9 @@ int main(void) {
         {
             //re initialzie your stuff...
             SetupTimer0();
-            
-          //  USB_SetupHardware();
-           // GlobalInterruptEnable();
-          //  Message_Handling_Init();
+            USB_SetupHardware();
+            GlobalInterruptEnable();
+            Message_Handling_Init();
         }
         return 0;
     }
