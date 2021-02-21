@@ -278,7 +278,7 @@ void Message_Handling_Task() {
 
                     // Do the thing you need to do. Here we want to multiply
                     // TODO: fix this section do do what we want.
-                    uint32_t ret_val = GetMilli();
+                    float ret_val = GetMilli();
 
                     // send response right here if appropriate.
                     usb_send_msg("cff", command, &ret_val, sizeof(ret_val));
