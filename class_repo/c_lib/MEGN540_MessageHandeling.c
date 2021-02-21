@@ -29,7 +29,6 @@
 */
 
 #include "MEGN540_MessageHandeling.h"
-#include "Timing.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -260,16 +259,14 @@ void Message_Handling_Task() {
                     usb_send_msg("cf", command, 0, 1);
                 }
                 break;
-            case 't':
+          /* case 't':
                 if (usb_msg_length() == MEGN540_Message_Len('t')) {
                     //then process your minus...
                     // remove the command from the usb recieved buffer using the usb_msg_get() function
                     usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
 
                     // Build a meaningful structure to put your data in. Here we want two floats.
-                    struct Time_t now = GetTime();
-
-                    struct __attribute__((__packed__)){
+                    struct __attribute__((__packed__)) {
                         float v1;
                         float v2;
                     } data;
@@ -278,13 +275,12 @@ void Message_Handling_Task() {
                     usb_msg_read_into(&data, sizeof(data));
 
                     // Do the thing you need to do. Here we want to multiply
-                    // TODO: fix this section do do what we want.
-                    float ret_val = GetMilli();
+                    float ret_val = data.v1 - data.v2;
 
                     // send response right here if appropriate.
-                    usb_send_msg("cff", command, &ret_val, sizeof(ret_val));
+                    usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
                 }
-                break;
+                break;*/
             default:
                 // What to do if you dont recognize the command character
                 // light show!
