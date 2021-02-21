@@ -267,7 +267,7 @@ void Message_Handling_Task() {
                     usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
 
                     // Build a meaningful structure to put your data in. Here we want two floats.
-                    struct Time_t now = GetTime();
+                    //struct Time_t now = GetTime();
 
                     struct __attribute__((__packed__)){
                         float v1;
