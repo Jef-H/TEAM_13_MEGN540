@@ -166,7 +166,7 @@ float  SecondsSince(const Time_t* time_start_p )
 {
     // *** MEGN540 Lab 2 ***
     Time_t current_time = GetTime();
-    float delta_time =((current_time.millisec - time_start_p.millisec) * 0.001) +
+    float delta_time =((current_time.millisec - time_start_p->first) * 0.001) +
     ((current_time.microsec - time_start_p.microsec) * 0.000001);
     return delta_time;
 }
