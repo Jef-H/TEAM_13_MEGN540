@@ -44,18 +44,24 @@ int main(void) {
 
     while (true);
     {
+        USB_Upkeep_Task();
+        Message_Handling_Task();
+
         // baby steps of main.
         // 1. have the robot send the time each second.
         // 2. toggle ledevery few ms with the interrupt ( might show as dim)
         // 3. time how long a loop takes.
+        Time_t test = GetTime();
 
+        usb_send_data(test,48);
         GetTime();
-        USB_USBTask();
+       // USB_USBTask();
+
         if (MSG_FLAG_Execute(&mf_restart))// TODO add desired timer
         {
             //re initialzie your stuff...
-           // SetupTimer0();
-            //USB_SetupHardware();
+            SetupTimer0();
+            USB_SetupHardware();
             //GlobalInterruptEnable();
             Message_Handling_Init();
         }
