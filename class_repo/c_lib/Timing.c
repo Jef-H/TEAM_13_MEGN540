@@ -75,7 +75,7 @@ void SetupTimer0()
      CLKSEL0 = (1<<CLKS);
     //Reset prescaler
     //(PSRSYNC; GTCCR bit 0); set bit to 1
-      PRSYNC = (1 << GTTCR);
+      PRSYNC = (1 << GTCCR);
     //Enable prescaler change
     //(CLKPR); Write all bits to 0
     *CLKPR = 0;
@@ -105,7 +105,8 @@ void SetupTimer0()
     //(CLKSEL0; CLKS bit 0); set bit to 1
     CLKSEL0 = (1<<CLKS);
     //(PSRSYNC; GTCCR bit 0); set bit to 1
-    PSRSYNC |= (1 << GTCCR);
+    // ERRORS OUT RIGHT NOW TODO: WHYYYYY
+    ///PSRSYNC |= (1<<GTCCR);
     //(CLKPR); Write all bits to 0
     CLKPR = 0;
     //(CLKPR; CLKPCE bit 7); set bit to 1
