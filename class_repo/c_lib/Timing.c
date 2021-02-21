@@ -197,5 +197,12 @@ float  SecondsSince(const Time_t* time_start_p )
 // ISR function
 // TCNT0 = 0;
 // increment both internal and external millisec counters.
+// TODO: maybe this belongs down here in ISR ?
+//Enable Compare Match A interrupt
+//(TIMSK0; OCIE0A bit 1); set bit to 1
+//TIMSK0 |= (1 << OCIE0A);
+//Set comparing feature to CTC mode
+//(TCCR0A; WGM01 bit 1); set bit to 1
+//TCCR0A |= (1 << WGM01);
 
 
