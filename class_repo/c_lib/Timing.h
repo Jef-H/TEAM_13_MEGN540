@@ -64,6 +64,7 @@ volatile uint8_t ms_counter_4;
  * Function SetupTimer0 initializes Timer0 to have a prescalar of XX and initializes the compare
  * feature for use in an ISR.  It also enables ISR's.
  */
+uint32_t GetMilli();
 void SetupTimer0( );
 
 /**
@@ -71,7 +72,7 @@ void SetupTimer0( );
  * things on second or millisecond resolution.
  * @return
  */
-uint32_t GetMilli();
+//uint32_t GetMilli();
 uint16_t GetMicro();
 
 /**
