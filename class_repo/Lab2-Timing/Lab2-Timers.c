@@ -43,6 +43,11 @@ int main(void) {
 
     while (true);
     {
+        // baby steps of main.
+        // 1. have the robot send the time each second.
+        // 2. toggle ledevery few ms with the interrupt ( might show as dim)
+        // 3. time how long a loop takes. 
+
         GetTime();
         USB_Echo_Task();
         USB_USBTask();
