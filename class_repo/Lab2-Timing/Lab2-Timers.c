@@ -46,10 +46,9 @@ int main(void) {
         // baby steps of main.
         // 1. have the robot send the time each second.
         // 2. toggle ledevery few ms with the interrupt ( might show as dim)
-        // 3. time how long a loop takes. 
+        // 3. time how long a loop takes.
 
-        GetTime();
-        USB_Echo_Task();
+        Time_t loop_start = GetTime();
         USB_USBTask();
         if (MSG_FLAG_Execute(&mf_restart))// TODO add desired timer
         {

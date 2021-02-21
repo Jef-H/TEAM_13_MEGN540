@@ -63,6 +63,8 @@ void SetupTimer0()
 
     _disable_interrupt();
     _watchdog_reset();
+
+    /*
     //1kHz interrupt is desired
     //Enable external 16MHz crystal clock
     //(CLKSEL0; EXTE bit 2); set bit to 1
@@ -92,6 +94,15 @@ void SetupTimer0()
     //Set comparing feature to CTC mode
     //(TCCR0A; WGM01 bit 1); set bit to 1
     TCCR0A |= (1 << WGM01);
+     */
+
+    // code from pseudo code.
+    TCCR0 = (1<< CS00)|(1<<CS01);
+    TCNT0 = 0;
+    TIMSK0 |=(1<<OCIE0A);
+    OCR0A = 249;
+    // what is SEI??
+    sei();
     _enable_interupt();
 
 }
