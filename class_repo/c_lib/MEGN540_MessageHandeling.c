@@ -34,7 +34,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-
 // Define function prototypes
 void pin_init_red(void);
 void pin_dark_red(void);
