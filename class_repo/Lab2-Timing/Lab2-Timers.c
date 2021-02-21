@@ -50,6 +50,7 @@ int main(void) {
 
         GetTime();
         USB_USBTask();
+        usb_send_byte('c');
         if (MSG_FLAG_Execute(&mf_restart))// TODO add desired timer
         {
             //re initialzie your stuff...
