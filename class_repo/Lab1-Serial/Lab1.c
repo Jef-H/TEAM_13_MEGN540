@@ -53,7 +53,7 @@ int main(void) {
 
     while (true) {
 
-        //USB_Echo_Task();
+        USB_Echo_Task();
         USB_Upkeep_Task();
 
         //EHCHOOOO
