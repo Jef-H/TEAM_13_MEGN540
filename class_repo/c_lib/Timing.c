@@ -96,16 +96,17 @@ void SetupTimer0()
     //(TCCR0A; WGM01 bit 1); set bit to 1
     TCCR0A |= (1 << WGM01);
      */
- 
+    GlobalInterruptDisable();
     // code from pseudo code.
     TCCR0B = (1<< CS00)|(1<<CS01);
     TCNT0 = 0;
     TIMSK0 |=(1<<OCIE0A);
     OCR0A = 249;
     // what is SEI??
-    sei();
+   // sei();
     // SEI replacement.
     //SREG |=(1<<I); // Global Interrupt Enable
+    GlobalInterruptEnable();
 }
 
 
