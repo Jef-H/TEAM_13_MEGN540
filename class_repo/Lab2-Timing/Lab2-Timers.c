@@ -53,7 +53,7 @@ int main(void) {
         // 3. time how long a loop takes.
         Time_t test = GetTime();
 
-        usb_send_data(*test,48);
+        usb_send_data(&test,48);
         GetTime();
        // USB_USBTask();
 
