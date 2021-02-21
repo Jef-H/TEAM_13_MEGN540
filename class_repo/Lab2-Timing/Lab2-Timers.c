@@ -36,7 +36,7 @@
  *  enters a loop to run the application tasks in sequence.
  */
 int main(void) {
-   // SetupTimer0();         // initialize timer zero functionality
+    SetupTimer0();         // initialize timer zero functionality
 
     USB_SetupHardware();   // initialize USB
 
