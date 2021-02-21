@@ -41,7 +41,7 @@ int main(void) {
     USB_SetupHardware();
     GlobalInterruptEnable();
     Message_Handling_Init();
-   // SetupTimer0();
+    SetupTimer0();
 
    // SetupTimer0();         // initialize timer zero functionality
     //GlobalInterruptEnable(); // Enable Global Interrupts for USB and Timer etc.
@@ -58,6 +58,7 @@ int main(void) {
             USB_SetupHardware();
             GlobalInterruptEnable();
             Message_Handling_Init();
+            SetupTimer0();
         }
     }
     // baseline above.
