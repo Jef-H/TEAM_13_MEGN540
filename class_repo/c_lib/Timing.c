@@ -61,6 +61,7 @@ void SetupTimer0()
     ms_counter_3 = 0;
     ms_counter_4 = 0;
 
+
     _disable_interrupt();
     _watchdog_reset();
 
@@ -189,3 +190,11 @@ float  SecondsSince(const Time_t* time_start_p )
     ms_counter_3 ++;
     ms_counter_4 ++;
 }*/
+
+// stuff from pseudo code.
+// interrupt service routine
+// ISR function
+// TCNT0 = 0;
+// increment both internal and external millisec counters.
+
+

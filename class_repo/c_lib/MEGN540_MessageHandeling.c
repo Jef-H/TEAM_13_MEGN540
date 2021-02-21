@@ -102,11 +102,13 @@ bool MSG_FLAG_Execute( MSG_FLAG_t* p_flag)
     // What is the logic to indicate an action should be executed?
     // For Lab 1, ignore the timing part.
 
-    // HE TALKED ABOUT THIS IN CLASS FEB 18th first 10 minutes
+    // HE TALKED ABOUT THIS IN CLASS FEB 18th first 10 minutes // TODO fix this.
     uint16_t targetFrequency  =1;
     if (GetMilli() >= targetFrequency) {
         return p_flag->active;
     }
+
+    return false;
 }
 
 
