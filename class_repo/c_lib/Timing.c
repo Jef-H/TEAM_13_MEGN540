@@ -103,7 +103,7 @@ void SetupTimer0()
     TIMSK0 |=(1<<OCIE0A);
     OCR0A = 249;
     // what is SEI??
-    //sei()
+    sei();
     // TODO: write interupt enable function.
     //_enable_interupt();
 
