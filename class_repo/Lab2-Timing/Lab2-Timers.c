@@ -72,7 +72,7 @@ int main(void) {
         }
         if( MSG_FLAG_Execute( &mf_time_float_send ) ){
             float loop_time = SecondsSince(loopStart);
-            usb_send_msg("ccf", mf_loop_timer->cmd )
+            usb_send_msg("ccf", mf_loop_timer->cmd );
         }
 
     }
