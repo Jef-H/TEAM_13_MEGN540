@@ -106,7 +106,7 @@ void SetupTimer0()
     CLKSEL0 = (1<<CLKS);
     //(PSRSYNC; GTCCR bit 0); set bit to 1
     // ERRORS OUT RIGHT NOW TODO: WHYYYYY
-    ///PSRSYNC |= (1<<GTCCR);
+    GTCCR |= (1<<PSRSYNC);
     //(CLKPR); Write all bits to 0
     CLKPR = 0;
     //(CLKPR; CLKPCE bit 7); set bit to 1
@@ -124,7 +124,7 @@ void SetupTimer0()
    // sei();
     // SEI replacement.
     //SREG |=(1<<I); // Global Interrupt Enable
-    SREG |=(1<<1);
+    SREG |=(1<<7);
    //TODO  GlobalInterruptEnable();
 }
 
