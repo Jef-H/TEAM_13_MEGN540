@@ -175,6 +175,7 @@ float  SecondsSince(const Time_t* time_start_p )
     ms_counter_4 ++;
 }*/
 // TODO: fix these parameters.
+/*
 void ISR ( vector<int> sourceInterrupt, vector<int> timerCompareVector){
     //Does this need to be here?
     TCNT0 = 0;
@@ -188,7 +189,7 @@ void ISR ( vector<int> sourceInterrupt, vector<int> timerCompareVector){
     ms_counter_4 ++;
 
 }
-
+*/
 // stuff from pseudo code.
 // interrupt service routine
 // ISR function
