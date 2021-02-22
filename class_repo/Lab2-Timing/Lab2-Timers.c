@@ -53,6 +53,9 @@ int main(void) {
         USB_Upkeep_Task();
         Message_Handling_Task();
 
+
+
+
         if( MSG_FLAG_Execute( &mf_restart ) ){
             //re initialzie your stuff...
             USB_SetupHardware();
@@ -62,17 +65,18 @@ int main(void) {
         }
         if( MSG_FLAG_Execute( &mf_send_time ) ){
             float time = mf_send_time.last_trigger_time.millisec + (mf_send_time.last_trigger_time.microsec/1000);
-            usb_send_msg("ccf",mf_send_time->cmd, time, sizeof(time));
+           // usb_send_msg("ccf",mf_send_time->cmd, time, sizeof(time));
         }
+
         if( MSG_FLAG_Execute( &mf_time_float_send ) ){
             Time_t start_float_time = GetTime();
             float f = 2.223;
-            float f_time = SecondsSince(start_float_time);
-            usb_send_msg("ccf",mf_time_float_send->cmd,f_time,sizeof(f_time));
+            //float f_time = SecondsSince(start_float_time);
+           // usb_send_msg("ccf",mf_time_float_send->cmd,f_time,sizeof(f_time));
         }
         if( MSG_FLAG_Execute( &mf_time_float_send ) ){
-            float loop_time = SecondsSince(loopStart);
-            usb_send_msg("ccf", mf_loop_timer->cmd );
+            //  float loop_time = SecondsSince(loopStart);
+            //  usb_send_msg("ccf", mf_loop_timer->cmd );
         }
 
     }
