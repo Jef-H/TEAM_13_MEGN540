@@ -61,63 +61,35 @@ void SetupTimer0()
     ms_counter_3 = 0;
     ms_counter_4 = 0;
 
-
     //_disable_interrupt();
     //_watchdog_reset();
-
-    /*
-    //1kHz interrupt is desired
-    //Enable external 16MHz crystal clock
-    //(CLKSEL0; EXTE bit 2); set bit to 1
-    *CLKSEL0 |= (1<<EXTE);
-    //Select clock source to external 16MHz crystal
-    //(CLKSEL0; CLKS bit 0); set bit to 1
-     CLKSEL0 = (1<<CLKS);
-    //Reset prescaler
-    //(PSRSYNC; GTCCR bit 0); set bit to 1
-      PRSYNC = (1 << GTCCR);
-    //Enable prescaler change
-    //(CLKPR); Write all bits to 0
-    *CLKPR = 0;
-    //(CLKPR; CLKPCE bit 7); set bit to 1
-    *CLKPR  |= (1 << CLKPCE7);
-    //Set prescaler division factor
-    // going to use 64
-    //(TCCR0B; CS01 bit 1); set bit to 1
-   *TCCR0B |= (1<<CS01);
-    //(TCCR0B; CS02 bit 0); set bit to 1
-    *TCCR0B |= (1<<CS02);
-    //Set output compare register ‘A’
-    // takes an 8-bit value
-    //set OCR0A to 249 (for 1kHz interrupt)
-    *OCR0A = 249;
-    //Enable Compare Match A interrupt
-    //(TIMSK0; OCIE0A bit 1); set bit to 1
-    *TIMSK0 |= (1 << OCIE0A);
-    //Set comparing feature to CTC mode
-    //(TCCR0A; WGM01 bit 1); set bit to 1
-    TCCR0A |= (1 << WGM01);
-     */
    //TODO  GlobalInterruptDisable();
-
+//Enable external 16MHz crystal clock
     //(CLKSEL0; EXTE bit 2); set bit to 1
     CLKSEL0 |= (1<<EXTE);
     //(CLKSEL0; CLKS bit 0); set bit to 1
     CLKSEL0 = (1<<CLKS);
+    //Reset prescaler
     //(PSRSYNC; GTCCR bit 0); set bit to 1
     // ERRORS OUT RIGHT NOW TODO: WHYYYYY
     GTCCR |= (1<<PSRSYNC);
+    //Enable prescaler change
     //(CLKPR); Write all bits to 0
     CLKPR = 0;
     //(CLKPR; CLKPCE bit 7); set bit to 1
     CLKPR  |= (1 << CLKPCE);
-
     // code from pseudo code. // petruska said these 4 lines look fine.
+    //(TCCR0B; CS01 bit 1); set bit to 1
     TCCR0B = (1<< CS00)|(1<<CS01);
+    // what is this call doing?
     TCNT0 = 0;
+    //set OCR0A to 249 (for 1kHz interrupt)
     OCR0A = 249;
+    //Enable Compare Match A interrupt
+    //(TIMSK0; OCIE0A bit 1); set bit to 1
     TIMSK0 |=(1<<OCIE0A);
-    // one of our calls
+    // Set comparing feature to CTC mode
+    //(TCCR0A; WGM01 bit 1); set bit to 1
     TCCR0A |= (1 << WGM01);
 
     // what is SEI??
@@ -125,7 +97,6 @@ void SetupTimer0()
     // SEI replacement.
     //SREG |=(1<<I); // Global Interrupt Enable
     SREG |=(1<<7);
-   //TODO  GlobalInterruptEnable();
 }
 
 
@@ -146,8 +117,7 @@ uint16_t GetMicro()
     // *** MEGN540 Lab 2 ***
     // YOUR CODE HERE
     // pseudo cocde says * 4us
-    // TODO: double check
-    return TCNT0 * 1000 ;// YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
+    return TCNT0 * 4 ;// YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
 }
 
 Time_t GetTime()
@@ -156,7 +126,7 @@ Time_t GetTime()
     // YOUR CODE HERE
     Time_t time ={
                     .millisec = _count_ms,
-                    .microsec = GetMicro() // YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
+                    .microsec = GetMicro()// YOU NEED TO REPLACE THIS WITH A CALL TO THE TIMER0 REGISTER AND MULTIPLY APPROPRIATELY
                  };
 
     return time;
@@ -204,6 +174,20 @@ float  SecondsSince(const Time_t* time_start_p )
     ms_counter_3 ++;
     ms_counter_4 ++;
 }*/
+// TODO: fix these parameters.
+void ISR ( vector<int> sourceInterrupt, vector<int> timerCompareVector){
+    //Does this need to be here?
+    TCNT0 = 0;
+
+    // take care of upticks of both our internal and external variables.
+    _count_ms ++;
+
+    ms_counter_1 ++;
+    ms_counter_2 ++;
+    ms_counter_3 ++;
+    ms_counter_4 ++;
+
+}
 
 // stuff from pseudo code.
 // interrupt service routine
