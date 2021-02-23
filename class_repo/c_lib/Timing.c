@@ -109,7 +109,8 @@ float  GetTimeSec()
     // *** MEGN540 Lab 2 ***
     // YOUR CODE HERE
     Time_t time = GetTime();
-    float seconds = time.millisec / 1000;
+    //
+    float seconds = (time.millisec * 0.001 ) + (time.microsec *0.000001);
     return seconds;
 }
 uint16_t GetMicro()
