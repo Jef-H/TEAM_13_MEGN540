@@ -107,7 +107,6 @@ bool MSG_FLAG_Execute( MSG_FLAG_t* p_flag)
         return p_flag->active;
 }
 
-
 /**
  * Function Message_Handling_Init initializes the message handling and all associated state flags and data to their default
  * conditions.
@@ -146,9 +145,6 @@ void Message_Handling_Task() {
         pin_init_yellow();
         pin_dark_yellow();
         pin_light_yellow();
-
-
-
 
         // process command
         switch (command) {
@@ -255,28 +251,27 @@ void Message_Handling_Task() {
                     usb_send_msg("cf", command, 0, 1);
                 }
                 break;
-          /* case 't':
+            case 't':
                 if (usb_msg_length() == MEGN540_Message_Len('t')) {
-                    //then process your minus...
-                    // remove the command from the usb recieved buffer using the usb_msg_get() function
-                    usb_msg_get(); // removes the first character from the received buffer, we already know it was a -
 
-                    // Build a meaningful structure to put your data in. Here we want two floats.
-                    struct __attribute__((__packed__)) {
-                        float v1;
-                        float v2;
-                    } data;
+                    usb_msg_get();
+                    uint8_t secondC;
+                    secondC = usb_msg_get();
 
-                    // Copy the bytes from the usb receive buffer into our structure so we can use the information
-                    usb_msg_read_into(&data, sizeof(data));
+                  //  usb_msg_read_into(&data, sizeof(data));
+                    if(secondC == 0) {
+                        mf_send_time.active == true;
+                    }
+                    else if(secondC == 1) {
+                        mf_time_float_send.active == true;
+                    }
+                    else if(secondC == 2) {
+                        mf_loop_timer.active == true;
+                    }
 
-                    // Do the thing you need to do. Here we want to multiply
-                    float ret_val = data.v1 - data.v2;
-
-                    // send response right here if appropriate.
-                    usb_send_msg("cf", command, &ret_val, sizeof(ret_val));
                 }
-                break;*/
+                break;
+
             default:
                 // What to do if you dont recognize the command character
                 // light show!
