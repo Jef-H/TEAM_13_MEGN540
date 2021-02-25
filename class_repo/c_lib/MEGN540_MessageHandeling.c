@@ -257,6 +257,7 @@ void Message_Handling_Task() {
                     usb_msg_get();
                     uint8_t secondC;
                     secondC = usb_msg_peek();
+                    // if we use peek then maybe we need to clear the buffer after? 
 
                   //  usb_msg_read_into(&data, sizeof(data));
                     if(secondC == 0) {
