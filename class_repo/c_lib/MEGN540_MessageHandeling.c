@@ -256,7 +256,7 @@ void Message_Handling_Task() {
 
                     usb_msg_get();
                     uint8_t secondC;
-                    secondC = usb_msg_get();
+                    secondC = usb_msg_peek();
 
                   //  usb_msg_read_into(&data, sizeof(data));
                     if(secondC == 0) {
