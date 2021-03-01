@@ -29,10 +29,8 @@
 */
 
 #include "MEGN540_MessageHandeling.h"
-
 #include <avr/io.h>
 #include <util/delay.h>
-
 
 // Define function prototypes
 void pin_init_red(void);
@@ -86,9 +84,7 @@ static inline void MSG_FLAG_Init(MSG_FLAG_t* p_flag)
     p_flag->duration = -1;
     p_flag->last_trigger_time.millisec=0;
     p_flag->last_trigger_time.microsec=0;
-
 }
-
 
 /**
  * Function MSG_FLAG_Execute indicates if the action associated with the message flag should be executed
@@ -97,14 +93,27 @@ static inline void MSG_FLAG_Init(MSG_FLAG_t* p_flag)
  */
 bool MSG_FLAG_Execute( MSG_FLAG_t* p_flag)
 {
-    // *** MEGN540  ***
-    // THIS FUNCTION WILL BE MOST USEFUL FORM LAB 2 ON.
-    // What is the logic to indicate an action should be executed?
-    // For Lab 1, ignore the timing part.
-
+   /* // What is the logic to indicate an action should be executed?
     // HE TALKED ABOUT THIS IN CLASS FEB 18th first 10 minutes // TODO fix this.
-
+     if( p_flag->duration == -1 ) {
+        return p_flag->active = true;
+    }
+    else if(p_flag->duration <= SecondsSince(p_flag->last_trigger_time.millisec)) {
         return p_flag->active;
+    }
+    else {
+        p_flag->active = false;
+        return p_flag->active;
+    }
+    */
+    float delta = 0.0;
+    delta = SecondsSince(p_flag->last_trigger_time.millisec);
+    if(p_flag->active == true && p_flag->duration > delta ) {
+        return false;
+    }
+    return p_flag->active;
+
+
 }
 
 /**
@@ -118,7 +127,7 @@ void Message_Handling_Init()
     // state machine flags to control your main-loop state machine
     MSG_FLAG_Init( &mf_restart ); // needs to be initialized to the default values.
     MSG_FLAG_Init( &mf_loop_timer);
-    MSG_FLAG_Init( &mf_time_float_send);
+    MSG_FLAG_Init( &mf_time_float_send );
     MSG_FLAG_Init( &mf_send_time );
 }
 
@@ -255,21 +264,61 @@ void Message_Handling_Task() {
                 if (usb_msg_length() == MEGN540_Message_Len('t')) {
 
                     usb_msg_get();
-                    uint8_t secondC;
-                    secondC = usb_msg_peek();
-                    // if we use peek then maybe we need to clear the buffer after? 
+                    int secondC = usb_msg_get();
 
-                  //  usb_msg_read_into(&data, sizeof(data));
                     if(secondC == 0) {
-                        mf_send_time.active == true;
+                        mf_send_time.active = true;
+                        mf_time_float_send.duration = -1;
+
                     }
                     else if(secondC == 1) {
-                        mf_time_float_send.active == true;
+                        mf_time_float_send.active = true;
+                        mf_time_float_send.duration = -1;
+
                     }
                     else if(secondC == 2) {
-                        mf_loop_timer.active == true;
-                    }
+                        mf_loop_timer.active = true;
+                        mf_loop_timer.duration = -1;
 
+                    }
+                }
+                break;
+            case 'T':
+                if (usb_msg_length() == MEGN540_Message_Len('T')) {
+
+                    usb_msg_get();
+
+                    struct __attribute__((__packed__)) {
+                        char secondC;
+                        float milliInterval;
+                    } data;
+
+                    // Copy the bytes from the usb receive buffer into our structure so we can use the information
+                    usb_msg_read_into(&data, sizeof(data));
+
+                    if(data.milliInterval > 0.0) {
+
+                        if (data.secondC == 0) {
+                            mf_send_time.active = true;
+                            mf_send_time.duration = data.milliInterval;
+
+                        } else if (data.secondC == 1) {
+                            mf_time_float_send.active = true;
+                            mf_time_float_send.duration = data.milliInterval;
+
+                        } else if (data.secondC == 2) {
+                            mf_loop_timer.active = true;
+                            mf_loop_timer.duration = data.milliInterval;
+
+                        } else {
+                            usb_flush_input_buffer();
+                            break;
+
+                        }
+                    } else {
+                        usb_flush_input_buffer();
+                        break;
+                    }
                 }
                 break;
 
@@ -288,8 +337,6 @@ void Message_Handling_Task() {
     }
 }
 
-
-
 /**
  * Function MEGN540_Message_Len returns the number of bytes associated with a command string per the
  * class documentation;
@@ -303,7 +350,7 @@ uint8_t MEGN540_Message_Len( char cmd )
         case '~': return	1; break;
         case '*': return	9; break;
         case '/': return	9; break;
-        case '+': return	9; break;
+        case '+': return	6; break;
         case '-': return    9; break;
         case 't': return	2; break;
         case 'T': return	6; break;

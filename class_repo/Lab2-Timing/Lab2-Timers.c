@@ -42,8 +42,7 @@ int main(void) {
     GlobalInterruptEnable();
     Message_Handling_Init();
 
-    //SetupTimer0();         // initialize timer zero functionality
-
+    SetupTimer0();         // initialize timer zero functionality
 
     while (true){
 
@@ -51,57 +50,47 @@ int main(void) {
         Message_Handling_Task();
 
         Time_t loopStart = GetTime();
-        //USB_Echo_Task();
-     //   SetupTimer0();
-
 
         if( MSG_FLAG_Execute( &mf_restart ) ){
             //re initialzie your stuff...
             USB_SetupHardware();
             GlobalInterruptEnable();
             Message_Handling_Init();
-     //       SetupTimer0();
         }
+
         if( MSG_FLAG_Execute( &mf_send_time ) ) {
-            float time = mf_send_time.last_trigger_time.millisec + (mf_send_time.last_trigger_time.microsec / 1000);
-            usb_send_msg("ccf", 'T', &time, sizeof(time));
+
+            mf_send_time.last_trigger_time = GetTime();
+            float sendTime = (mf_send_time.last_trigger_time.millisec / 1000.0);
+            usb_send_msg("cf", '0', &sendTime, sizeof(sendTime));
+            if(mf_send_time.duration < 0.0) {
+           mf_send_time.active = false;
+    }
         }
 
         if( MSG_FLAG_Execute( &mf_time_float_send ) ){
-            Time_t start_float_time = GetTime();
-            float floatTest = 3.1416;
-            float floatTime = SecondsSince(&start_float_time);
-            usb_send_msg("ccf", 'T', &floatTime, sizeof(floatTime));
+
+            mf_time_float_send.last_trigger_time.millisec = GetMilli();
+            float floatTest = 0.000001;
+            usb_send_msg("cf", '1', &floatTest, sizeof(floatTest));
+            float floatTime = SecondsSince(&mf_time_float_send.last_trigger_time.millisec);
+            usb_send_msg("cf", '1', &floatTime, sizeof(floatTime));
+
+            if(mf_time_float_send.duration < 0.0) {
+                mf_time_float_send.active = false;
+            }
 
         }
         if( MSG_FLAG_Execute( &mf_loop_timer ) ){
+            mf_loop_timer.last_trigger_time = GetTime();
             float loop_time = SecondsSince(&loopStart);
-            usb_send_msg("ccf", 'T', &loop_time, sizeof(loop_time) );
+            usb_send_msg("cf", '2', &loop_time, sizeof(loop_time));
+            if(mf_loop_timer.duration < 0.0) {
+            mf_loop_timer.active = false;
+}
+
         }
 
     }
-    // baseline above.
-
-        //USB_Upkeep_Task();
-        //Message_Handling_Task();
-        // baby steps of main.
-        // have the robot send the time once.
-        // 1. have the robot send the time each second.
-        // 2. toggle led every few ms with the interrupt ( might show as dim)
-        // 3. time how long a loop takes.
-        //Time_t test = GetTime();
-
-        //usb_send_data(&test,48);
-/*
-        if (MSG_FLAG_Execute(&mf_restart))// TODO add desired timer
-        {
-            //re initialzie your stuff...
-           // SetupTimer0();
-            USB_SetupHardware();
-            GlobalInterruptEnable();
-            Message_Handling_Init();
-        }*/
-
-
         return 0;
     }
